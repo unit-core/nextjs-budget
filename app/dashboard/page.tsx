@@ -38,6 +38,7 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
   const currentDate = new Date()
   const { start, end } = getMonthRange(currentDate)
   const supabase = await createClient()
+  
   const { data: transactions, error } = await supabase.from('transactions')
     .select(`
       id,
@@ -58,66 +59,74 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
     .lt('executed_at', end.toISOString())
     
   if (transactions) {
-    // 1. Определяем "сегодняшнюю" дату для сравнения
     const todayDateString = new Date().toDateString();
 
-    // 2. Подготавливаем хранилища для подсчетов
     const monthTotals: Record<string, number> = {};
     const todayTotals: Record<string, number> = {};
+    
+    // Структура: { "Food": { "EUR": 100, "USD": 50 }, "Transport": { "EUR": 20 } }
+    const categoryMap: Record<string, Record<string, number>> = {}; 
     let itemsCount = 0;
 
-    // 3. Проходим по всем транзакциям один раз
     transactions.forEach((transaction) => {
-      // Проверяем, совершена ли транзакция сегодня
       const isToday = new Date(transaction.executed_at).toDateString() === todayDateString;
-      
       const items = transaction.transaction_items || [];
-      itemsCount += items.length; // Плюсуем количество айтемов
+      itemsCount += items.length;
 
-      // Проходим по всем позициям внутри транзакции
       items.forEach((item) => {
-        const currency = item.currency_code || 'EUR'; // Фоллбэк, если кода нет
+        const currency = item.currency_code || 'EUR';
         const amount = item.amount || 0;
+        const category = item.category || 'Other';
 
-        // Прибавляем к итогам за месяц
+        // Итоги для карточек (верхний уровень)
         monthTotals[currency] = (monthTotals[currency] || 0) + amount;
-
-        // Если транзакция сегодняшняя, прибавляем к итогам за сегодня
         if (isToday) {
           todayTotals[currency] = (todayTotals[currency] || 0) + amount;
         }
+
+        // Группировка для таблицы по категориям и валютам
+        if (!categoryMap[category]) {
+          categoryMap[category] = {};
+        }
+        categoryMap[category][currency] = (categoryMap[category][currency] || 0) + amount;
       });
     });
 
-    // 4. Вспомогательная функция для форматирования сумм
-    const formatTotals = (totals: Record<string, number>) => {
+    // Хелпер для форматирования (тот же, что вы использовали для карточек)
+    const formatCurrencyDict = (totals: Record<string, number>) => {
       const keys = Object.keys(totals);
-      if (keys.length === 0) return "0,00"; // Если данных нет
-      
+      if (keys.length === 0) return "0,00";
       return keys.map(currency => {
         return new Intl.NumberFormat(undefined, {
           style: 'currency',
           currency: currency
         }).format(totals[currency]);
-      }).join('\n'); // Соединяем переносом строки
+      }).join('\n'); // Склеиваем переносом строки
     };
 
-    // 5. Собираем итоговый объект
+    // Формируем финальный массив для MonthTransactionsDataTable
+    const categoriesData = Object.entries(categoryMap).map(([categoryName, currencies]) => ({
+      name: categoryName,
+      amount: formatCurrencyDict(currencies) // Здесь будет строка с переносами, если валют несколько
+    }));
+
     const summary = {
-      today: formatTotals(todayTotals),
-      month: formatTotals(monthTotals),
+      today: formatCurrencyDict(todayTotals),
+      month: formatCurrencyDict(monthTotals),
       transactions_number: transactions.length,
       items_number: itemsCount
     };
+
     return (
       <div className="flex flex-col gap-4">
         <SectionCards texts={texts} values={summary}/>
-        <MonthTransactionsDataTable data={[]} />
+        {/* Теперь data содержит массив объектов { name, amount } */}
+        <MonthTransactionsDataTable data={categoriesData} />
       </div>
     )
   } else {
     return (
-      <div>Some thing went wrong</div>
+      <div className="p-4 text-red-500">Something went wrong or no data found</div>
     )
   }
 }
