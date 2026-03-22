@@ -33,7 +33,7 @@ export function SectionCards({ texts, values }: { texts: DateTexts, values: Date
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Today</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl whitespace-pre-line">
             {values.today}
           </CardTitle>
           {/* <CardAction>
@@ -57,7 +57,7 @@ export function SectionCards({ texts, values }: { texts: DateTexts, values: Date
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Current month</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl whitespace-pre-line">
             {values.month}
           </CardTitle>
           {/* <CardAction>

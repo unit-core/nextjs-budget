@@ -158,7 +158,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     accessorKey: "amount",
     header: "Amount",
     cell: ({ row }) => {
-      return <div>{row.original.amount}</div>
+      return <div className="whitespace-pre-line">{row.original.amount}</div>
     },
     enableHiding: false,
   },
