@@ -1,6 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import { ChartAreaInteractive } from "@/components/chart-area-interactive"
-import { DataTable, DataTableSkeleton, schema } from "@/components/data-table"
+import { AllTransactionsDataTable, AllTransactionsDataTableSkeleton, schema } from "@/components/all-transactions-data-table"
 import { SectionCards, SectionCardsSkeleton, DateTexts } from "@/components/section-cards"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
@@ -10,6 +10,7 @@ import { Suspense } from "react"
 import { createClient } from "@/lib/supabase/server"
 import { z } from "zod"
 import { SidebarUser } from "@/components/app-sidebar"
+import { MonthTransactionsDataTable, MonthTransactionsDataTableSkeleton } from "@/components/month-transactions-data-table"
 
 // Вспомогательная функция (эквивалент Task.sleep)
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -108,7 +109,12 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
       transactions_number: transactions.length,
       items_number: itemsCount
     };
-    return <SectionCards texts={texts} values={summary}/>
+    return (
+      <div className="flex flex-col gap-4">
+        <SectionCards texts={texts} values={summary}/>
+        <MonthTransactionsDataTable data={[]} />
+      </div>
+    )
   } else {
     return (
       <div>Some thing went wrong</div>
@@ -173,7 +179,7 @@ async function AsyncDataTable() {
       }
     })
     return (
-      <DataTable data={transactionsArray} />
+      <AllTransactionsDataTable data={transactionsArray} />
     )
   } else {
     return (
@@ -239,14 +245,19 @@ export default function Page() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
 
-              <Suspense fallback={<SectionCardsSkeleton texts={sectionCardsTexts}/>}>
+              <Suspense fallback={
+                <div className="flex flex-col gap-4">
+                  <SectionCardsSkeleton texts={sectionCardsTexts}/>
+                  <MonthTransactionsDataTableSkeleton />
+                </div>
+              }>
                 <AsyncSectionCards texts={sectionCardsTexts}/>
               </Suspense>
               
               <div className="px-4 lg:px-6">
                 <ChartAreaInteractive />
               </div>
-              <Suspense fallback={<DataTableSkeleton />}>
+              <Suspense fallback={<AllTransactionsDataTableSkeleton />}>
                 <AsyncDataTable/>
               </Suspense>
             </div>
