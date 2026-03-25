@@ -16,7 +16,7 @@ const FileUploadDemo = ({ user }: { user: SidebarUser }) => {
     path: user?.id ?? '',
     allowedMimeTypes: ['image/*'],
     maxFiles: 10,
-    maxFileSize: 1000 * 1000 * 3, // 3MB
+    maxFileSize: 1000 * 1000 * 5, // 5MB
   })
   
   // Эффект для обработки завершения
