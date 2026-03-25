@@ -15,6 +15,22 @@ import { User } from '@supabase/supabase-js';
 import { Spinner } from "./ui/spinner"
 import { SidebarUser } from "@/components/app-sidebar"
 
+import TextareaAutosize from "react-textarea-autosize"
+
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group"
+import {
+  IconBrandJavascript,
+  IconCopy,
+  IconCornerDownLeft,
+  IconRefresh,
+} from "@tabler/icons-react"
+
 export function NavMain({
   items,
   user
@@ -31,38 +47,16 @@ export function NavMain({
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
-            { (user === undefined || user === null) ? 
+            { user === undefined || user === null ?
               <SidebarMenuButton
                 tooltip="Quick Create"
-                disabled={user === undefined}
                 className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
               >
                 <Spinner />
                 <span>Quick Create</span>
               </SidebarMenuButton> : 
-              <Sheet>
-                <SheetTrigger asChild>
-                  <SidebarMenuButton
-                    tooltip="Quick Create"
-                    className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
-                  >
-                    <CirclePlusIcon
-                    />
-                    <span>Quick Create</span>
-                  </SidebarMenuButton>
-                </SheetTrigger>
-                <SheetContent side="bottom">
-                  <SheetHeader>
-                    <SheetTitle>Are you absolutely sure?</SheetTitle>
-                    <SheetDescription>This action cannot be undone.</SheetDescription>
-                  </SheetHeader>
-                  <div className="flex h-full w-full p-4 flex-col">
-                    <FileUploadDemo user={user}/>
-                  </div>
-                </SheetContent>
-              </Sheet>
+              <DrawerDemo user={user}/>
             }
-
             <Button
               size="icon"
               className="size-8 group-data-[collapsible=icon]:opacity-0"
@@ -86,5 +80,79 @@ export function NavMain({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
+  )
+}
+
+import * as React from "react"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+
+function DrawerDemo({ user }: { user: SidebarUser }) {
+  const [goal, setGoal] = React.useState(350)
+
+  function onClick(adjustment: number) {
+    setGoal(Math.max(200, Math.min(400, goal + adjustment)))
+  }
+
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <SidebarMenuButton
+          tooltip="Quick Create"
+          className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
+        >
+          <CirclePlusIcon />
+          <span>Quick Create</span>
+        </SidebarMenuButton>
+      </DrawerTrigger>
+      <DrawerContent>
+        <div className="mx-auto w-full max-w-xl">
+          <DrawerHeader>
+            <DrawerTitle>Create Transactions</DrawerTitle>
+            <DrawerDescription>Upload your receipts or describe expenses in your own words.</DrawerDescription>
+          </DrawerHeader>
+          <div className="flex flex-col p-4 gap-4">
+            <Tabs defaultValue="image">
+              <TabsList>
+                <TabsTrigger value="image">Image</TabsTrigger>
+                <TabsTrigger value="text">Text</TabsTrigger>
+              </TabsList>
+              <TabsContent value="image">
+                <FileUploadDemo user={user}/>
+              </TabsContent>
+              <TabsContent value="text">
+                <InputGroupCustom />
+              </TabsContent>
+            </Tabs>
+          </div>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  )
+}
+
+function InputGroupCustom() {
+  return (
+    <div className="grid w-full gap-6">
+      <InputGroup>
+        <TextareaAutosize
+          data-slot="input-group-control"
+          className="flex field-sizing-content min-h-24 max-h-80 w-full resize-none rounded-md bg-transparent px-3 py-2.5 text-base transition-[color,box-shadow] outline-none md:text-sm"
+          placeholder="Just type what you spent...."
+        />
+        <InputGroupAddon align="block-end">
+          <InputGroupButton className="ml-auto" size="sm" variant="default">
+            Submit
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
+    </div>
   )
 }
