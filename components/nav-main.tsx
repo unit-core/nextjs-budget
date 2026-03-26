@@ -14,8 +14,11 @@ import { FileUploadDemo } from "./file-upload"
 import { User } from '@supabase/supabase-js';
 import { Spinner } from "./ui/spinner"
 import { SidebarUser } from "@/components/app-sidebar"
+import { toast } from "sonner"
 
 import TextareaAutosize from "react-textarea-autosize"
+
+import { createClient } from '@/lib/supabase/client'
 
 import {
   InputGroup,
@@ -123,12 +126,16 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
               <TabsList>
                 <TabsTrigger value="image">Image</TabsTrigger>
                 <TabsTrigger value="text">Text</TabsTrigger>
+                <TabsTrigger value="manual">Manual</TabsTrigger>
               </TabsList>
               <TabsContent value="image">
                 <FileUploadDemo user={user}/>
               </TabsContent>
               <TabsContent value="text">
                 <InputGroupCustom />
+              </TabsContent>
+              <TabsContent value="manual">
+                {/* <InputGroupCustom /> */}
               </TabsContent>
             </Tabs>
           </div>
@@ -137,18 +144,65 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
     </Drawer>
   )
 }
+import { useState } from 'react'
 
 function InputGroupCustom() {
+  // 1. Создаем состояние для текста
+  const [text, setText] = useState('')
+  const [isLoading, setLoading] = useState(false)
+
+  const saveNewTransaction = async () => {
+    if (!text.trim()) return // Не отправляем пустую строку
+    setLoading(true)
+    const supabase = createClient()
+    
+    // 2. Используем переменную 'text' для отправки
+    const { data, error } = await supabase
+      .from('transactions')
+      .insert({
+        source: {
+          source_type: 'text',
+          source: {
+            text: text.trim()
+          }
+        }
+      })
+    setLoading(false)
+    if (!error) {
+      const currentDate = new Date()
+      const dateString = currentDate.toLocaleDateString('en-US', {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+      toast("Transaction has been created", {
+        position: 'top-center',
+        description: dateString
+      })
+      setText('') // Очищаем поле после успешной отправки
+    }
+  }
+
   return (
     <div className="grid w-full gap-6">
       <InputGroup>
         <TextareaAutosize
+          value={text} // 3. Привязываем значение
+          onChange={(e) => setText(e.target.value)} // 4. Обновляем при вводе
           data-slot="input-group-control"
           className="flex field-sizing-content min-h-24 max-h-80 w-full resize-none rounded-md bg-transparent px-3 py-2.5 text-base transition-[color,box-shadow] outline-none md:text-sm"
           placeholder="Just type what you spent...."
         />
         <InputGroupAddon align="block-end">
-          <InputGroupButton className="ml-auto" size="sm" variant="default">
+          <InputGroupButton 
+            className="ml-auto" 
+            size="sm" 
+            variant="default" 
+            onClick={saveNewTransaction}
+            disabled={!text.trim() || isLoading} // Хороший UX: кнопка неактивна, если пусто
+          >
+            {isLoading ? <Spinner /> : null }
             Submit
           </InputGroupButton>
         </InputGroupAddon>
