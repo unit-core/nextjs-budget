@@ -203,10 +203,10 @@ async function AsyncAppSidebar() {
     data: { user },
     error
   } = await supabase.auth.getUser()
-  // console.log(user)
   if (!user) throw { message: "User undefined for app sidebar"}
   const sidebarUser: SidebarUser = {
-    id: user.id
+    id: user.id,
+    email: user.email ?? '-'
   }
   return <AppSidebar variant="inset" user={sidebarUser} />
 }

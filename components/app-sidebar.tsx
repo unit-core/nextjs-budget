@@ -26,44 +26,44 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: (
         <LayoutDashboardIcon
         />
       ),
     },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: (
-        <ListIcon
-        />
-      ),
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: (
-        <ChartBarIcon
-        />
-      ),
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: (
-        <FolderIcon
-        />
-      ),
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: (
-        <UsersIcon
-        />
-      ),
-    },
+    // {
+    //   title: "Lifecycle",
+    //   url: "#",
+    //   icon: (
+    //     <ListIcon
+    //     />
+    //   ),
+    // },
+    // {
+    //   title: "Analytics",
+    //   url: "#",
+    //   icon: (
+    //     <ChartBarIcon
+    //     />
+    //   ),
+    // },
+    // {
+    //   title: "Folders",
+    //   url: "/folders",
+    //   icon: (
+    //     <FolderIcon
+    //     />
+    //   ),
+    // },
+    // {
+    //   title: "Team",
+    //   url: "#",
+    //   icon: (
+    //     <UsersIcon
+    //     />
+    //   ),
+    // },
   ],
   navClouds: [
     {
@@ -178,7 +178,8 @@ const data = {
 
 // 1. Создаем тип для нашего юзера
 export type SidebarUser = {
-  id: string
+  id: string,
+  email: string
 } | null | undefined
 
 // 2. Расширяем стандартные пропсы Sidebar
@@ -187,7 +188,6 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
-  console.log(user)
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -199,7 +199,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
             >
               <a href="#">
                 <CommandIcon className="size-5!" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">Budget by Unitcore</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -207,11 +207,13 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} user={user} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* <NavDocuments items={data.documents} />
+        <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={
+          {name: 'User', email: user?.email ?? '-', avatar: '/images/avatars/shadcn.jpg'}
+        } />
       </SidebarFooter>
     </Sidebar>
   )

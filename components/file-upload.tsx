@@ -22,7 +22,7 @@ const FileUploadDemo = ({ user }: { user: SidebarUser }) => {
   // Эффект для обработки завершения
   useEffect(() => {
     if (props.isSuccess) {
-      console.log("Загрузка завершена", props.successes);
+      // console.log("Загрузка завершена", props.successes);
       
       // 1. Показать уведомление (например, через toast)
       // toast.success("Файлы успешно загружены!");
