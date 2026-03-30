@@ -105,9 +105,9 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
   function onClick(adjustment: number) {
     setGoal(Math.max(200, Math.min(400, goal + adjustment)))
   }
-
+  const isMobile = useIsMobile()
   return (
-    <Drawer>
+    <Drawer direction={isMobile ? "bottom" : "right"}>
       <DrawerTrigger asChild>
         <SidebarMenuButton
           tooltip="Quick Create"
@@ -118,7 +118,7 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
         </SidebarMenuButton>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="mx-auto w-full max-w-xl">
+        <div className="mx-auto w-full">
           <DrawerHeader>
             <DrawerTitle>Create Transactions</DrawerTitle>
             <DrawerDescription>Upload your receipts or describe expenses in your own words.</DrawerDescription>
@@ -147,6 +147,7 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
   )
 }
 import { useState } from 'react'
+import { useIsMobile } from "@/hooks/use-mobile"
 
 function InputGroupCustom() {
   // 1. Создаем состояние для текста
