@@ -1,0 +1,32 @@
+{
+  "Settings": {
+    "language": "اللغة",
+    "layoutDirection": "اتجاه التخطيط",
+    "logOut": "تسجيل الخروج"
+  },
+  "Dashboard": {
+    "title": "لوحة التحكم"
+  },
+  "HomePage": {
+    "whatsNew": "ما الجديد",
+    "justShipped": "تم إطلاق الإصدار 1.0",
+    "title": "انشر على السحابة بثقة",
+    "description": "نص تجريبي يوضح كيفية عمل الترجمة في التطبيق. هذا مثال على استخدام next-intl للترجمة.",
+    "getStarted": "ابدأ الآن",
+    "learnMore": "اعرف المزيد",
+    "featuresTitle": "ابقَ على اطلاع بدعم العملاء",
+    "boostTitle": "عزّز إنتاجيتك اليوم",
+    "boostDescription": "نص تجريبي يوضح كيفية عمل الترجمة في التطبيق. هذا مثال على استخدام next-intl للترجمة.",
+    "copyright": "© 2024 شركتك. جميع الحقوق محفوظة."
+  },
+  "Features": {
+    "spamReport": "تقرير البريد العشوائي",
+    "spamReportDesc": "وصف تجريبي لميزة تقرير البريد العشوائي يوضح كيفية عمل الترجمة.",
+    "composeMarkdown": "الكتابة بتنسيق Markdown",
+    "composeMarkdownDesc": "وصف تجريبي لميزة الكتابة بتنسيق Markdown يوضح كيفية عمل الترجمة.",
+    "emailCommenting": "التعليق على البريد الإلكتروني",
+    "emailCommentingDesc": "وصف تجريبي لميزة التعليق على البريد الإلكتروني يوضح كيفية عمل الترجمة.",
+    "customerConnections": "اتصالات العملاء",
+    "customerConnectionsDesc": "وصف تجريبي لميزة اتصالات العملاء يوضح كيفية عمل الترجمة."
+  }
+}

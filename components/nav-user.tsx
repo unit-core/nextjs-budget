@@ -13,6 +13,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
   SidebarMenu,
@@ -21,25 +24,54 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { createClient } from "@/lib/supabase/client"
-import { EllipsisVerticalIcon, CircleUserRoundIcon, CreditCardIcon, BellIcon, LogOutIcon } from "lucide-react"
+import {
+  EllipsisVerticalIcon,
+  LogOutIcon,
+  LanguagesIcon,
+  PilcrowLeftIcon,
+  CheckIcon,
+} from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useLocale, useTranslations } from "next-intl"
+import { useTransition } from "react"
+import { setLocale, setDirection } from "@/i18n/actions"
+import { locales, localeNames, type Locale } from "@/i18n/config"
 
 export function NavUser({
   user,
+  direction,
 }: {
   user: {
     name: string
     email: string
     avatar: string
   }
+  direction: "ltr" | "rtl"
 }) {
   const { isMobile } = useSidebar()
   const router = useRouter()
+  const locale = useLocale()
+  const t = useTranslations("Settings")
+  const [isPending, startTransition] = useTransition()
 
   const logout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
-    router.push('/auth/login')
+    router.push("/auth/login")
+  }
+
+  function handleLocaleChange(newLocale: Locale) {
+    startTransition(async () => {
+      await setLocale(newLocale)
+      router.refresh()
+    })
+  }
+
+  function handleDirectionChange(dir: "ltr" | "rtl") {
+    startTransition(async () => {
+      await setDirection(dir)
+      router.refresh()
+    })
   }
 
   return (
@@ -66,7 +98,7 @@ export function NavUser({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? "bottom" : direction === "rtl" ? "left" : "right"}
             align="end"
             sideOffset={4}
           >
@@ -85,28 +117,67 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {/* <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <CircleUserRoundIcon
-                />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon
-                />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BellIcon
-                />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup> */}
-            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuGroup>
+              {/* Language Picker */}
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <LanguagesIcon className="me-2 size-4" />
+                  {t("language")}
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  {locales.map((loc) => (
+                    <DropdownMenuItem
+                      key={loc}
+                      onClick={() => handleLocaleChange(loc)}
+                      disabled={isPending}
+                    >
+                      {locale === loc && (
+                        <CheckIcon className="me-2 size-4" />
+                      )}
+                      <span className={locale !== loc ? "ms-6" : ""}>
+                        {localeNames[loc]}
+                      </span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+
+              {/* Layout Direction Picker */}
+              {/* <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <PilcrowLeftIcon className="me-2 size-4" />
+                  {t("layoutDirection")}
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem
+                    onClick={() => handleDirectionChange("ltr")}
+                    disabled={isPending}
+                  >
+                    {direction === "ltr" && (
+                      <CheckIcon className="me-2 size-4" />
+                    )}
+                    <span className={direction !== "ltr" ? "ms-6" : ""}>
+                      LTR — Left to Right
+                    </span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleDirectionChange("rtl")}
+                    disabled={isPending}
+                  >
+                    {direction === "rtl" && (
+                      <CheckIcon className="me-2 size-4" />
+                    )}
+                    <span className={direction !== "rtl" ? "ms-6" : ""}>
+                      RTL — Right to Left
+                    </span>
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub> */}
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>
-              <LogOutIcon
-              />
-              Log out
+              <LogOutIcon />
+              {t("logOut")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -11,6 +11,7 @@ import { createClient } from "@/lib/supabase/server"
 import { z } from "zod"
 import { SidebarUser } from "@/components/app-sidebar"
 import { MonthTransactionsDataTable, MonthTransactionsDataTableSkeleton } from "@/components/month-transactions-data-table"
+import { getDirection } from "@/i18n/actions"
 
 // Вспомогательная функция (эквивалент Task.sleep)
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -199,6 +200,7 @@ async function AsyncDataTable() {
 
 async function AsyncAppSidebar() {
   const supabase = await createClient()
+  const direction = await getDirection()
   const {
     data: { user },
     error
@@ -208,7 +210,7 @@ async function AsyncAppSidebar() {
     id: user.id,
     email: user.email ?? '-'
   }
-  return <AppSidebar variant="inset" user={sidebarUser} />
+  return <AppSidebar variant="inset" user={sidebarUser} direction={direction} />
 }
 
 export default function Page() {

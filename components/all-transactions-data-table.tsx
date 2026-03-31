@@ -40,6 +40,7 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 import { useIsMobile } from "@/hooks/use-mobile"
+import { useDirection } from "@/hooks/use-direction"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -915,9 +916,10 @@ const chartConfig = {
 
 function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
   const isMobile = useIsMobile()
+  const direction = useDirection()
 
   return (
-    <Drawer direction={isMobile ? "bottom" : "right"}>
+    <Drawer direction={isMobile ? "bottom" : direction === "rtl" ? "left" : "right"}>
       <DrawerTrigger asChild>
         <Button variant="link" className="w-fit px-0 text-start text-foreground">
           {item.name}

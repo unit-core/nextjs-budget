@@ -185,11 +185,14 @@ export type SidebarUser = {
 // 2. Расширяем стандартные пропсы Sidebar
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   user: SidebarUser
+  direction?: "ltr" | "rtl"
 }
 
-export function AppSidebar({ user, ...props }: AppSidebarProps) {
+export function AppSidebar({ user, direction = "ltr", ...props }: AppSidebarProps) {
+  const side = direction === "rtl" ? "right" : "left"
+
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="offcanvas" side={side} {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -211,9 +214,10 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={
-          {name: 'User', email: user?.email ?? '-', avatar: '/images/avatars/shadcn.jpg'}
-        } />
+        <NavUser
+          user={{name: 'User', email: user?.email ?? '-', avatar: '/images/avatars/shadcn.jpg'}}
+          direction={direction}
+        />
       </SidebarFooter>
     </Sidebar>
   )

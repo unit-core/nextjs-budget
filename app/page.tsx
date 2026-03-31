@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { LanguagePicker } from "@/components/language-picker"
 
 import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid'
 
@@ -6,6 +7,9 @@ export default function Page() {
   return (
     <div className="flex min-h-svh">
       <div className="flex w-full flex-col text-sm leading-loose">
+        <div className="absolute top-4 end-4 z-10">
+          <LanguagePicker />
+        </div>
         <HeroSection />
         <FeaturesSection />
         <CtaSection />

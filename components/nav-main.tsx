@@ -106,8 +106,9 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
     setGoal(Math.max(200, Math.min(400, goal + adjustment)))
   }
   const isMobile = useIsMobile()
+  const direction = useDirection()
   return (
-    <Drawer direction={isMobile ? "bottom" : "right"}>
+    <Drawer direction={isMobile ? "bottom" : direction === "rtl" ? "left" : "right"}>
       <DrawerTrigger asChild>
         <SidebarMenuButton
           tooltip="Quick Create"
@@ -148,6 +149,7 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
 }
 import { useState } from 'react'
 import { useIsMobile } from "@/hooks/use-mobile"
+import { useDirection } from "@/hooks/use-direction"
 
 function InputGroupCustom() {
   // 1. Создаем состояние для текста

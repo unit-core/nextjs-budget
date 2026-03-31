@@ -1,0 +1,32 @@
+{
+  "Settings": {
+    "language": "Language",
+    "layoutDirection": "Layout Direction",
+    "logOut": "Log out"
+  },
+  "Dashboard": {
+    "title": "Dashboard"
+  },
+  "HomePage": {
+    "whatsNew": "What's new",
+    "justShipped": "Just shipped v1.0",
+    "title": "Deploy to the cloud with confidence",
+    "description": "Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat.",
+    "getStarted": "Get started",
+    "learnMore": "Learn more",
+    "featuresTitle": "Stay on top of customer support",
+    "boostTitle": "Boost your productivity today",
+    "boostDescription": "Incididunt sint fugiat pariatur cupidatat consectetur sit cillum anim id veniam aliqua proident excepteur commodo do ea.",
+    "copyright": "© 2024 Your Company, Inc. All rights reserved."
+  },
+  "Features": {
+    "spamReport": "Spam report",
+    "spamReportDesc": "Autem reprehenderit aut debitis ut. Officiis harum omnis placeat blanditiis delectus sint vel et voluptatum.",
+    "composeMarkdown": "Compose in markdown",
+    "composeMarkdownDesc": "Illum et aut inventore. Ut et dignissimos quasi. Omnis saepe dolorum. Hic autem fugiat. Voluptatem officiis necessitatibus.",
+    "emailCommenting": "Email commenting",
+    "emailCommentingDesc": "Commodi quam quo. In quasi mollitia optio voluptate et est reiciendis. Ut et sunt id officiis vitae perspiciatis.",
+    "customerConnections": "Customer connections",
+    "customerConnectionsDesc": "Deserunt corrupti praesentium quo vel cupiditate est occaecati ad. Aperiam libero modi similique iure praesentium facilis."
+  }
+}
