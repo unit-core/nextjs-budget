@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { LanguagePicker } from "@/components/language-picker"
+import { useTranslations } from "next-intl"
 
-import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid'
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { ChatBubbleOvalLeftEllipsisIcon, HeartIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 
 export default function Page() {
   return (
@@ -18,9 +20,9 @@ export default function Page() {
     </div>
   )
 }
-import { ChevronRightIcon } from '@heroicons/react/20/solid'
 
 function HeroSection() {
+  const t = useTranslations("HomePage")
   return (
     <div className="relative isolate overflow-hidden bg-background">
       <svg
@@ -43,43 +45,32 @@ function HeroSection() {
       </svg>
       <div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:px-8 lg:py-40">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:shrink-0 lg:pt-8">
-          {/* <img
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="h-11 dark:hidden"
-          />
-          <img
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-            className="h-11 not-dark:hidden"
-          /> */}
           <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6">
               <span className="rounded-full bg-gray-50 px-3 py-1 text-sm/6 font-semibold text-primary ring-1 ring-gray-600/20 ring-inset dark:bg-gray-500/10 dark:ring-gray-500/25">
-                What's new
+                {t("whatsNew")}
               </span>
               <span className="inline-flex items-center space-x-2 text-sm/6 font-medium text-gray-600 dark:text-gray-300">
-                <span>Just shipped v1.0</span>
+                <span>{t("justShipped")}</span>
                 <ChevronRightIcon aria-hidden="true" className="size-5 text-gray-400 dark:text-gray-500" />
               </span>
             </a>
           </div>
           <h1 className="mt-10 text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
-            Deploy to the cloud with confidence
+            {t("title")}
           </h1>
           <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8 dark:text-gray-400">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-            fugiat veniam occaecat.
+            {t("description")}
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <a
               href="/auth/login"
               className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-accent shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
             >
-              Get started
+              {t("getStarted")}
             </a>
             <a href="#" className="text-sm/6 font-semibold text-primary">
-              Learn more <span aria-hidden="true">→</span>
+              {t("learnMore")} <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
@@ -108,42 +99,39 @@ function HeroSection() {
   )
 }
 
-import { ChatBubbleOvalLeftEllipsisIcon, HeartIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
-
-const features = [
-  {
-    name: 'Spam report',
-    description:
-      'Autem reprehenderit aut debitis ut. Officiis harum omnis placeat blanditiis delectus sint vel et voluptatum.',
-    icon: TrashIcon,
-  },
-  {
-    name: 'Compose in markdown',
-    description:
-      'Illum et aut inventore. Ut et dignissimos quasi. Omnis saepe dolorum. Hic autem fugiat. Voluptatem officiis necessitatibus.',
-    icon: PencilSquareIcon,
-  },
-  {
-    name: 'Email commenting',
-    description:
-      'Commodi quam quo. In quasi mollitia optio voluptate et est reiciendis. Ut et sunt id officiis vitae perspiciatis.',
-    icon: ChatBubbleOvalLeftEllipsisIcon,
-  },
-  {
-    name: 'Customer connections',
-    description:
-      'Deserunt corrupti praesentium quo vel cupiditate est occaecati ad. Aperiam libero modi similique iure praesentium facilis.',
-    icon: HeartIcon,
-  },
-]
-
 function FeaturesSection() {
+  const t = useTranslations("Features")
+  const th = useTranslations("HomePage")
+
+  const features = [
+    {
+      name: t("spamReport"),
+      description: t("spamReportDesc"),
+      icon: TrashIcon,
+    },
+    {
+      name: t("composeMarkdown"),
+      description: t("composeMarkdownDesc"),
+      icon: PencilSquareIcon,
+    },
+    {
+      name: t("emailCommenting"),
+      description: t("emailCommentingDesc"),
+      icon: ChatBubbleOvalLeftEllipsisIcon,
+    },
+    {
+      name: t("customerConnections"),
+      description: t("customerConnectionsDesc"),
+      icon: HeartIcon,
+    },
+  ]
+
   return (
     <div className="py-24 sm:py-32 bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-5">
           <h2 className="col-span-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
-            Stay on top of customer support
+            {th("featuresTitle")}
           </h2>
           <dl className="col-span-3 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2">
             {features.map((feature) => (
@@ -163,28 +151,28 @@ function FeaturesSection() {
     </div>
   )
 }
+
 function CtaSection() {
+  const t = useTranslations("HomePage")
   return (
     <div className="bg-background">
       <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="relative isolate overflow-hidden px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16 bg-sidebar dark:shadow-none dark:after:pointer-events-none dark:after:absolute dark:after:inset-0 dark:after:inset-ring dark:after:inset-ring-white/10 dark:after:sm:rounded-3xl">
           <h2 className="text-4xl font-semibold tracking-tight text-balance text-primary sm:text-5xl">
-            Boost your productivity today
+            {t("boostTitle")}
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-primary">
-            Incididunt sint fugiat pariatur cupidatat consectetur sit cillum anim id veniam aliqua proident excepteur
-            commodo do ea.
+            {t("boostDescription")}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
               href="/auth/login"
               className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:bg-white/10 dark:text-primary dark:shadow-none dark:inset-ring dark:inset-ring-white/5 dark:hover:bg-white/15 dark:focus-visible:outline-white"
             >
-              {' '}
-              Get started{' '}
+              {t("getStarted")}
             </a>
             <a href="#" className="text-sm/6 font-semibold text-primary">
-              Learn more
+              {t("learnMore")}
               <span aria-hidden="true">→</span>
             </a>
           </div>
@@ -207,8 +195,7 @@ function CtaSection() {
   )
 }
 
-
-const navigation = [
+const socialNavigation = [
   {
     name: 'Facebook',
     href: '#',
@@ -273,11 +260,12 @@ const navigation = [
 ]
 
 function FooterSection() {
+  const t = useTranslations("HomePage")
   return (
     <footer className="bg-background">
       <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center gap-x-6 md:order-2">
-          {navigation.map((item) => (
+          {socialNavigation.map((item) => (
             <a
               key={item.name}
               href={item.href}
@@ -289,7 +277,7 @@ function FooterSection() {
           ))}
         </div>
         <p className="mt-8 text-center text-sm/6 text-gray-600 md:order-1 md:mt-0 dark:text-gray-400">
-          &copy; 2024 Your Company, Inc. All rights reserved.
+          {t("copyright")}
         </p>
       </div>
     </footer>
