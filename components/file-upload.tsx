@@ -6,6 +6,7 @@ import { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { SidebarUser } from "@/components/app-sidebar"
+import { toast } from 'sonner';
  
 const FileUploadDemo = ({ user }: { user: SidebarUser }) => {
 
@@ -22,6 +23,10 @@ const FileUploadDemo = ({ user }: { user: SidebarUser }) => {
   // Эффект для обработки завершения
   useEffect(() => {
     if (props.isSuccess) {
+      toast("Transaction has been created", {
+        position: 'top-center',
+        description: "The system is already processing"
+      })
       // console.log("Загрузка завершена", props.successes);
       
       // 1. Показать уведомление (например, через toast)

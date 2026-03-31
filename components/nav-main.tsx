@@ -174,16 +174,9 @@ function InputGroupCustom() {
       })
     setLoading(false)
     if (!error) {
-      const currentDate = new Date()
-      const dateString = currentDate.toLocaleDateString('en-US', {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
       toast("Transaction has been created", {
         position: 'top-center',
-        description: dateString
+        description: "The system is already processing"
       })
       setText('') // Очищаем поле после успешной отправки
     }
