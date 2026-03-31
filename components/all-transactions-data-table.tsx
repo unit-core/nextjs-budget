@@ -622,6 +622,12 @@ export function AllTransactionsDataTable({
     pageIndex: 0,
     pageSize: 10,
   })
+
+  // Sync data when initialData changes (e.g. after locale switch)
+  React.useEffect(() => {
+    setData(initialData)
+  }, [initialData])
+
   const sortableId = React.useId()
   const sensors = useSensors(
     useSensor(MouseSensor, {}),

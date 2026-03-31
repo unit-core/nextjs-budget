@@ -12,6 +12,7 @@ import { z } from "zod"
 import { SidebarUser } from "@/components/app-sidebar"
 import { MonthTransactionsDataTable, MonthTransactionsDataTableSkeleton } from "@/components/month-transactions-data-table"
 import { getDirection } from "@/i18n/actions"
+import { getTranslations } from "next-intl/server"
 
 // Вспомогательная функция (эквивалент Task.sleep)
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -39,6 +40,7 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
   const currentDate = new Date()
   const { start, end } = getMonthRange(currentDate)
   const supabase = await createClient()
+  const td = await getTranslations("Dashboard")
   
   const { data: transactions, error } = await supabase.from('transactions')
     .select(`
@@ -106,8 +108,10 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
     };
 
     // Формируем финальный массив для MonthTransactionsDataTable
+    const tc = await getTranslations("Categories")
     const categoriesData = Object.entries(categoryMap).map(([categoryName, currencies]) => ({
-      name: categoryName,
+      name: tc.has(`${categoryName}.name`) ? tc(`${categoryName}.name`) : categoryName,
+      description: tc.has(`${categoryName}.description`) ? tc(`${categoryName}.description`) : undefined,
       amount: formatCurrencyDict(currencies) // Здесь будет строка с переносами, если валют несколько
     }));
 
@@ -122,7 +126,7 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
       <div className="flex flex-col gap-4">
         <SectionCards texts={texts} values={summary}/>
         {/* Теперь data содержит массив объектов { name, amount } */}
-        <MonthTransactionsDataTable data={categoriesData} />
+        <MonthTransactionsDataTable data={categoriesData} translations={{ category: td("category"), amount: td("amount"), noResults: td("noResults"), loading: td("loading") }} />
       </div>
     )
   } else {

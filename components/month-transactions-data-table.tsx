@@ -92,12 +92,25 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 import { GripVerticalIcon, CircleCheckIcon, LoaderIcon, EllipsisVerticalIcon, Columns3Icon, ChevronDownIcon, PlusIcon, ChevronsLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronsRightIcon, TrendingUpIcon } from "lucide-react"
 
 export const schema = z.object({
   name: z.string(),
+  description: z.string().optional(),
   amount: z.string(),
 })
+
+export interface TableTranslations {
+  category: string
+  amount: string
+  noResults: string
+  loading: string
+}
 
 // Create a separate component for the drag handle
 function DragHandle({ id }: { id: string }) {
@@ -119,50 +132,39 @@ function DragHandle({ id }: { id: string }) {
   )
 }
 
-const columns: ColumnDef<z.infer<typeof schema>>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <div className="flex items-center justify-center">
-        {/* <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        /> */}
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-center">
-        {/* <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        /> */}
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "header",
-    header: "Category",
-    cell: ({ row }) => {
-      return <TableCellViewer item={row.original} />
+function getColumns(translations?: TableTranslations): ColumnDef<z.infer<typeof schema>>[] {
+  return [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <div className="flex items-center justify-center">
+        </div>
+      ),
+      cell: ({ row }) => (
+        <div className="flex items-center justify-center">
+        </div>
+      ),
+      enableSorting: false,
+      enableHiding: false,
     },
-    enableHiding: false,
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
-    cell: ({ row }) => {
-      return <div className="whitespace-pre-line">{row.original.amount}</div>
+    {
+      accessorKey: "header",
+      header: translations?.category ?? "Category",
+      cell: ({ row }) => {
+        return <TableCellViewer item={row.original} />
+      },
+      enableHiding: false,
     },
-    enableHiding: false,
-  },
-]
+    {
+      accessorKey: "amount",
+      header: translations?.amount ?? "Amount",
+      cell: ({ row }) => {
+        return <div className="whitespace-pre-line">{row.original.amount}</div>
+      },
+      enableHiding: false,
+    },
+  ]
+}
 
 function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
@@ -190,7 +192,8 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
 }
 
 
-export function MonthTransactionsDataTableSkeleton() {
+export function MonthTransactionsDataTableSkeleton({ translations }: { translations?: TableTranslations } = {}) {
+  const columns = React.useMemo(() => getColumns(translations), [translations])
   const [data, setData] = React.useState(() => [])
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -303,7 +306,7 @@ export function MonthTransactionsDataTableSkeleton() {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      Loading...
+                      {translations?.loading ?? "Loading..."}
                     </TableCell>
                   </TableRow>
                 )}
@@ -333,9 +336,12 @@ export function MonthTransactionsDataTableSkeleton() {
 
 export function MonthTransactionsDataTable({
   data: initialData,
+  translations,
 }: {
   data: z.infer<typeof schema>[]
+  translations?: TableTranslations
 }) {
+  const columns = React.useMemo(() => getColumns(translations), [translations])
   const [data, setData] = React.useState(() => initialData)
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -348,6 +354,12 @@ export function MonthTransactionsDataTable({
     pageIndex: 0,
     pageSize: 10,
   })
+
+  // Sync data when initialData changes (e.g. after locale switch)
+  React.useEffect(() => {
+    setData(initialData)
+  }, [initialData])
+
   const sortableId = React.useId()
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
@@ -448,7 +460,7 @@ export function MonthTransactionsDataTable({
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {translations?.noResults ?? "No results."}
                     </TableCell>
                   </TableRow>
                 )}
@@ -497,11 +509,25 @@ const chartConfig = {
 } satisfies ChartConfig
 
 function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
-  const isMobile = useIsMobile()
+  if (!item.description) {
+    return (
+      <span className="text-start text-foreground">
+        {item.name}
+      </span>
+    )
+  }
 
   return (
-    <Button variant="link" className="w-fit px-0 text-start text-foreground">
-      {item.name}
-    </Button>
+    <HoverCard openDelay={10} closeDelay={100}>
+      <HoverCardTrigger asChild>
+        <Button variant="link" className="w-fit px-0 text-start text-foreground">
+          {item.name}
+        </Button>
+      </HoverCardTrigger>
+      <HoverCardContent className="flex w-64 flex-col gap-0.5">
+        <div className="font-semibold">{item.name}</div>
+        <div className="text-sm text-muted-foreground">{item.description}</div>
+      </HoverCardContent>
+    </HoverCard>
   )
 }
