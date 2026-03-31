@@ -217,6 +217,15 @@ async function AsyncAppSidebar() {
   return <AppSidebar variant="inset" user={sidebarUser} direction={direction} />
 }
 
+async function AsyncChartAreaInteractive() {
+  const supabase = await createClient()
+  const { data: items, error } = await supabase.from('transaction_items')
+    .select()
+    .order('executed_at', { ascending: false })
+  if (!items) return <div>Empty</div>
+  return <ChartAreaInteractive items={items}/>
+}
+
 export default function Page() {
   const currentDate = new Date()
   const { start, end } = getMonthRange(currentDate);
@@ -270,7 +279,9 @@ export default function Page() {
               </Suspense>
               
               <div className="px-4 lg:px-6">
-                <ChartAreaInteractive />
+                <Suspense fallback={<div>Loading charts</div>}>
+                  <AsyncChartAreaInteractive/>
+                </Suspense>
               </div>
               <Suspense fallback={<AllTransactionsDataTableSkeleton />}>
                 <AsyncDataTable/>

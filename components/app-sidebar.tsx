@@ -200,7 +200,7 @@ export function AppSidebar({ user, direction = "ltr", ...props }: AppSidebarProp
               asChild
               className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
-              <a href="#">
+              <a href="/">
                 <CommandIcon className="size-5!" />
                 <span className="text-base font-semibold">Budget by Unitcore</span>
               </a>
