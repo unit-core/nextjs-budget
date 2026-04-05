@@ -205,7 +205,6 @@ export default function TransactionForm({
   }
 
   return (
-    <ScrollArea>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {/* Transaction name */}
         <div className="grid gap-1.5">
@@ -222,26 +221,24 @@ export default function TransactionForm({
         {/* Type + Date row */}
         {/* <div className="grid grid-cols-2 gap-3"> */}
             <div className="grid gap-1.5">
-            <Label>{t('type')}</Label>
-            <Select value={transactionType} onValueChange={setTransactionType}>
-                <SelectTrigger className="w-full">
-                <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                <SelectItem value="EXPENSE">{t('expense')}</SelectItem>
-                <SelectItem value="INCOME">{t('income')}</SelectItem>
-                </SelectContent>
-            </Select>
-            </div>
-            <div className="grid gap-1.5">
-            <Label htmlFor="tx-date">{t('date')}</Label>
-            <Input
-                id="tx-date"
-                type="datetime-local"
-                required
-                value={executedAt}
-                onChange={(e) => setExecutedAt(e.target.value)}
-            />
+                <Label>{t('type')}</Label>
+                <Select value={transactionType} onValueChange={setTransactionType}>
+                    <SelectTrigger className="w-full">
+                    <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                    <SelectItem value="EXPENSE">{t('expense')}</SelectItem>
+                    <SelectItem value="INCOME">{t('income')}</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Label htmlFor="tx-date">{t('date')}</Label>
+                <Input
+                    id="tx-date"
+                    type="datetime-local"
+                    required
+                    value={executedAt}
+                    onChange={(e) => setExecutedAt(e.target.value)}
+                />
             </div>
         {/* </div> */}
 
@@ -338,6 +335,5 @@ export default function TransactionForm({
             }
         </Button>
         </form>
-    </ScrollArea>
   )
 }
