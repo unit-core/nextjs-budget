@@ -119,7 +119,7 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
         </SidebarMenuButton>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="mx-auto w-full">
+        <div className="mx-auto w-full overflow-y-auto">
           <DrawerHeader>
             <DrawerTitle>Create Transactions</DrawerTitle>
             <DrawerDescription>Upload your receipts or describe expenses in your own words.</DrawerDescription>

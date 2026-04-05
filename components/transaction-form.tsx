@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
+import { ScrollArea } from './ui/scroll-area'
 
 const CATEGORIES = [
   'RENT', 'MORTGAGE', 'UTILITIES', 'INTERNET', 'HOUSEHOLD',
@@ -204,137 +205,139 @@ export default function TransactionForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      {/* Transaction name */}
-      <div className="grid gap-1.5">
-        <Label htmlFor="tx-name">{t('name')}</Label>
-        <Input
-          id="tx-name"
-          placeholder={t('namePlaceholder')}
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-
-      {/* Type + Date row */}
-      {/* <div className="grid grid-cols-2 gap-3"> */}
+    <ScrollArea>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {/* Transaction name */}
         <div className="grid gap-1.5">
-          <Label>{t('type')}</Label>
-          <Select value={transactionType} onValueChange={setTransactionType}>
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="EXPENSE">{t('expense')}</SelectItem>
-              <SelectItem value="INCOME">{t('income')}</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="grid gap-1.5">
-          <Label htmlFor="tx-date">{t('date')}</Label>
-          <Input
-            id="tx-date"
-            type="datetime-local"
+            <Label htmlFor="tx-name">{t('name')}</Label>
+            <Input
+            id="tx-name"
+            placeholder={t('namePlaceholder')}
             required
-            value={executedAt}
-            onChange={(e) => setExecutedAt(e.target.value)}
-          />
-        </div>
-      {/* </div> */}
-
-      {/* Items */}
-      <div className="grid gap-2">
-        <div className="flex items-center justify-between">
-          <Label>{t('items')}</Label>
-          <Button type="button" variant="ghost" size="sm" onClick={addItem}>
-            <PlusIcon className="size-4" />
-            {t('addItem')}
-          </Button>
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            />
         </div>
 
-        {items.map((item, index) => (
-          <div key={index} className="grid gap-2 rounded-lg border p-3">
+        {/* Type + Date row */}
+        {/* <div className="grid grid-cols-2 gap-3"> */}
             <div className="grid gap-1.5">
-              <Input
-                placeholder={t('itemNamePlaceholder')}
-                required
-                value={item.name}
-                onChange={(e) => updateItem(index, 'name', e.target.value)}
-              />
-            <Select
-                value={item.category}
-                onValueChange={(v) => updateItem(index, 'category', v)}
-            >
+            <Label>{t('type')}</Label>
+            <Select value={transactionType} onValueChange={setTransactionType}>
                 <SelectTrigger className="w-full">
-                    <SelectValue>
-                    {/* This renders only the name in the trigger when a value is selected */}
-                    {item.category ? tc(`${item.category}.name`) : tc('placeholder_text')}
-                    </SelectValue>
+                <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                    {CATEGORIES.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                        <div className="flex flex-col items-start p-2">
-                            <span className="font-semibold">{tc(`${cat}.name`)}</span>
-                            <span className="text-xs text-muted-foreground">{tc(`${cat}.description`)}</span>
-                        </div>
-                    </SelectItem>
-                    ))}
+                <SelectItem value="EXPENSE">{t('expense')}</SelectItem>
+                <SelectItem value="INCOME">{t('income')}</SelectItem>
                 </SelectContent>
             </Select>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              <Input
-                type="number"
-                step="0.01"
-                min="0"
-                placeholder="0.00"
+            <div className="grid gap-1.5">
+            <Label htmlFor="tx-date">{t('date')}</Label>
+            <Input
+                id="tx-date"
+                type="datetime-local"
                 required
-                value={item.amount}
-                onChange={(e) => updateItem(index, 'amount', e.target.value)}
-              />
-              <Select
-                value={item.currency_code}
-                onValueChange={(v) => updateItem(index, 'currency_code', v)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {CURRENCIES.map((c) => (
-                    <SelectItem key={c} value={c}>{c}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                value={executedAt}
+                onChange={(e) => setExecutedAt(e.target.value)}
+            />
             </div>
-            {items.length > 1 && (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="w-fit text-destructive"
-                onClick={() => removeItem(index)}
-              >
-                <TrashIcon className="size-3.5" />
-                {t('removeItem')}
-              </Button>
-            )}
-          </div>
-        ))}
-      </div>
+        {/* </div> */}
 
-      {error && <p className="text-sm text-destructive">{error}</p>}
+        {/* Items */}
+        <div className="grid gap-2">
+            <div className="flex items-center justify-between">
+            <Label>{t('items')}</Label>
+            <Button type="button" variant="ghost" size="sm" onClick={addItem}>
+                <PlusIcon className="size-4" />
+                {t('addItem')}
+            </Button>
+            </div>
 
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? <Spinner /> : null}
-        {isLoading
-          ? t('saving')
-          : isEdit
-            ? t('update')
-            : t('create')
-        }
-      </Button>
-    </form>
+            {items.map((item, index) => (
+            <div key={index} className="grid gap-2 rounded-lg border p-3">
+                <div className="grid gap-1.5">
+                <Input
+                    placeholder={t('itemNamePlaceholder')}
+                    required
+                    value={item.name}
+                    onChange={(e) => updateItem(index, 'name', e.target.value)}
+                />
+                <Select
+                    value={item.category}
+                    onValueChange={(v) => updateItem(index, 'category', v)}
+                >
+                    <SelectTrigger className="w-full">
+                        <SelectValue>
+                        {/* This renders only the name in the trigger when a value is selected */}
+                        {item.category ? tc(`${item.category}.name`) : tc('placeholder_text')}
+                        </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                        {CATEGORIES.map((cat) => (
+                        <SelectItem key={cat} value={cat}>
+                            <div className="flex flex-col items-start p-2">
+                                <span className="font-semibold">{tc(`${cat}.name`)}</span>
+                                <span className="text-xs text-muted-foreground">{tc(`${cat}.description`)}</span>
+                            </div>
+                        </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                <Input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="0.00"
+                    required
+                    value={item.amount}
+                    onChange={(e) => updateItem(index, 'amount', e.target.value)}
+                />
+                <Select
+                    value={item.currency_code}
+                    onValueChange={(v) => updateItem(index, 'currency_code', v)}
+                >
+                    <SelectTrigger className="w-full">
+                    <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                    {CURRENCIES.map((c) => (
+                        <SelectItem key={c} value={c}>{c}</SelectItem>
+                    ))}
+                    </SelectContent>
+                </Select>
+                </div>
+                {items.length > 1 && (
+                <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="w-fit text-destructive"
+                    onClick={() => removeItem(index)}
+                >
+                    <TrashIcon className="size-3.5" />
+                    {t('removeItem')}
+                </Button>
+                )}
+            </div>
+            ))}
+        </div>
+
+        {error && <p className="text-sm text-destructive">{error}</p>}
+
+        <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? <Spinner /> : null}
+            {isLoading
+            ? t('saving')
+            : isEdit
+                ? t('update')
+                : t('create')
+            }
+        </Button>
+        </form>
+    </ScrollArea>
   )
 }
