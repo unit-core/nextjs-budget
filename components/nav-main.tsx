@@ -138,7 +138,7 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
                 <InputGroupCustom />
               </TabsContent>
               <TabsContent value="manual">
-                {/* <InputGroupCustom /> */}
+                <TransactionForm />
               </TabsContent>
             </Tabs>
           </div>
@@ -150,6 +150,7 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
 import { useState } from 'react'
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useDirection } from "@/hooks/use-direction"
+import TransactionForm from "./transaction-form"
 
 function InputGroupCustom() {
   // 1. Создаем состояние для текста

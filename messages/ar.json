@@ -113,5 +113,22 @@
     "emailCommentingDesc": "وصف تجريبي لميزة التعليق على البريد الإلكتروني يوضح كيفية عمل الترجمة.",
     "customerConnections": "اتصالات العملاء",
     "customerConnectionsDesc": "وصف تجريبي لميزة اتصالات العملاء يوضح كيفية عمل الترجمة."
+  },
+  "TransactionForm": {
+    "name": "اسم المعاملة",
+    "namePlaceholder": "مثال: مشتريات الأسبوع",
+    "type": "النوع",
+    "expense": "مصروف",
+    "income": "دخل",
+    "date": "التاريخ",
+    "items": "العناصر",
+    "addItem": "إضافة عنصر",
+    "removeItem": "حذف",
+    "itemNamePlaceholder": "اسم العنصر",
+    "saving": "جارٍ الحفظ...",
+    "create": "إنشاء معاملة",
+    "update": "تحديث المعاملة",
+    "transactionCreated": "تم إنشاء المعاملة",
+    "transactionUpdated": "تم تحديث المعاملة"
   }
 }

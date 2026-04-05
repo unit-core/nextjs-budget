@@ -113,5 +113,22 @@
     "emailCommentingDesc": "Commodi quam quo. In quasi mollitia optio voluptate et est reiciendis. Ut et sunt id officiis vitae perspiciatis.",
     "customerConnections": "Customer connections",
     "customerConnectionsDesc": "Deserunt corrupti praesentium quo vel cupiditate est occaecati ad. Aperiam libero modi similique iure praesentium facilis."
+  },
+  "TransactionForm": {
+    "name": "Transaction Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "date": "Date",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Transaction",
+    "update": "Update Transaction",
+    "transactionCreated": "Transaction created",
+    "transactionUpdated": "Transaction updated"
   }
 }
