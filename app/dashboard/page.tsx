@@ -60,15 +60,18 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
     .order('executed_at', { ascending: false })
     .gte('executed_at', start.toISOString())
     .lt('executed_at', end.toISOString())
-    
+    .eq('status', 'CONFIRMED')
+
   if (transactions) {
     const todayDateString = new Date().toDateString();
 
     const monthTotals: Record<string, number> = {};
     const todayTotals: Record<string, number> = {};
     
-    // Структура: { "Food": { "EUR": 100, "USD": 50 }, "Transport": { "EUR": 20 } }
-    const categoryMap: Record<string, Record<string, number>> = {}; 
+    const categoryMap: Record<string, Record<string, number>> = {};
+    // Track transactions per category: key is "category::transactionId"
+    const categoryTxTotals: Record<string, Record<string, Record<string, number>>> = {};
+    const categoryTxMeta: Record<string, Record<string, { name: string; executed_at: string }>> = {};
     let itemsCount = 0;
 
     transactions.forEach((transaction) => {
@@ -81,17 +84,33 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
         const amount = item.amount || 0;
         const category = item.category || 'Other';
 
-        // Итоги для карточек (верхний уровень)
         monthTotals[currency] = (monthTotals[currency] || 0) + amount;
         if (isToday) {
           todayTotals[currency] = (todayTotals[currency] || 0) + amount;
         }
 
-        // Группировка для таблицы по категориям и валютам
         if (!categoryMap[category]) {
           categoryMap[category] = {};
         }
         categoryMap[category][currency] = (categoryMap[category][currency] || 0) + amount;
+
+        // Group by transaction within each category
+        if (!categoryTxTotals[category]) {
+          categoryTxTotals[category] = {};
+          categoryTxMeta[category] = {};
+        }
+        if (!categoryTxTotals[category][transaction.id]) {
+          categoryTxTotals[category][transaction.id] = {};
+          categoryTxMeta[category][transaction.id] = {
+            name: transaction.name || '-',
+            executed_at: new Date(transaction.executed_at).toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+            }),
+          };
+        }
+        categoryTxTotals[category][transaction.id][currency] =
+          (categoryTxTotals[category][transaction.id][currency] || 0) + amount;
       });
     });
 
@@ -109,11 +128,19 @@ async function AsyncSectionCards({texts}: { texts: DateTexts }) {
 
     // Формируем финальный массив для MonthTransactionsDataTable
     const tc = await getTranslations("Categories")
-    const categoriesData = Object.entries(categoryMap).map(([categoryName, currencies]) => ({
-      name: tc.has(`${categoryName}.name`) ? tc(`${categoryName}.name`) : categoryName,
-      description: tc.has(`${categoryName}.description`) ? tc(`${categoryName}.description`) : undefined,
-      amount: formatCurrencyDict(currencies) // Здесь будет строка с переносами, если валют несколько
-    }));
+    const categoriesData = Object.entries(categoryMap).map(([categoryName, currencies]) => {
+      const txs = categoryTxTotals[categoryName] || {};
+      const meta = categoryTxMeta[categoryName] || {};
+      return {
+        name: tc.has(`${categoryName}.name`) ? tc(`${categoryName}.name`) : categoryName,
+        description: tc.has(`${categoryName}.description`) ? tc(`${categoryName}.description`) : undefined,
+        amount: formatCurrencyDict(currencies),
+        transactions: Object.entries(txs).map(([txId, totals]) => ({
+          name: meta[txId]?.name || '-',
+          amount: formatCurrencyDict(totals),
+        })),
+      };
+    });
 
     const summary = {
       today: formatCurrencyDict(todayTotals),
@@ -155,34 +182,28 @@ async function AsyncDataTable() {
     `)
     .order('executed_at', { ascending: false })
   if (transactions) {
-    const transactionsArray: z.infer<typeof schema>[] = transactions.map((element) => {
+    const mapTransaction = (element: typeof transactions[number]): z.infer<typeof schema> => {
       const executedAt = new Date(element.executed_at)
       const executedAtString = executedAt.toLocaleDateString(undefined, {
         year: "numeric",
         month: "long",
         day: "numeric",
       })
-      // 2. Считаем сумму по каждой валюте
-      // Получаем объект вида: { 'EUR': 120, 'USD': 50 }
       const totalsByCurrency = element.transaction_items.reduce((acc: Record<string, number>, item) => {
-        // Если currency_code почему-то пустой, задаем фолбэк (например 'EUR')
         const currency = item.currency_code || 'EUR';
         acc[currency] = (acc[currency] || 0) + (item.amount || 0);
           return acc;
       }, {});
-      // 3. Превращаем объект с суммами в отформатированную строку
-      // Если массив пустой, выводим прочерк или "0"
-      const totalAmountString = Object.keys(totalsByCurrency).length === 0 
-        ? "—" 
+      const totalAmountString = Object.keys(totalsByCurrency).length === 0
+        ? "—"
         : Object.entries(totalsByCurrency)
             .map(([currency, amount]) => {
-              // Используем Intl.NumberFormat для красивого отображения (со значками валют и пробелами)
-              return new Intl.NumberFormat(undefined, { 
-                style: 'currency', 
-                currency: currency 
+              return new Intl.NumberFormat(undefined, {
+                style: 'currency',
+                currency: currency
               }).format(amount);
             })
-            .join('\n'); // Если валют несколько, соединяем их плюсом (или запятой: ', ')
+            .join('\n');
       return {
         id: element.id,
         name: element.name.length > 0 ? element.name : '-',
@@ -191,9 +212,17 @@ async function AsyncDataTable() {
         executed_at: executedAtString,
         amount: totalAmountString
       }
-    })
+    }
+
+    const pendingData = transactions
+      .filter(t => t.status !== 'CONFIRMED')
+      .map(mapTransaction)
+    const completedData = transactions
+      .filter(t => t.status === 'CONFIRMED')
+      .map(mapTransaction)
+
     return (
-      <AllTransactionsDataTable data={transactionsArray} />
+      <AllTransactionsDataTable data={completedData} pendingData={pendingData} />
     )
   } else {
     return (
@@ -219,10 +248,18 @@ async function AsyncAppSidebar() {
 
 async function AsyncChartAreaInteractive() {
   const supabase = await createClient()
-  const { data: items, error } = await supabase.from('transaction_items')
-    .select()
+  const { data: transactions, error } = await supabase.from('transactions')
+    .select(`
+      transaction_items (
+        executed_at,
+        currency_code,
+        amount
+      )
+    `)
+    .eq('status', 'CONFIRMED')
     .order('executed_at', { ascending: false })
-  if (!items) return <div>Empty</div>
+  if (!transactions) return <div>Empty</div>
+  const items = transactions.flatMap((t) => t.transaction_items)
   return <ChartAreaInteractive items={items}/>
 }
 

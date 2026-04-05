@@ -93,10 +93,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { GripVerticalIcon, CircleCheckIcon, LoaderIcon, EllipsisVerticalIcon, Columns3Icon, ChevronDownIcon, PlusIcon, ChevronsLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronsRightIcon, TrendingUpIcon } from "lucide-react"
+import { GripVerticalIcon, CircleCheckIcon, LoaderIcon, EllipsisVerticalIcon, Columns3Icon, ChevronDownIcon, PlusIcon, ChevronsLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronsRightIcon, TrendingUpIcon, CheckIcon, TrashIcon } from "lucide-react"
 import { createClient } from '@/lib/supabase/client'
 import { Spinner } from "@/components/ui/spinner"
 import TransactionForm from "@/components/transaction-form"
+import { useRouter } from "next/navigation"
 
 export const schema = z.object({
   id: z.string(),
@@ -154,32 +155,27 @@ function DragHandle({ id }: { id: string }) {
 }
 
 const columns: ColumnDef<z.infer<typeof schema>>[] = [
-  // {
-  //   id: "drag",
-  //   header: () => null,
-  //   cell: ({ row }) => <DragHandle id={row.original.id} />,
-  // },
   {
     id: "select",
     header: ({ table }) => (
       <div className="flex items-center justify-center">
-        {/* <Checkbox
+        <Checkbox
           checked={
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-        /> */}
+        />
       </div>
     ),
     cell: ({ row }) => (
       <div className="flex items-center justify-center">
-        {/* <Checkbox
+        <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-        /> */}
+        />
       </div>
     ),
     enableSorting: false,
@@ -193,57 +189,6 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     },
     enableHiding: false,
   },
-  {
-    accessorKey: "type",
-    header: "Type",
-    cell: ({ row }) => (
-      <div className="w-32">
-        <Badge variant="outline" className="px-1.5 text-muted-foreground">
-          {row.original.transaction_type}
-        </Badge>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <Badge variant="outline" className="px-1.5 text-muted-foreground">
-        {row.original.status === "Done" ? (
-          <CircleCheckIcon className="fill-green-500 dark:fill-green-400" />
-        ) : (
-          <LoaderIcon
-          />
-        )}
-        {row.original.status}
-      </Badge>
-    ),
-  },
-  // {
-  //   accessorKey: "target",
-  //   header: () => <div className="w-full text-end">Target</div>,
-  //   cell: ({ row }) => (
-  //     <form
-  //       onSubmit={(e) => {
-  //         e.preventDefault()
-  //         toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-  //           loading: `Saving ${row.original.name}`,
-  //           success: "Done",
-  //           error: "Error",
-  //         })
-  //       }}
-  //     >
-  //       <Label htmlFor={`${row.original.id}-target`} className="sr-only">
-  //         Target
-  //       </Label>
-  //       <Input
-  //         className="h-8 w-16 border-transparent bg-transparent text-end shadow-none hover:bg-input/30 focus-visible:border focus-visible:bg-background dark:bg-transparent dark:hover:bg-input/30 dark:focus-visible:bg-input/30"
-  //         defaultValue={row.original.name}
-  //         id={`${row.original.id}-target`}
-  //       />
-  //     </form>
-  //   ),
-  // },
   {
     accessorKey: "executed at",
     header: "Executed at",
@@ -260,42 +205,6 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     },
     enableHiding: true,
   },
-  // {
-  //   accessorKey: "reviewer",
-  //   header: "Reviewer",
-  //   cell: ({ row }) => {
-  //     const isAssigned = row.original.name !== "Assign reviewer"
-
-  //     if (isAssigned) {
-  //       return row.original.name
-  //     }
-
-  //     return (
-  //       <>
-  //         <Label htmlFor={`${row.original.id}-reviewer`} className="sr-only">
-  //           Reviewer
-  //         </Label>
-  //         <Select>
-  //           <SelectTrigger
-  //             className="w-38 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
-  //             size="sm"
-  //             id={`${row.original.id}-reviewer`}
-  //           >
-  //             <SelectValue placeholder="Assign reviewer" />
-  //           </SelectTrigger>
-  //           <SelectContent align="end">
-  //             <SelectGroup>
-  //               <SelectItem value="Eddie Lake">Eddie Lake</SelectItem>
-  //               <SelectItem value="Jamik Tashpulatov">
-  //                 Jamik Tashpulatov
-  //               </SelectItem>
-  //             </SelectGroup>
-  //           </SelectContent>
-  //         </Select>
-  //       </>
-  //     )
-  //   },
-  // },
   {
     id: "actions",
     cell: ({ row, table }) => {
@@ -321,16 +230,11 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
               className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
               size="icon"
             >
-              <EllipsisVerticalIcon
-              />
+              <EllipsisVerticalIcon />
               <span className="sr-only">Open menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-32">
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Make a copy</DropdownMenuItem>
-            <DropdownMenuItem>Favorite</DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive" onClick={() => deleteTransaction()}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -364,6 +268,214 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   )
 }
 
+
+const pendingColumns: ColumnDef<z.infer<typeof schema>>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <div className="flex items-center justify-center">
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      </div>
+    ),
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        {row.getCanSelect() && (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        )}
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "header",
+    header: "Header",
+    cell: ({ row }) => {
+      return <TableCellViewer item={row.original} />
+    },
+    enableHiding: false,
+  },
+  {
+    accessorKey: "type",
+    header: "Type",
+    cell: ({ row }) => (
+      <div className="w-32">
+        <Badge variant="outline" className="px-1.5 text-muted-foreground">
+          {row.original.transaction_type}
+        </Badge>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <Badge variant="outline" className="px-1.5 text-muted-foreground">
+        <LoaderIcon />
+        {row.original.status}
+      </Badge>
+    ),
+  },
+  {
+    accessorKey: "executed at",
+    header: "Executed at",
+    cell: ({ row }) => <div>{row.original.executed_at}</div>,
+    enableHiding: true,
+  },
+  {
+    accessorKey: "amount",
+    header: "Amount",
+    cell: ({ row }) => <div className="whitespace-pre-line">{row.original.amount}</div>,
+    enableHiding: true,
+  },
+]
+
+function PendingTransactionsTable({
+  data: initialData,
+}: {
+  data: z.infer<typeof schema>[]
+}) {
+  const [data, setData] = React.useState(() => initialData)
+  const [rowSelection, setRowSelection] = React.useState({})
+  const [isConfirming, setIsConfirming] = React.useState(false)
+  const router = useRouter()
+
+  React.useEffect(() => {
+    setData(initialData)
+  }, [initialData])
+
+  const table = useReactTable({
+    data,
+    columns: pendingColumns,
+    state: {
+      rowSelection,
+    },
+    getRowId: (row) => row.id.toString(),
+    enableRowSelection: (row) => row.original.status === 'PENDING',
+    onRowSelectionChange: setRowSelection,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  })
+
+  const selectedCount = table.getFilteredSelectedRowModel().rows.length
+
+  const [isDeleting, setIsDeleting] = React.useState(false)
+
+  const getSelectedIds = () =>
+    table.getFilteredSelectedRowModel().rows.map((row) => row.original.id)
+
+  const confirmSelected = async () => {
+    const selectedIds = getSelectedIds()
+    if (selectedIds.length === 0) return
+
+    setIsConfirming(true)
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('transactions')
+      .update({ status: 'CONFIRMED' })
+      .in('id', selectedIds)
+
+    if (!error) {
+      setData((prev) => prev.filter((row) => !selectedIds.includes(row.id)))
+      setRowSelection({})
+      toast("Transactions confirmed", {
+        position: 'top-center',
+        description: `${selectedIds.length} transaction(s) marked as confirmed`,
+      })
+      router.refresh()
+    }
+    setIsConfirming(false)
+  }
+
+  const deleteSelected = async () => {
+    const selectedIds = getSelectedIds()
+    if (selectedIds.length === 0) return
+
+    setIsDeleting(true)
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('transactions')
+      .delete()
+      .in('id', selectedIds)
+
+    if (!error) {
+      setData((prev) => prev.filter((row) => !selectedIds.includes(row.id)))
+      setRowSelection({})
+      toast("Transactions deleted", {
+        position: 'top-center',
+        description: `${selectedIds.length} transaction(s) deleted`,
+      })
+      router.refresh()
+    }
+    setIsDeleting(false)
+  }
+
+  if (data.length === 0) return null
+
+  const isBusy = isConfirming || isDeleting
+
+  return (
+    <div className="flex flex-col gap-4 px-4 lg:px-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-medium">Pending Transactions</h3>
+          <Badge variant="secondary">{data.length}</Badge>
+        </div>
+        {selectedCount > 0 && (
+          <div className="flex items-center gap-2">
+            <Button size="sm" onClick={confirmSelected} disabled={isBusy}>
+              {isConfirming ? <Spinner /> : <CheckIcon className="size-4" />}
+              Confirm {selectedCount}
+            </Button>
+            <Button size="sm" variant="destructive" onClick={deleteSelected} disabled={isBusy}>
+              {isDeleting ? <Spinner /> : <TrashIcon className="size-4" />}
+              Delete {selectedCount}
+            </Button>
+          </div>
+        )}
+      </div>
+      <div className="overflow-hidden rounded-lg border">
+        <Table>
+          <TableHeader className="sticky top-0 z-10 bg-muted">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody className="**:data-[slot=table-cell]:first:w-8">
+            {table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  )
+}
 
 export function AllTransactionsDataTableSkeleton() {
   const [data, setData] = React.useState(() => [])
@@ -648,8 +760,10 @@ export function AllTransactionsDataTableSkeleton() {
 
 export function AllTransactionsDataTable({
   data: initialData,
+  pendingData = [],
 }: {
   data: z.infer<typeof schema>[]
+  pendingData?: z.infer<typeof schema>[]
 }) {
   const [data, setData] = React.useState(() => initialData)
   const [rowSelection, setRowSelection] = React.useState({})
@@ -663,6 +777,8 @@ export function AllTransactionsDataTable({
     pageIndex: 0,
     pageSize: 10,
   })
+  const [isDeletingSelected, setIsDeletingSelected] = React.useState(false)
+  const router = useRouter()
 
   // Sync data when initialData changes (e.g. after locale switch)
   React.useEffect(() => {
@@ -711,6 +827,31 @@ export function AllTransactionsDataTable({
     },
   })
 
+  const selectedCount = table.getFilteredSelectedRowModel().rows.length
+
+  const deleteSelected = async () => {
+    const selectedIds = table.getFilteredSelectedRowModel().rows.map((row) => row.original.id)
+    if (selectedIds.length === 0) return
+
+    setIsDeletingSelected(true)
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('transactions')
+      .delete()
+      .in('id', selectedIds)
+
+    if (!error) {
+      setData((prev) => prev.filter((row) => !selectedIds.includes(row.id)))
+      setRowSelection({})
+      toast("Transactions deleted", {
+        position: 'top-center',
+        description: `${selectedIds.length} transaction(s) deleted`,
+      })
+      router.refresh()
+    }
+    setIsDeletingSelected(false)
+  }
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     if (active && over && active.id !== over.id) {
@@ -723,6 +864,8 @@ export function AllTransactionsDataTable({
   }
 
   return (
+    <>
+    <PendingTransactionsTable data={pendingData} />
     <Tabs
       defaultValue="outline"
       className="w-full flex-col justify-start gap-6"
@@ -781,7 +924,12 @@ export function AllTransactionsDataTable({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* <AddTransactionButton /> */}
+          {selectedCount > 0 && (
+            <Button size="sm" variant="destructive" onClick={deleteSelected} disabled={isDeletingSelected}>
+              {isDeletingSelected ? <Spinner /> : <TrashIcon className="size-4" />}
+              Delete {selectedCount}
+            </Button>
+          )}
         </div>
       </div>
       <TabsContent
@@ -939,6 +1087,7 @@ export function AllTransactionsDataTable({
         <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
       </TabsContent>
     </Tabs>
+    </>
   )
 }
 

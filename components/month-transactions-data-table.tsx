@@ -98,11 +98,18 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import { GripVerticalIcon, CircleCheckIcon, LoaderIcon, EllipsisVerticalIcon, Columns3Icon, ChevronDownIcon, PlusIcon, ChevronsLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronsRightIcon, TrendingUpIcon } from "lucide-react"
+import { useDirection } from "@/hooks/use-direction"
+
+const transactionItemSchema = z.object({
+  name: z.string(),
+  amount: z.string(),
+})
 
 export const schema = z.object({
   name: z.string(),
   description: z.string().optional(),
   amount: z.string(),
+  transactions: z.array(transactionItemSchema).optional(),
 })
 
 export interface TableTranslations {
@@ -509,7 +516,11 @@ const chartConfig = {
 } satisfies ChartConfig
 
 function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
-  if (!item.description) {
+  const isMobile = useIsMobile()
+  const direction = useDirection()
+  const transactions = item.transactions || []
+
+  if (transactions.length === 0) {
     return (
       <span className="text-start text-foreground">
         {item.name}
@@ -518,16 +529,38 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
   }
 
   return (
-    <HoverCard openDelay={10} closeDelay={100}>
-      <HoverCardTrigger asChild>
+    <Drawer direction={isMobile ? "bottom" : direction === "rtl" ? "left" : "right"}>
+      <DrawerTrigger asChild>
         <Button variant="link" className="w-fit px-0 text-start text-foreground">
           {item.name}
         </Button>
-      </HoverCardTrigger>
-      <HoverCardContent className="flex w-64 flex-col gap-0.5">
-        <div className="font-semibold">{item.name}</div>
-        <div className="text-sm text-muted-foreground">{item.description}</div>
-      </HoverCardContent>
-    </HoverCard>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>{item.name}</DrawerTitle>
+          {item.description && (
+            <DrawerDescription>{item.description}</DrawerDescription>
+          )}
+        </DrawerHeader>
+        <div className="overflow-y-auto px-4 pb-4">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead className="text-end">Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {transactions.map((tx, i) => (
+                <TableRow key={i}>
+                  <TableCell>{tx.name}</TableCell>
+                  <TableCell className="text-end whitespace-pre-line">{tx.amount}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </DrawerContent>
+    </Drawer>
   )
 }
