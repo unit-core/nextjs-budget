@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { PlusIcon, TrashIcon } from 'lucide-react'
+import { PlusIcon, TrashIcon, CalendarIcon } from 'lucide-react'
+import { format } from 'date-fns'
 
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -19,6 +20,13 @@ import {
 } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
 import { ScrollArea } from './ui/scroll-area'
+import { Calendar } from '@/components/ui/calendar'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
 
 const CATEGORIES = [
   'RENT', 'MORTGAGE', 'UTILITIES', 'INTERNET', 'HOUSEHOLD',
@@ -56,12 +64,6 @@ function defaultItem(): TransactionItem {
   return { name: '', amount: '', currency_code: 'EUR', category: 'UNKNOWN' }
 }
 
-function toDateInputValue(date: Date): string {
-  const offset = date.getTimezoneOffset()
-  const local = new Date(date.getTime() - offset * 60 * 1000)
-  return local.toISOString().slice(0, 16)
-}
-
 export default function TransactionForm({
   initialData,
   onSuccess,
@@ -76,10 +78,10 @@ export default function TransactionForm({
 
   const [name, setName] = useState(initialData?.name ?? '')
   const [transactionType, setTransactionType] = useState(initialData?.transaction_type ?? 'EXPENSE')
-  const [executedAt, setExecutedAt] = useState(
+  const [executedAt, setExecutedAt] = useState<Date>(
     initialData?.executed_at
-      ? toDateInputValue(new Date(initialData.executed_at))
-      : toDateInputValue(new Date())
+      ? new Date(initialData.executed_at)
+      : new Date()
   )
   const [items, setItems] = useState<TransactionItem[]>(
     initialData?.items?.length ? initialData.items : [defaultItem()]
@@ -115,7 +117,7 @@ export default function TransactionForm({
           .update({
             name,
             transaction_type: transactionType,
-            executed_at: new Date(executedAt).toISOString(),
+            executed_at: executedAt.toISOString(),
           })
           .eq('id', initialData!.id!)
 
@@ -142,7 +144,7 @@ export default function TransactionForm({
                   amount: parseFloat(item.amount) || 0,
                   currency_code: item.currency_code,
                   category: item.category,
-                  executed_at: new Date(executedAt).toISOString(),
+                  executed_at: executedAt.toISOString(),
                 }))
             )
           if (itemsError) throw itemsError
@@ -156,7 +158,7 @@ export default function TransactionForm({
           .insert({
             name,
             transaction_type: transactionType,
-            executed_at: new Date(executedAt).toISOString(),
+            executed_at: executedAt.toISOString(),
             status: 'CONFIRMED',
             source: null,
           })
@@ -178,7 +180,7 @@ export default function TransactionForm({
                   amount: parseFloat(item.amount) || 0,
                   currency_code: item.currency_code,
                   category: item.category,
-                  executed_at: new Date(executedAt).toISOString(),
+                  executed_at: executedAt.toISOString(),
                 }))
             )
           if (itemsError) throw itemsError
@@ -191,7 +193,7 @@ export default function TransactionForm({
       if (!isEdit) {
         setName('')
         setTransactionType('EXPENSE')
-        setExecutedAt(toDateInputValue(new Date()))
+        setExecutedAt(new Date())
         setItems([defaultItem()])
       }
 
@@ -231,14 +233,45 @@ export default function TransactionForm({
                     <SelectItem value="INCOME">{t('income')}</SelectItem>
                     </SelectContent>
                 </Select>
-                <Label htmlFor="tx-date">{t('date')}</Label>
-                <Input
-                    id="tx-date"
-                    type="datetime-local"
-                    required
-                    value={executedAt}
-                    onChange={(e) => setExecutedAt(e.target.value)}
-                />
+                <Label>{t('date')}</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-start font-normal",
+                        !executedAt && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="size-4" />
+                      {format(executedAt, "PPP p")}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={executedAt}
+                      onSelect={(day) => {
+                        if (!day) return
+                        const updated = new Date(day)
+                        updated.setHours(executedAt.getHours(), executedAt.getMinutes())
+                        setExecutedAt(updated)
+                      }}
+                    />
+                    <div className="border-t p-3">
+                      <Input
+                        type="time"
+                        value={format(executedAt, "HH:mm")}
+                        onChange={(e) => {
+                          const [h, m] = e.target.value.split(":").map(Number)
+                          const updated = new Date(executedAt)
+                          updated.setHours(h, m)
+                          setExecutedAt(updated)
+                        }}
+                      />
+                    </div>
+                  </PopoverContent>
+                </Popover>
             </div>
         {/* </div> */}
 
