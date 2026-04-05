@@ -156,8 +156,8 @@ export default function TransactionForm({
             name,
             transaction_type: transactionType,
             executed_at: new Date(executedAt).toISOString(),
-            status: 'Done',
-            source: { source_type: 'manual' },
+            status: 'CONFIRMED',
+            source: null,
           })
           .select('id, folder_id')
           .single()
@@ -262,19 +262,27 @@ export default function TransactionForm({
                 value={item.name}
                 onChange={(e) => updateItem(index, 'name', e.target.value)}
               />
-              <Select
+            <Select
                 value={item.category}
                 onValueChange={(v) => updateItem(index, 'category', v)}
-              >
+            >
                 <SelectTrigger className="w-full">
-                  <SelectValue />
+                    <SelectValue>
+                    {/* This renders only the name in the trigger when a value is selected */}
+                    {item.category ? tc(`${item.category}.name`) : tc('placeholder_text')}
+                    </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  {CATEGORIES.map((cat) => (
-                    <SelectItem key={cat} value={cat}>{tc(`${cat}.name`)}</SelectItem>
-                  ))}
+                    {CATEGORIES.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                        <div className="flex flex-col items-start p-2">
+                            <span className="font-semibold">{tc(`${cat}.name`)}</span>
+                            <span className="text-xs text-muted-foreground">{tc(`${cat}.description`)}</span>
+                        </div>
+                    </SelectItem>
+                    ))}
                 </SelectContent>
-              </Select>
+            </Select>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Input
