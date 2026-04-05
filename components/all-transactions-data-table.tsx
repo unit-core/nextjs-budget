@@ -485,7 +485,7 @@ export function AllTransactionsDataTableSkeleton() {
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <AddTransactionButton />
+          {/* <AddTransactionButton /> */}
         </div>
       </div>
       <TabsContent
@@ -781,7 +781,7 @@ export function AllTransactionsDataTable({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <AddTransactionButton />
+          {/* <AddTransactionButton /> */}
         </div>
       </div>
       <TabsContent
