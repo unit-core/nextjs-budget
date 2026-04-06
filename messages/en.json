@@ -93,26 +93,27 @@
     "errorUnspecified": "An unspecified error occurred."
   },
   "HomePage": {
-    "whatsNew": "What's new",
-    "justShipped": "Just shipped v1.0",
-    "title": "Deploy to the cloud with confidence",
-    "description": "Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat.",
-    "getStarted": "Get started",
-    "learnMore": "Learn more",
-    "featuresTitle": "Stay on top of customer support",
-    "boostTitle": "Boost your productivity today",
-    "boostDescription": "Incididunt sint fugiat pariatur cupidatat consectetur sit cillum anim id veniam aliqua proident excepteur commodo do ea.",
-    "copyright": "© 2024 Your Company, Inc. All rights reserved."
+    "whatsNew": "Free to use",
+    "justShipped": "Start tracking today",
+    "title": "Take control of your money",
+    "description": "Track every expense, monitor your income, and understand where your money goes. Simple budgeting that helps you save more and spend smarter.",
+    "getStarted": "Start for free",
+    "learnMore": "See how it works",
+    "featuresTitle": "Everything you need to manage your finances",
+    "boostTitle": "Stop guessing. Start budgeting.",
+    "boostDescription": "Join thousands of users who finally understand their spending habits. Create your free account in seconds and take the first step toward financial clarity.",
+    "alreadyHaveAccount": "Already have an account? Log in",
+    "copyright": "© 2026 Denis Popov. All rights reserved."
   },
   "Features": {
-    "spamReport": "Spam report",
-    "spamReportDesc": "Autem reprehenderit aut debitis ut. Officiis harum omnis placeat blanditiis delectus sint vel et voluptatum.",
-    "composeMarkdown": "Compose in markdown",
-    "composeMarkdownDesc": "Illum et aut inventore. Ut et dignissimos quasi. Omnis saepe dolorum. Hic autem fugiat. Voluptatem officiis necessitatibus.",
-    "emailCommenting": "Email commenting",
-    "emailCommentingDesc": "Commodi quam quo. In quasi mollitia optio voluptate et est reiciendis. Ut et sunt id officiis vitae perspiciatis.",
-    "customerConnections": "Customer connections",
-    "customerConnectionsDesc": "Deserunt corrupti praesentium quo vel cupiditate est occaecati ad. Aperiam libero modi similique iure praesentium facilis."
+    "expenseTracking": "Effortless expense tracking",
+    "expenseTrackingDesc": "Log your daily expenses in seconds. Categorize transactions across 40+ categories like groceries, rent, travel, and more.",
+    "smartAnalytics": "Smart analytics & charts",
+    "smartAnalyticsDesc": "Visualize your spending patterns with interactive charts. See daily, monthly, and category breakdowns at a glance.",
+    "multiCurrency": "Multi-currency support",
+    "multiCurrencyDesc": "Track expenses in EUR, USD, and other currencies. Perfect for travelers and expats managing money across borders.",
+    "secureData": "Secure & private",
+    "secureDataDesc": "Your financial data is encrypted and stored securely. We never share your information with third parties."
   },
   "TransactionForm": {
     "name": "Transaction Name",

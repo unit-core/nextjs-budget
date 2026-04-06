@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { LanguagePicker } from "@/components/language-picker"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
-import { ChatBubbleOvalLeftEllipsisIcon, HeartIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { ChartBarIcon, CurrencyDollarIcon, ShieldCheckIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 
 export default function Page() {
   return (
@@ -23,6 +23,7 @@ export default function Page() {
 
 function HeroSection() {
   const t = useTranslations("HomePage")
+  const locale = useLocale()
   return (
     <div className="relative isolate overflow-hidden bg-background">
       <svg
@@ -50,10 +51,10 @@ function HeroSection() {
               <span className="rounded-full bg-gray-50 px-3 py-1 text-sm/6 font-semibold text-primary ring-1 ring-gray-600/20 ring-inset dark:bg-gray-500/10 dark:ring-gray-500/25">
                 {t("whatsNew")}
               </span>
-              <span className="inline-flex items-center space-x-2 text-sm/6 font-medium text-gray-600 dark:text-gray-300">
+              {/* <span className="inline-flex items-center space-x-2 text-sm/6 font-medium text-gray-600 dark:text-gray-300">
                 <span>{t("justShipped")}</span>
                 <ChevronRightIcon aria-hidden="true" className="size-5 text-gray-400 dark:text-gray-500" />
-              </span>
+              </span> */}
             </a>
           </div>
           <h1 className="mt-10 text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
@@ -64,12 +65,12 @@ function HeroSection() {
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <a
-              href="/auth/login"
+              href="/auth/sign-up"
               className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-accent shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
             >
               {t("getStarted")}
             </a>
-            <a href="#" className="text-sm/6 font-semibold text-primary">
+            <a href="#features" className="text-sm/6 font-semibold text-primary">
               {t("learnMore")} <span aria-hidden="true">→</span>
             </a>
           </div>
@@ -78,18 +79,11 @@ function HeroSection() {
           <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
             <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-gray-900/10 ring-inset lg:-m-4 lg:rounded-2xl lg:p-4 dark:bg-white/2.5 dark:ring-white/10">
               <img
-                alt="App screenshot"
-                src="https://tailwindcss.com/plus-assets/img/component-images/project-app-screenshot.png"
+                alt="Budget Tracker Dashboard"
+                src={`/images/screenshots/project-app-screenshot-${locale}.png`}
                 width={2432}
                 height={1442}
-                className="w-304 rounded-md bg-gray-50 shadow-xl ring-1 ring-gray-900/10 dark:hidden"
-              />
-              <img
-                alt="App screenshot"
-                src="https://tailwindcss.com/plus-assets/img/component-images/dark-project-app-screenshot.png"
-                width={2432}
-                height={1442}
-                className="w-304 rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10 not-dark:hidden"
+                className="w-304 rounded-md bg-gray-50 shadow-xl ring-1 ring-gray-900/10"
               />
             </div>
           </div>
@@ -105,29 +99,29 @@ function FeaturesSection() {
 
   const features = [
     {
-      name: t("spamReport"),
-      description: t("spamReportDesc"),
-      icon: TrashIcon,
+      name: t("expenseTracking"),
+      description: t("expenseTrackingDesc"),
+      icon: CurrencyDollarIcon,
     },
     {
-      name: t("composeMarkdown"),
-      description: t("composeMarkdownDesc"),
-      icon: PencilSquareIcon,
+      name: t("smartAnalytics"),
+      description: t("smartAnalyticsDesc"),
+      icon: ChartBarIcon,
     },
     {
-      name: t("emailCommenting"),
-      description: t("emailCommentingDesc"),
-      icon: ChatBubbleOvalLeftEllipsisIcon,
+      name: t("multiCurrency"),
+      description: t("multiCurrencyDesc"),
+      icon: DevicePhoneMobileIcon,
     },
     {
-      name: t("customerConnections"),
-      description: t("customerConnectionsDesc"),
-      icon: HeartIcon,
+      name: t("secureData"),
+      description: t("secureDataDesc"),
+      icon: ShieldCheckIcon,
     },
   ]
 
   return (
-    <div className="py-24 sm:py-32 bg-background">
+    <div id="features" className="py-24 sm:py-32 bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-5">
           <h2 className="col-span-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
@@ -166,14 +160,13 @@ function CtaSection() {
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
-              href="/auth/login"
+              href="/auth/sign-up"
               className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:bg-white/10 dark:text-primary dark:shadow-none dark:inset-ring dark:inset-ring-white/5 dark:hover:bg-white/15 dark:focus-visible:outline-white"
             >
               {t("getStarted")}
             </a>
-            <a href="#" className="text-sm/6 font-semibold text-primary">
-              {t("learnMore")}
-              <span aria-hidden="true">→</span>
+            <a href="/auth/login" className="text-sm/6 font-semibold text-primary">
+              {t("alreadyHaveAccount")} <span aria-hidden="true">→</span>
             </a>
           </div>
           <svg
