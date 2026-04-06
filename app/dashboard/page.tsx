@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
 import data from "./data.json"
 import { Suspense } from "react"
+import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { z } from "zod"
 import { SidebarUser } from "@/components/app-sidebar"
@@ -238,7 +239,7 @@ async function AsyncAppSidebar() {
     data: { user },
     error
   } = await supabase.auth.getUser()
-  if (!user) throw { message: "User undefined for app sidebar"}
+  if (!user) redirect('/auth/login')
   const sidebarUser: SidebarUser = {
     id: user.id,
     email: user.email ?? '-'
