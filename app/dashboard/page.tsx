@@ -232,7 +232,10 @@ async function AsyncAppSidebar() {
     id: user.id,
     email: user.email ?? '-'
   }
-  return <AppSidebar variant="inset" user={sidebarUser} direction={direction} />
+  const { count } = await supabase
+    .from('transactions')
+    .select('*', { count: 'exact', head: true })
+  return <AppSidebar variant="inset" user={sidebarUser} direction={direction} hasTransactions={(count ?? 0) > 0} />
 }
 
 export default function Page() {

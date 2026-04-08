@@ -186,9 +186,10 @@ export type SidebarUser = {
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   user: SidebarUser
   direction?: "ltr" | "rtl"
+  hasTransactions?: boolean
 }
 
-export function AppSidebar({ user, direction = "ltr", ...props }: AppSidebarProps) {
+export function AppSidebar({ user, direction = "ltr", hasTransactions = true, ...props }: AppSidebarProps) {
   const side = direction === "rtl" ? "right" : "left"
 
   return (
@@ -209,7 +210,7 @@ export function AppSidebar({ user, direction = "ltr", ...props }: AppSidebarProp
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} user={user} />
+        <NavMain items={data.navMain} user={user} showQuickCreate={hasTransactions} />
         {/* <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>

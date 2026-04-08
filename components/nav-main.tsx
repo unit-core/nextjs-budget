@@ -37,7 +37,8 @@ import { usePathname } from 'next/navigation';
 
 export function NavMain({
   items,
-  user
+  user,
+  showQuickCreate = true,
 }: {
   items: {
     title: string
@@ -45,11 +46,13 @@ export function NavMain({
     icon?: React.ReactNode
   }[],
   user: SidebarUser
+  showQuickCreate?: boolean
 }) {
   const pathname = usePathname();
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
+        {showQuickCreate && (
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
             { user === undefined || user === null ?
@@ -59,7 +62,7 @@ export function NavMain({
               >
                 <Spinner />
                 <span>Quick Create</span>
-              </SidebarMenuButton> : 
+              </SidebarMenuButton> :
               <DrawerDemo user={user}/>
             }
             {/* <Button
@@ -73,6 +76,7 @@ export function NavMain({
             </Button> */}
           </SidebarMenuItem>
         </SidebarMenu>
+        )}
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
