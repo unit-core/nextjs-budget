@@ -32,6 +32,7 @@ import {
   CheckIcon,
   SparklesIcon,
   CreditCardIcon,
+  ClockIcon,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
@@ -57,7 +58,8 @@ export function NavUser({
   const locale = useLocale()
   const t = useTranslations("Settings")
   const [isPending, startTransition] = useTransition()
-  const { isPremium, isLoading: isSubLoading, redirectToPortal } = useSubscription()
+  const { isPremium, isTrial, trialDaysLeft, isLoading: isSubLoading, redirectToPortal } = useSubscription()
+  const tSub = useTranslations("Subscription")
 
   const logout = async () => {
     const supabase = createClient()
@@ -181,7 +183,21 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              {!isSubLoading && !isPremium && (
+              {!isSubLoading && isTrial && (
+                <>
+                  <div className="flex items-center gap-2 px-2 py-1.5 text-xs text-muted-foreground">
+                    <ClockIcon className="size-3.5 text-primary" />
+                    {tSub("trialActive", { days: trialDaysLeft })}
+                  </div>
+                  <DropdownMenuItem asChild>
+                    <Link href="/pricing">
+                      <SparklesIcon className="me-2 size-4" />
+                      {t("upgradeToPremium")}
+                    </Link>
+                  </DropdownMenuItem>
+                </>
+              )}
+              {!isSubLoading && !isPremium && !isTrial && (
                 <DropdownMenuItem asChild>
                   <Link href="/pricing">
                     <SparklesIcon className="me-2 size-4" />
@@ -189,7 +205,7 @@ export function NavUser({
                   </Link>
                 </DropdownMenuItem>
               )}
-              {!isSubLoading && isPremium && (
+              {!isSubLoading && isPremium && !isTrial && (
                 <DropdownMenuItem onClick={redirectToPortal}>
                   <CreditCardIcon className="me-2 size-4" />
                   {t("manageSubscription")}

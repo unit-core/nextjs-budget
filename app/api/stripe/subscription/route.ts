@@ -1,56 +1,74 @@
 import { NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
 import { createClient } from '@/lib/supabase/server'
 
+const TRIAL_DAYS = 30
+
 export async function GET() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    return NextResponse.json({ isPremium: false })
-  }
-
-  // First, try Stripe Sync Engine tables
-  const { data: syncData, error: syncError } = await supabase
-    .from('stripe_subscriptions')
-    .select(`
-      id,
-      status,
-      stripe_customers!inner (
-        email
-      )
-    `)
-    .eq('stripe_customers.email', user.email)
-    .in('status', ['active', 'trialing'])
-    .limit(1)
-
-  if (!syncError && syncData && syncData.length > 0) {
-    return NextResponse.json({ isPremium: true })
-  }
-
-  // Fallback: query Stripe API directly
   try {
-    const customers = await stripe.customers.list({
-      email: user.email!,
-      limit: 1,
-    })
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
 
-    if (customers.data.length === 0) {
-      return NextResponse.json({ isPremium: false })
+    if (!user) {
+      return NextResponse.json({ isPremium: false, isTrial: false, trialDaysLeft: 0 })
     }
 
-    const subscriptions = await stripe.subscriptions.list({
-      customer: customers.data[0].id,
-      status: 'active',
-      limit: 1,
-    })
+    // Check trial: user.created_at is set by Supabase Auth on registration
+    const createdAt = new Date(user.created_at)
+    const now = new Date()
+    const daysSinceRegistration = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24))
+    const trialDaysLeft = Math.max(0, TRIAL_DAYS - daysSinceRegistration)
+    const isTrial = trialDaysLeft > 0
 
+    // Try Stripe Sync Engine tables
+    const { data: syncData, error: syncError } = await supabase
+      .from('stripe_subscriptions')
+      .select(`
+        id,
+        status,
+        stripe_customers!inner (
+          email
+        )
+      `)
+      .eq('stripe_customers.email', user.email)
+      .in('status', ['active', 'trialing'])
+      .limit(1)
+
+    if (!syncError && syncData && syncData.length > 0) {
+      return NextResponse.json({ isPremium: true, isTrial: false, trialDaysLeft: 0 })
+    }
+
+    // Fallback: query Stripe API directly
+    try {
+      const { stripe } = await import('@/lib/stripe')
+      const customers = await stripe.customers.list({
+        email: user.email!,
+        limit: 1,
+      })
+
+      if (customers.data.length > 0) {
+        const subscriptions = await stripe.subscriptions.list({
+          customer: customers.data[0].id,
+          status: 'active',
+          limit: 1,
+        })
+
+        if (subscriptions.data.length > 0) {
+          return NextResponse.json({ isPremium: true, isTrial: false, trialDaysLeft: 0 })
+        }
+      }
+    } catch {
+      // Stripe unavailable — fall through to trial check
+    }
+
+    // No active subscription — grant access if within trial period
     return NextResponse.json({
-      isPremium: subscriptions.data.length > 0,
+      isPremium: isTrial,
+      isTrial,
+      trialDaysLeft,
     })
   } catch {
-    return NextResponse.json({ isPremium: false })
+    return NextResponse.json({ isPremium: false, isTrial: false, trialDaysLeft: 0 })
   }
 }

@@ -8,7 +8,8 @@
   },
   "Subscription": {
     "premiumFeature": "ميزة بريميوم",
-    "upgradeToPremium": "الترقية إلى بريميوم"
+    "upgradeToPremium": "الترقية إلى بريميوم",
+    "trialActive": "فترة تجريبية مجانية — {days, plural, one {يوم واحد} other {# يوم}} متبقي"
   },
   "Pricing": {
     "title": "الأسعار",

@@ -8,7 +8,8 @@
   },
   "Subscription": {
     "premiumFeature": "Премиум-функция",
-    "upgradeToPremium": "Перейти на Premium"
+    "upgradeToPremium": "Перейти на Premium",
+    "trialActive": "Бесплатный пробный период — {days, plural, one {# день} few {# дня} other {# дней}} осталось"
   },
   "Pricing": {
     "title": "Тарифы",

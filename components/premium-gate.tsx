@@ -1,13 +1,13 @@
 'use client'
 
-import { LockIcon, SparklesIcon } from 'lucide-react'
+import { LockIcon, SparklesIcon, ClockIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useSubscription } from '@/hooks/use-subscription'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 export function PremiumGate({ children }: { children: React.ReactNode }) {
-  const { isPremium, isLoading } = useSubscription()
+  const { isPremium, isTrial, trialDaysLeft, isLoading } = useSubscription()
   const t = useTranslations('Subscription')
 
   if (isLoading) {
@@ -18,8 +18,25 @@ export function PremiumGate({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (isPremium) {
+  if (isPremium && !isTrial) {
     return <>{children}</>
+  }
+
+  if (isTrial) {
+    return (
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2 text-sm">
+          <ClockIcon className="size-4 shrink-0 text-primary" />
+          <span className="text-muted-foreground">
+            {t('trialActive', { days: trialDaysLeft })}
+          </span>
+          <Button asChild size="sm" variant="link" className="ms-auto h-auto p-0 text-xs">
+            <Link href="/pricing">{t('upgradeToPremium')}</Link>
+          </Button>
+        </div>
+        {children}
+      </div>
+    )
   }
 
   return (

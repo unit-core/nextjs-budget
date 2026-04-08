@@ -8,7 +8,8 @@
   },
   "Subscription": {
     "premiumFeature": "Premium Feature",
-    "upgradeToPremium": "Upgrade to Premium"
+    "upgradeToPremium": "Upgrade to Premium",
+    "trialActive": "Free trial — {days, plural, one {# day} other {# days}} left"
   },
   "Pricing": {
     "title": "Pricing",
