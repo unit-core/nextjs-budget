@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { CirclePlusIcon, MailIcon, SparklesIcon, LockIcon } from "lucide-react"
+import { CirclePlusIcon, MailIcon, SparklesIcon, LockIcon, PenLineIcon, CameraIcon, TypeIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
 import { FileUploadDemo } from "./file-upload"
 import { User } from '@supabase/supabase-js';
@@ -125,12 +125,24 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
             <DrawerDescription>Upload your receipts or describe expenses in your own words.</DrawerDescription>
           </DrawerHeader>
           <div className="flex flex-col p-4 gap-4">
-            <Tabs defaultValue="image">
-              <TabsList>
-                <TabsTrigger value="image">Image</TabsTrigger>
-                <TabsTrigger value="text">Text</TabsTrigger>
-                <TabsTrigger value="manual">Manual</TabsTrigger>
+            <Tabs defaultValue="manual">
+              <TabsList className="w-full">
+                <TabsTrigger value="manual" className="flex-1 gap-1.5">
+                  <PenLineIcon className="size-3.5" />
+                  Manual
+                </TabsTrigger>
+                <TabsTrigger value="image" className="flex-1 gap-1.5">
+                  <CameraIcon className="size-3.5" />
+                  Image
+                </TabsTrigger>
+                <TabsTrigger value="text" className="flex-1 gap-1.5">
+                  <TypeIcon className="size-3.5" />
+                  Text
+                </TabsTrigger>
               </TabsList>
+              <TabsContent value="manual">
+                <TransactionForm />
+              </TabsContent>
               <TabsContent value="image">
                 <PremiumGate>
                   <FileUploadDemo user={user}/>
@@ -140,9 +152,6 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
                 <PremiumGate>
                   <InputGroupCustom />
                 </PremiumGate>
-              </TabsContent>
-              <TabsContent value="manual">
-                <TransactionForm />
               </TabsContent>
             </Tabs>
           </div>

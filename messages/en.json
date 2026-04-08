@@ -146,6 +146,22 @@
     "secureData": "Secure & private",
     "secureDataDesc": "Your financial data is encrypted and stored securely. We never share your information with third parties."
   },
+  "EmptyState": {
+    "title": "Start tracking your money",
+    "description": "Add your first transaction below and see your spending come to life with charts, categories, and monthly insights.",
+    "stepLabel": "Step {number}",
+    "step1Title": "Create a transaction",
+    "step1Desc": "Fill in the form manually, upload a receipt photo, or just describe your expense in text — choose whatever is easiest.",
+    "step2Title": "Save and wait",
+    "step2Desc": "Hit save and give us a moment to process your transaction. Image and text entries are auto-categorized — manual ones use the category you pick.",
+    "step3Title": "Check your dashboard",
+    "step3Desc": "Come back and explore your dashboard — see charts, category breakdowns, monthly totals, and a full history of all your transactions.",
+    "formTitle": "Create your first transaction",
+    "formDescription": "Upload a receipt, describe it in words, or fill in the form manually.",
+    "tabImage": "Image",
+    "tabText": "Text",
+    "tabManual": "Manual"
+  },
   "TransactionForm": {
     "name": "Transaction Name",
     "namePlaceholder": "e.g. Weekly groceries",

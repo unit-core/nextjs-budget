@@ -54,6 +54,8 @@ export async function POST(request: NextRequest) {
     customerId = customer.id
   }
 
+  const trialDays = parseInt(process.env.STRIPE_TRIAL_DAYS || '0', 10)
+
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
@@ -63,6 +65,12 @@ export async function POST(request: NextRequest) {
         quantity: 1,
       },
     ],
+    ...(trialDays > 0 && {
+      subscription_data: {
+        trial_period_days: trialDays,
+      },
+    }),
+    allow_promotion_codes: true,
     success_url: `${appUrl}/dashboard?subscription=success`,
     cancel_url: `${appUrl}/pricing`,
   })
