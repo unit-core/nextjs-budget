@@ -2,7 +2,38 @@
   "Settings": {
     "language": "اللغة",
     "layoutDirection": "اتجاه التخطيط",
-    "logOut": "تسجيل الخروج"
+    "logOut": "تسجيل الخروج",
+    "upgradeToPremium": "الترقية إلى بريميوم",
+    "manageSubscription": "إدارة الاشتراك"
+  },
+  "Subscription": {
+    "premiumFeature": "ميزة بريميوم",
+    "upgradeToPremium": "الترقية إلى بريميوم"
+  },
+  "Pricing": {
+    "title": "الأسعار",
+    "headline": "اختر الخطة المناسبة لك",
+    "subtitle": "افتح الميزات المميزة لتتبع المصاريف بشكل أسرع عبر تحميل الصور والإدخال النصي الذكي.",
+    "weeklyName": "أسبوعي",
+    "yearlyName": "سنوي",
+    "perWeek": "/أسبوع",
+    "perYear": "/سنة",
+    "plusTax": "+ الضرائب المطبقة",
+    "weeklyDescription": "جرّب الميزات المميزة مع خطة أسبوعية مرنة. إلغاء في أي وقت.",
+    "yearlyDescription": "أفضل قيمة — وفّر أكثر من 20% مقارنة بالخطة الأسبوعية.",
+    "savePercent": "وفّر 23%",
+    "featureImageUpload": "إنشاء معاملات من صور الإيصالات",
+    "featureTextInput": "إنشاء معاملات من الأوصاف النصية",
+    "featureAllCategories": "أكثر من 40 فئة يتم اكتشافها تلقائياً",
+    "featureBasicSupport": "دعم عبر البريد الإلكتروني",
+    "featurePrioritySupport": "دعم ذو أولوية عبر البريد الإلكتروني",
+    "featureEarlyAccess": "وصول مبكر إلى الميزات الجديدة",
+    "getStarted": "ابدأ الآن",
+    "redirecting": "جارٍ إعادة التوجيه...",
+    "manageSubscription": "إدارة الاشتراك",
+    "alreadyPremium": "لديك بالفعل اشتراك بريميوم نشط!",
+    "freeIncluded": "الخطة المجانية تشمل: الإدخال اليدوي للمعاملات، لوحة التحليلات، دعم العملات المتعددة، وسجل غير محدود.",
+    "backToDashboard": "العودة إلى لوحة التحكم"
   },
   "Dashboard": {
     "title": "لوحة التحكم",

@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { CirclePlusIcon, MailIcon } from "lucide-react"
+import { CirclePlusIcon, MailIcon, SparklesIcon, LockIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
 import { FileUploadDemo } from "./file-upload"
 import { User } from '@supabase/supabase-js';
@@ -132,10 +132,14 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
                 <TabsTrigger value="manual">Manual</TabsTrigger>
               </TabsList>
               <TabsContent value="image">
-                <FileUploadDemo user={user}/>
+                <PremiumGate>
+                  <FileUploadDemo user={user}/>
+                </PremiumGate>
               </TabsContent>
               <TabsContent value="text">
-                <InputGroupCustom />
+                <PremiumGate>
+                  <InputGroupCustom />
+                </PremiumGate>
               </TabsContent>
               <TabsContent value="manual">
                 <TransactionForm />
@@ -151,6 +155,7 @@ import { useState } from 'react'
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useDirection } from "@/hooks/use-direction"
 import TransactionForm from "./transaction-form"
+import { PremiumGate } from "./premium-gate"
 
 function InputGroupCustom() {
   // 1. Создаем состояние для текста

@@ -30,12 +30,16 @@ import {
   LanguagesIcon,
   PilcrowLeftIcon,
   CheckIcon,
+  SparklesIcon,
+  CreditCardIcon,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { useLocale, useTranslations } from "next-intl"
 import { useTransition } from "react"
 import { setLocale, setDirection } from "@/i18n/actions"
 import { locales, localeNames, type Locale } from "@/i18n/config"
+import { useSubscription } from "@/hooks/use-subscription"
 
 export function NavUser({
   user,
@@ -53,6 +57,7 @@ export function NavUser({
   const locale = useLocale()
   const t = useTranslations("Settings")
   const [isPending, startTransition] = useTransition()
+  const { isPremium, isLoading: isSubLoading, redirectToPortal } = useSubscription()
 
   const logout = async () => {
     const supabase = createClient()
@@ -173,6 +178,23 @@ export function NavUser({
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub> */}
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              {!isSubLoading && !isPremium && (
+                <DropdownMenuItem asChild>
+                  <Link href="/pricing">
+                    <SparklesIcon className="me-2 size-4" />
+                    {t("upgradeToPremium")}
+                  </Link>
+                </DropdownMenuItem>
+              )}
+              {!isSubLoading && isPremium && (
+                <DropdownMenuItem onClick={redirectToPortal}>
+                  <CreditCardIcon className="me-2 size-4" />
+                  {t("manageSubscription")}
+                </DropdownMenuItem>
+              )}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>

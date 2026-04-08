@@ -2,7 +2,38 @@
   "Settings": {
     "language": "Language",
     "layoutDirection": "Layout Direction",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "upgradeToPremium": "Upgrade to Premium",
+    "manageSubscription": "Manage Subscription"
+  },
+  "Subscription": {
+    "premiumFeature": "Premium Feature",
+    "upgradeToPremium": "Upgrade to Premium"
+  },
+  "Pricing": {
+    "title": "Pricing",
+    "headline": "Choose the right plan for you",
+    "subtitle": "Unlock premium features to track expenses faster with image upload and smart text input.",
+    "weeklyName": "Weekly",
+    "yearlyName": "Yearly",
+    "perWeek": "/week",
+    "perYear": "/year",
+    "plusTax": "+ applicable taxes",
+    "weeklyDescription": "Try premium features with a flexible weekly plan. Cancel anytime.",
+    "yearlyDescription": "Best value — save over 20% compared to the weekly plan.",
+    "savePercent": "Save 23%",
+    "featureImageUpload": "Create transactions from receipt photos",
+    "featureTextInput": "Create transactions from text descriptions",
+    "featureAllCategories": "40+ auto-detected categories",
+    "featureBasicSupport": "Email support",
+    "featurePrioritySupport": "Priority email support",
+    "featureEarlyAccess": "Early access to new features",
+    "getStarted": "Get started",
+    "redirecting": "Redirecting...",
+    "manageSubscription": "Manage Subscription",
+    "alreadyPremium": "You already have an active premium subscription!",
+    "freeIncluded": "Free plan includes: manual transaction entry, dashboard analytics, multi-currency support, and unlimited history.",
+    "backToDashboard": "Back to Dashboard"
   },
   "Dashboard": {
     "title": "Dashboard",

@@ -9,6 +9,8 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
 import { getDirection } from "@/i18n/actions"
+import { SubscriptionProvider } from "@/hooks/use-subscription"
+
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -38,7 +40,9 @@ export default async function RootLayout({
           <DirectionProvider direction={direction}>
             <ThemeProvider>
               <TooltipProvider>
-                {children}
+                <SubscriptionProvider>
+                  {children}
+                </SubscriptionProvider>
               </TooltipProvider>
             </ThemeProvider>
           </DirectionProvider>
