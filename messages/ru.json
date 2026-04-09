@@ -98,6 +98,8 @@
     "password": "Пароль",
     "forgotPassword": "Забыли пароль?",
     "loggingIn": "Входим...",
+    "orContinueWith": "Или войти через",
+    "continueWithGoogle": "Войти через Google",
     "noAccount": "Нет аккаунта?",
     "signUp": "Зарегистрироваться",
     "signUpTitle": "Регистрация",

@@ -98,6 +98,8 @@
     "password": "Password",
     "forgotPassword": "Forgot your password?",
     "loggingIn": "Logging in...",
+    "orContinueWith": "Or continue with",
+    "continueWithGoogle": "Continue with Google",
     "noAccount": "Don't have an account?",
     "signUp": "Sign up",
     "signUpTitle": "Sign up",

@@ -98,6 +98,8 @@
     "password": "كلمة المرور",
     "forgotPassword": "نسيت كلمة المرور؟",
     "loggingIn": "جارٍ تسجيل الدخول...",
+    "orContinueWith": "أو المتابعة عبر",
+    "continueWithGoogle": "المتابعة عبر Google",
     "noAccount": "ليس لديك حساب؟",
     "signUp": "إنشاء حساب",
     "signUpTitle": "إنشاء حساب",
