@@ -212,7 +212,7 @@ export function AppSidebar({ user, direction = "ltr", hasTransactions = true, ..
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} user={user} showQuickCreate={hasTransactions} />
+        <NavMain items={[{ title: td("title"), url: "/dashboard", icon: <LayoutDashboardIcon /> }]} user={user} showQuickCreate={hasTransactions} />
         {/* <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
