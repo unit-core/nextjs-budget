@@ -38,6 +38,7 @@ function TextInput() {
   const [text, setText] = useState("")
   const [isLoading, setLoading] = useState(false)
   const router = useRouter()
+  const t = useTranslations("EmptyState")
 
   const saveNewTransaction = async () => {
     if (!text.trim()) return
@@ -53,9 +54,9 @@ function TextInput() {
       })
     setLoading(false)
     if (!error) {
-      toast("Transaction has been created", {
+      toast(t("transactionCreated"), {
         position: "top-center",
-        description: "The system is already processing",
+        description: t("processingDescription"),
       })
       setText("")
       router.refresh()
@@ -70,7 +71,7 @@ function TextInput() {
           onChange={(e) => setText(e.target.value)}
           data-slot="input-group-control"
           className="flex field-sizing-content min-h-24 max-h-80 w-full resize-none rounded-md bg-transparent px-3 py-2.5 text-base transition-[color,box-shadow] outline-none md:text-sm"
-          placeholder="Just type what you spent...."
+          placeholder={t("textPlaceholder")}
         />
         <InputGroupAddon align="block-end">
           <InputGroupButton
@@ -81,7 +82,7 @@ function TextInput() {
             disabled={!text.trim() || isLoading}
           >
             {isLoading ? <Spinner /> : null}
-            Submit
+            {t("submit")}
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>

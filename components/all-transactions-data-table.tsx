@@ -39,6 +39,7 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { toast } from "sonner"
 import { z } from "zod"
 
+import { useTranslations } from "next-intl"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useDirection } from "@/hooks/use-direction"
 import { Badge } from "@/components/ui/badge"
@@ -111,6 +112,7 @@ export const schema = z.object({
 function AddTransactionButton() {
   const isMobile = useIsMobile()
   const direction = useDirection()
+  const t = useTranslations("Dashboard")
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -118,13 +120,13 @@ function AddTransactionButton() {
       <DrawerTrigger asChild>
         <Button variant="outline" size="sm">
           <PlusIcon />
-          <span className="hidden lg:inline">Add Transaction</span>
+          <span className="hidden lg:inline">{t("addTransaction")}</span>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>New Transaction</DrawerTitle>
-          <DrawerDescription>Create a new transaction manually.</DrawerDescription>
+          <DrawerTitle>{t("newTransaction")}</DrawerTitle>
+          <DrawerDescription>{t("newTransactionDesc")}</DrawerDescription>
         </DrawerHeader>
         <div className="overflow-y-auto px-4 pb-4">
           <TransactionForm onSuccess={() => setOpen(false)} />
@@ -154,7 +156,7 @@ function DragHandle({ id }: { id: string }) {
   )
 }
 
-const columns: ColumnDef<z.infer<typeof schema>>[] = [
+function createColumns(t: { header: string; executedAt: string; amount: string; delete: string; transactionDeleted: string; transactionDeletedDesc: string; editTransactionDesc: string }): ColumnDef<z.infer<typeof schema>>[] { return [
   {
     id: "select",
     header: ({ table }) => (
@@ -183,15 +185,15 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: "header",
-    header: "Header",
+    header: t.header,
     cell: ({ row }) => {
-      return <TableCellViewer item={row.original} />
+      return <TableCellViewer item={row.original} editTransactionDesc={t.editTransactionDesc} />
     },
     enableHiding: false,
   },
   {
     accessorKey: "executed at",
-    header: "Executed at",
+    header: t.executedAt,
     cell: ({ row }) => {
       return <div>{row.original.executed_at}</div>
     },
@@ -199,7 +201,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: "amount",
-    header: "Amount",
+    header: t.amount,
     cell: ({ row }) => {
       return <div className="whitespace-pre-line">{row.original.amount}</div>
     },
@@ -216,9 +218,9 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
           .eq('id', row.id)
         if (!error) {
           (table.options.meta as any)?.removeRow(row.id)
-          toast("Transaction has been deleted", {
+          toast(t.transactionDeleted, {
             position: 'top-center',
-            description: "All resources also removed"
+            description: t.transactionDeletedDesc
           })
         }
       }
@@ -235,13 +237,14 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-32">
-            <DropdownMenuItem variant="destructive" onClick={() => deleteTransaction()}>Delete</DropdownMenuItem>
+            <DropdownMenuItem variant="destructive" onClick={() => deleteTransaction()}>{t.delete}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
     },
   },
 ]
+}
 
 function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
@@ -269,7 +272,7 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
 }
 
 
-const pendingColumns: ColumnDef<z.infer<typeof schema>>[] = [
+function createPendingColumns(t: { header: string; type: string; status: string; executedAt: string; amount: string }): ColumnDef<z.infer<typeof schema>>[] { return [
   {
     id: "select",
     header: ({ table }) => (
@@ -300,7 +303,7 @@ const pendingColumns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: "header",
-    header: "Header",
+    header: t.header,
     cell: ({ row }) => {
       return <TableCellViewer item={row.original} />
     },
@@ -308,7 +311,7 @@ const pendingColumns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: "type",
-    header: "Type",
+    header: t.type,
     cell: ({ row }) => (
       <div className="w-32">
         <Badge variant="outline" className="px-1.5 text-muted-foreground">
@@ -319,7 +322,7 @@ const pendingColumns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: t.status,
     cell: ({ row }) => (
       <Badge variant="outline" className="px-1.5 text-muted-foreground">
         <LoaderIcon />
@@ -329,23 +332,32 @@ const pendingColumns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: "executed at",
-    header: "Executed at",
+    header: t.executedAt,
     cell: ({ row }) => <div>{row.original.executed_at}</div>,
     enableHiding: true,
   },
   {
     accessorKey: "amount",
-    header: "Amount",
+    header: t.amount,
     cell: ({ row }) => <div className="whitespace-pre-line">{row.original.amount}</div>,
     enableHiding: true,
   },
 ]
+}
 
 function PendingTransactionsTable({
   data: initialData,
 }: {
   data: z.infer<typeof schema>[]
 }) {
+  const t = useTranslations("Dashboard")
+  const pendingCols = React.useMemo(() => createPendingColumns({
+    header: t("header"),
+    type: t("type"),
+    status: t("status"),
+    executedAt: t("executedAt"),
+    amount: t("amount"),
+  }), [t])
   const [data, setData] = React.useState(() => initialData)
   const [rowSelection, setRowSelection] = React.useState({})
   const [isConfirming, setIsConfirming] = React.useState(false)
@@ -357,7 +369,7 @@ function PendingTransactionsTable({
 
   const table = useReactTable({
     data,
-    columns: pendingColumns,
+    columns: pendingCols,
     state: {
       rowSelection,
     },
@@ -389,9 +401,9 @@ function PendingTransactionsTable({
     if (!error) {
       setData((prev) => prev.filter((row) => !selectedIds.includes(row.id)))
       setRowSelection({})
-      toast("Transactions confirmed", {
+      toast(t("transactionsConfirmed"), {
         position: 'top-center',
-        description: `${selectedIds.length} transaction(s) marked as confirmed`,
+        description: t("transactionsConfirmedDesc", { count: selectedIds.length }),
       })
       router.refresh()
     }
@@ -412,9 +424,9 @@ function PendingTransactionsTable({
     if (!error) {
       setData((prev) => prev.filter((row) => !selectedIds.includes(row.id)))
       setRowSelection({})
-      toast("Transactions deleted", {
+      toast(t("transactionsDeleted"), {
         position: 'top-center',
-        description: `${selectedIds.length} transaction(s) deleted`,
+        description: t("transactionsDeletedDesc", { count: selectedIds.length }),
       })
       router.refresh()
     }
@@ -429,18 +441,18 @@ function PendingTransactionsTable({
     <div className="flex flex-col gap-4 px-4 lg:px-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-medium">Pending Transactions</h3>
+          <h3 className="text-sm font-medium">{t("pendingTransactions")}</h3>
           <Badge variant="secondary">{data.length}</Badge>
         </div>
         {selectedCount > 0 && (
           <div className="flex items-center gap-2">
             <Button size="sm" onClick={confirmSelected} disabled={isBusy}>
               {isConfirming ? <Spinner /> : <CheckIcon className="size-4" />}
-              Confirm {selectedCount}
+              {t("confirm")} {selectedCount}
             </Button>
             <Button size="sm" variant="destructive" onClick={deleteSelected} disabled={isBusy}>
               {isDeleting ? <Spinner /> : <TrashIcon className="size-4" />}
-              Delete {selectedCount}
+              {t("delete")} {selectedCount}
             </Button>
           </div>
         )}
@@ -478,6 +490,16 @@ function PendingTransactionsTable({
 }
 
 export function AllTransactionsDataTableSkeleton() {
+  const t = useTranslations("Dashboard")
+  const columns = React.useMemo(() => createColumns({
+    header: t("header"),
+    executedAt: t("executedAt"),
+    amount: t("amount"),
+    delete: t("delete"),
+    transactionDeleted: t("transactionDeleted"),
+    transactionDeletedDesc: t("transactionDeletedDesc", { count: 0 }),
+    editTransactionDesc: t("editTransactionDesc"),
+  }), [t])
   const [data, setData] = React.useState(() => [])
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -557,19 +579,19 @@ export function AllTransactionsDataTableSkeleton() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="outline">All Transactions</SelectItem>
+              <SelectItem value="outline">{t("allTransactions")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <TabsList className="hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:bg-muted-foreground/30 **:data-[slot=badge]:px-1 @4xl/main:flex">
-          <TabsTrigger value="outline">All Transactions</TabsTrigger>
+          <TabsTrigger value="outline">{t("allTransactions")}</TabsTrigger>
         </TabsList>
         <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <Columns3Icon data-icon="inline-start" />
-                Columns
+                {t("columns")}
                 <ChevronDownIcon data-icon="inline-end" />
               </Button>
             </DropdownMenuTrigger>
@@ -647,7 +669,7 @@ export function AllTransactionsDataTableSkeleton() {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      Loading...
+                      {t("loading")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -663,7 +685,7 @@ export function AllTransactionsDataTableSkeleton() {
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
               <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                Rows per page
+                {t("rowsPerPage")}
               </Label>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
@@ -688,8 +710,7 @@ export function AllTransactionsDataTableSkeleton() {
               </Select>
             </div>
             <div className="flex w-fit items-center justify-center text-sm font-medium">
-              Page {table.getState().pagination.pageIndex + 1} of{" "}
-              {table.getPageCount()}
+              {t("pageOf", { current: table.getState().pagination.pageIndex + 1, total: table.getPageCount() })}
             </div>
             <div className="ms-auto flex items-center gap-2 lg:ms-0">
               <Button
@@ -765,6 +786,16 @@ export function AllTransactionsDataTable({
   data: z.infer<typeof schema>[]
   pendingData?: z.infer<typeof schema>[]
 }) {
+  const t = useTranslations("Dashboard")
+  const columns = React.useMemo(() => createColumns({
+    header: t("header"),
+    executedAt: t("executedAt"),
+    amount: t("amount"),
+    delete: t("delete"),
+    transactionDeleted: t("transactionDeleted"),
+    transactionDeletedDesc: t("transactionDeletedDesc", { count: 0 }),
+    editTransactionDesc: t("editTransactionDesc"),
+  }), [t])
   const [data, setData] = React.useState(() => initialData)
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -843,9 +874,9 @@ export function AllTransactionsDataTable({
     if (!error) {
       setData((prev) => prev.filter((row) => !selectedIds.includes(row.id)))
       setRowSelection({})
-      toast("Transactions deleted", {
+      toast(t("transactionsDeleted"), {
         position: 'top-center',
-        description: `${selectedIds.length} transaction(s) deleted`,
+        description: t("transactionsDeletedDesc", { count: selectedIds.length }),
       })
       router.refresh()
     }
@@ -884,19 +915,19 @@ export function AllTransactionsDataTable({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="outline">All Transactions</SelectItem>
+              <SelectItem value="outline">{t("allTransactions")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <TabsList className="hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:bg-muted-foreground/30 **:data-[slot=badge]:px-1 @4xl/main:flex">
-          <TabsTrigger value="outline">All Transactions</TabsTrigger>
+          <TabsTrigger value="outline">{t("allTransactions")}</TabsTrigger>
         </TabsList>
         <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <Columns3Icon data-icon="inline-start" />
-                Columns
+                {t("columns")}
                 <ChevronDownIcon data-icon="inline-end" />
               </Button>
             </DropdownMenuTrigger>
@@ -927,7 +958,7 @@ export function AllTransactionsDataTable({
           {selectedCount > 0 && (
             <Button size="sm" variant="destructive" onClick={deleteSelected} disabled={isDeletingSelected}>
               {isDeletingSelected ? <Spinner /> : <TrashIcon className="size-4" />}
-              Delete {selectedCount}
+              {t("delete")} {selectedCount}
             </Button>
           )}
         </div>
@@ -979,7 +1010,7 @@ export function AllTransactionsDataTable({
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("noResults")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -995,7 +1026,7 @@ export function AllTransactionsDataTable({
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
               <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                Rows per page
+                {t("rowsPerPage")}
               </Label>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
@@ -1020,8 +1051,7 @@ export function AllTransactionsDataTable({
               </Select>
             </div>
             <div className="flex w-fit items-center justify-center text-sm font-medium">
-              Page {table.getState().pagination.pageIndex + 1} of{" "}
-              {table.getPageCount()}
+              {t("pageOf", { current: table.getState().pagination.pageIndex + 1, total: table.getPageCount() })}
             </div>
             <div className="ms-auto flex items-center gap-2 lg:ms-0">
               <Button
@@ -1111,7 +1141,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
+function TableCellViewer({ item, editTransactionDesc }: { item: z.infer<typeof schema>; editTransactionDesc?: string }) {
   const isMobile = useIsMobile()
   const direction = useDirection()
   const [open, setOpen] = React.useState(false)
@@ -1188,7 +1218,7 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
       <DrawerContent>
         <DrawerHeader className="gap-1">
           <DrawerTitle>{item.name}</DrawerTitle>
-          <DrawerDescription>Edit transaction details and items.</DrawerDescription>
+          <DrawerDescription>{editTransactionDesc}</DrawerDescription>
         </DrawerHeader>
         <div className="overflow-y-auto px-4 pb-4">
           {loading ? (

@@ -98,6 +98,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import { GripVerticalIcon, CircleCheckIcon, LoaderIcon, EllipsisVerticalIcon, Columns3Icon, ChevronDownIcon, PlusIcon, ChevronsLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronsRightIcon, TrendingUpIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useDirection } from "@/hooks/use-direction"
 
 const transactionItemSchema = z.object({
@@ -510,6 +511,7 @@ const chartConfig = {
 function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
   const isMobile = useIsMobile()
   const direction = useDirection()
+  const t = useTranslations("Dashboard")
   const transactions = item.transactions || []
 
   if (transactions.length === 0) {
@@ -538,8 +540,8 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead className="text-end">Amount</TableHead>
+                <TableHead>{t("name")}</TableHead>
+                <TableHead className="text-end">{t("amount")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -2,10 +2,11 @@
 
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { toast } from 'sonner'
 import { PlusIcon, TrashIcon, CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
+import { enUS, ru, ar } from 'date-fns/locale'
 
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -42,6 +43,8 @@ const CATEGORIES = [
 
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'PLN', 'UAH', 'RUB', 'TRY', 'AED', 'SAR'] as const
 
+const dateFnsLocales: Record<string, typeof enUS> = { en: enUS, ru, ar }
+
 interface TransactionItem {
   id?: string
   name: string
@@ -74,6 +77,8 @@ export default function TransactionForm({
   const isEdit = !!initialData?.id
   const t = useTranslations('TransactionForm')
   const tc = useTranslations('Categories')
+  const locale = useLocale()
+  const dateFnsLocale = dateFnsLocales[locale] || enUS
   const router = useRouter()
 
   const [name, setName] = useState(initialData?.name ?? '')
@@ -244,7 +249,7 @@ export default function TransactionForm({
                       )}
                     >
                       <CalendarIcon className="size-4" />
-                      {format(executedAt, "PPP p")}
+                      {format(executedAt, "PPP p", { locale: dateFnsLocale })}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">

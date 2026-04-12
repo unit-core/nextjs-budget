@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl"
 
 import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
@@ -190,6 +191,7 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ user, direction = "ltr", hasTransactions = true, ...props }: AppSidebarProps) {
+  const td = useTranslations("Dashboard")
   const side = direction === "rtl" ? "right" : "left"
 
   return (

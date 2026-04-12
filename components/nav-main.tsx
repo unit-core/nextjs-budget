@@ -8,6 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useTranslations } from "next-intl"
 import { CirclePlusIcon, MailIcon, SparklesIcon, LockIcon, PenLineIcon, CameraIcon, TypeIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
 import { FileUploadDemo } from "./file-upload"
@@ -49,6 +50,8 @@ export function NavMain({
   showQuickCreate?: boolean
 }) {
   const pathname = usePathname();
+  const t = useTranslations("NavMain")
+  const te = useTranslations("EmptyState")
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -57,11 +60,11 @@ export function NavMain({
           <SidebarMenuItem className="flex items-center gap-2">
             { user === undefined || user === null ?
               <SidebarMenuButton
-                tooltip="Quick Create"
+                tooltip={t("quickCreate")}
                 className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
               >
                 <Spinner />
-                <span>Quick Create</span>
+                <span>{t("quickCreate")}</span>
               </SidebarMenuButton> :
               <DrawerDemo user={user}/>
             }
@@ -105,6 +108,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 function DrawerDemo({ user }: { user: SidebarUser }) {
   const [goal, setGoal] = React.useState(350)
+  const t = useTranslations("NavMain")
+  const te = useTranslations("EmptyState")
 
   function onClick(adjustment: number) {
     setGoal(Math.max(200, Math.min(400, goal + adjustment)))
@@ -115,33 +120,33 @@ function DrawerDemo({ user }: { user: SidebarUser }) {
     <Drawer direction={isMobile ? "bottom" : direction === "rtl" ? "left" : "right"}>
       <DrawerTrigger asChild>
         <SidebarMenuButton
-          tooltip="Quick Create"
+          tooltip={t("quickCreate")}
           className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
         >
           <CirclePlusIcon />
-          <span>Quick Create</span>
+          <span>{t("quickCreate")}</span>
         </SidebarMenuButton>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full overflow-y-auto">
           <DrawerHeader>
-            <DrawerTitle>Create Transactions</DrawerTitle>
-            <DrawerDescription>Upload your receipts or describe expenses in your own words.</DrawerDescription>
+            <DrawerTitle>{t("createTransactions")}</DrawerTitle>
+            <DrawerDescription>{t("drawerDescription")}</DrawerDescription>
           </DrawerHeader>
           <div className="flex flex-col p-4 gap-4">
             <Tabs defaultValue="manual">
               <TabsList className="w-full">
                 <TabsTrigger value="manual" className="flex-1 gap-1.5">
                   <PenLineIcon className="size-3.5" />
-                  Manual
+                  {te("tabManual")}
                 </TabsTrigger>
                 <TabsTrigger value="image" className="flex-1 gap-1.5">
                   <CameraIcon className="size-3.5" />
-                  Image
+                  {te("tabImage")}
                 </TabsTrigger>
                 <TabsTrigger value="text" className="flex-1 gap-1.5">
                   <TypeIcon className="size-3.5" />
-                  Text
+                  {te("tabText")}
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="manual">
@@ -171,7 +176,8 @@ import TransactionForm from "./transaction-form"
 import { PremiumGate } from "./premium-gate"
 
 function InputGroupCustom() {
-  // 1. Создаем состояние для текста
+  const t = useTranslations("EmptyState")
+  // 1. Создаем состояние для тек��та
   const [text, setText] = useState('')
   const [isLoading, setLoading] = useState(false)
 
@@ -193,9 +199,9 @@ function InputGroupCustom() {
       })
     setLoading(false)
     if (!error) {
-      toast("Transaction has been created", {
+      toast(t("transactionCreated"), {
         position: 'top-center',
-        description: "The system is already processing"
+        description: t("processingDescription")
       })
       setText('') // Очищаем поле после успешной отправки
     }
@@ -209,7 +215,7 @@ function InputGroupCustom() {
           onChange={(e) => setText(e.target.value)} // 4. Обновляем при вводе
           data-slot="input-group-control"
           className="flex field-sizing-content min-h-24 max-h-80 w-full resize-none rounded-md bg-transparent px-3 py-2.5 text-base transition-[color,box-shadow] outline-none md:text-sm"
-          placeholder="Just type what you spent...."
+          placeholder={t("textPlaceholder")}
         />
         <InputGroupAddon align="block-end">
           <InputGroupButton 
@@ -220,7 +226,7 @@ function InputGroupCustom() {
             disabled={!text.trim() || isLoading} // Хороший UX: кнопка неактивна, если пусто
           >
             {isLoading ? <Spinner /> : null }
-            Submit
+            {t("submit")}
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>

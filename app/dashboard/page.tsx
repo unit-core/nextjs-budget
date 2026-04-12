@@ -13,7 +13,7 @@ import { createClient } from "@/lib/supabase/server"
 import { z } from "zod"
 import { SidebarUser } from "@/components/app-sidebar"
 import { MonthTransactionsDataTable } from "@/components/month-transactions-data-table"
-import { getDirection } from "@/i18n/actions"
+import { getDirection, getLocale } from "@/i18n/actions"
 import { getTranslations } from "next-intl/server"
 
 interface MonthRange {
@@ -29,11 +29,11 @@ function getMonthRange(date: Date): MonthRange {
   return { start, end };
 }
 
-function formatCurrencyDict(totals: Record<string, number>) {
+function formatCurrencyDict(totals: Record<string, number>, locale?: string) {
   const keys = Object.keys(totals);
   if (keys.length === 0) return "0,00";
   return keys.map(currency => {
-    return new Intl.NumberFormat(undefined, {
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: currency
     }).format(totals[currency]);
@@ -44,6 +44,7 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
   const currentDate = new Date()
   const { start, end } = getMonthRange(currentDate)
   const supabase = await createClient()
+  const locale = await getLocale()
   const td = await getTranslations("Dashboard")
   const tc = await getTranslations("Categories")
 
@@ -72,7 +73,7 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
     .order('executed_at', { ascending: false })
 
   if (error || !allTransactions) {
-    return <div className="p-4 text-destructive">Something went wrong loading transactions.</div>
+    return <div className="p-4 text-destructive">{td("somethingWentWrong")}</div>
   }
 
   // Empty state: no transactions at all
@@ -123,7 +124,7 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
         categoryTxTotals[category][transaction.id] = {};
         categoryTxMeta[category][transaction.id] = {
           name: transaction.name || '-',
-          executed_at: new Date(transaction.executed_at).toLocaleDateString(undefined, {
+          executed_at: new Date(transaction.executed_at).toLocaleDateString(locale, {
             month: "short",
             day: "numeric",
           }),
@@ -140,17 +141,17 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
     return {
       name: tc.has(`${categoryName}.name`) ? tc(`${categoryName}.name`) : categoryName,
       description: tc.has(`${categoryName}.description`) ? tc(`${categoryName}.description`) : undefined,
-      amount: formatCurrencyDict(currencies),
+      amount: formatCurrencyDict(currencies, locale),
       transactions: Object.entries(txs).map(([txId, totals]) => ({
         name: meta[txId]?.name || '-',
-        amount: formatCurrencyDict(totals),
+        amount: formatCurrencyDict(totals, locale),
       })),
     };
   });
 
   const summary = {
-    today: formatCurrencyDict(todayTotals),
-    month: formatCurrencyDict(monthTotals),
+    today: formatCurrencyDict(todayTotals, locale),
+    month: formatCurrencyDict(monthTotals, locale),
     transactions_number: confirmedThisMonth.length,
     items_number: itemsCount
   };
@@ -163,7 +164,7 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
   // 3. All transactions table data
   const mapTransaction = (element: typeof allTransactions[number]): z.infer<typeof schema> => {
     const executedAt = new Date(element.executed_at)
-    const executedAtString = executedAt.toLocaleDateString(undefined, {
+    const executedAtString = executedAt.toLocaleDateString(locale, {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -177,7 +178,7 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
       ? "—"
       : Object.entries(totalsByCurrency)
           .map(([currency, amount]) => {
-            return new Intl.NumberFormat(undefined, {
+            return new Intl.NumberFormat(locale, {
               style: 'currency',
               currency: currency
             }).format(amount);
@@ -238,25 +239,26 @@ async function AsyncAppSidebar() {
   return <AppSidebar variant="inset" user={sidebarUser} direction={direction} hasTransactions={(count ?? 0) > 0} />
 }
 
-export default function Page() {
+export default async function Page() {
+  const locale = await getLocale()
   const currentDate = new Date()
   const { start, end } = getMonthRange(currentDate);
   const sectionCardsTexts: DateTexts = {
-    today: currentDate.toLocaleDateString(undefined, {
+    today: currentDate.toLocaleDateString(locale, {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
     }),
-    month: currentDate.toLocaleDateString(undefined, {
+    month: currentDate.toLocaleDateString(locale, {
       year: "numeric",
       month: "long"
     }),
-    monthRange: `${start.toLocaleDateString(undefined, {
+    monthRange: `${start.toLocaleDateString(locale, {
       year: "numeric",
       month: "long",
       day: "numeric",
-    })} - ${end.toLocaleDateString(undefined, {
+    })} - ${end.toLocaleDateString(locale, {
       year: "numeric",
       month: "long",
       day: "numeric",

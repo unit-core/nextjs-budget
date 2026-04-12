@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Badge } from "@/components/ui/badge"
+import { useTranslations } from "next-intl"
 import {
   Card,
   CardAction,
@@ -10,9 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { TrendingUpIcon, TrendingDownIcon } from "lucide-react"
 import { Skeleton } from "./ui/skeleton"
-import { text } from "node:stream/consumers"
 
 export interface DateTexts {
   today: string;
@@ -28,26 +25,19 @@ export interface DateValues {
 }
 
 export function SectionCards({ texts, values }: { texts: DateTexts, values: DateValues }) {
+  const t = useTranslations("Dashboard")
   return (
     <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 dark:*:data-[slot=card]:bg-card">
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Today</CardDescription>
+          <CardDescription>{t("today")}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl whitespace-pre-line">
             {values.today}
           </CardTitle>
-          {/* <CardAction>
-            <Badge variant="outline">
-              <TrendingUpIcon
-              />
-              +12.5%
-            </Badge>
-          </CardAction> */}
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Total amount today{" "}
-            {/* <TrendingUpIcon className="size-4" /> */}
+            {t("totalAmountToday")}
           </div>
           <div className="text-muted-foreground">
             {texts.today}
@@ -56,22 +46,14 @@ export function SectionCards({ texts, values }: { texts: DateTexts, values: Date
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Current month</CardDescription>
+          <CardDescription>{t("currentMonth")}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl whitespace-pre-line">
             {values.month}
           </CardTitle>
-          {/* <CardAction>
-            <Badge variant="outline">
-              <TrendingDownIcon
-              />
-              -20%
-            </Badge>
-          </CardAction> */}
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Total amount for the current month{" "}
-            {/* <TrendingDownIcon className="size-4" /> */}
+            {t("totalAmountMonth")}
           </div>
           <div className="text-muted-foreground">
             {texts.monthRange}
@@ -80,22 +62,14 @@ export function SectionCards({ texts, values }: { texts: DateTexts, values: Date
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Transactions</CardDescription>
+          <CardDescription>{t("transactions")}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {values.transactions_number}
           </CardTitle>
-          {/* <CardAction>
-            <Badge variant="outline">
-              <TrendingUpIcon
-              />
-              +12.5%
-            </Badge>
-          </CardAction> */}
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Number of transactions{" "}
-            {/* <TrendingUpIcon className="size-4" /> */}
+            {t("numberOfTransactions")}
           </div>
           <div className="text-muted-foreground">
             {texts.monthRange}
@@ -104,24 +78,16 @@ export function SectionCards({ texts, values }: { texts: DateTexts, values: Date
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Items</CardDescription>
+          <CardDescription>{t("items")}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {values.items_number}
           </CardTitle>
-          {/* <CardAction>
-            <Badge variant="outline">
-              <TrendingUpIcon
-              />
-              +4.5%
-            </Badge>
-          </CardAction> */}
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Number of positions{" "}
-            {/* <TrendingUpIcon className="size-4" /> */}
+            {t("numberOfPositions")}
           </div>
-          <div className="text-muted-foreground">In transactions for {texts.month}</div>
+          <div className="text-muted-foreground">{t("inTransactionsFor", { month: texts.month })}</div>
         </CardFooter>
       </Card>
     </div>
@@ -129,19 +95,19 @@ export function SectionCards({ texts, values }: { texts: DateTexts, values: Date
 }
 
 export function SectionCardsSkeleton({ texts }: { texts: DateTexts }) {
+  const t = useTranslations("Dashboard")
   return (
     <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 dark:*:data-[slot=card]:bg-card">
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Today</CardDescription>
+          <CardDescription>{t("today")}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             <Skeleton className="h-9 w-[120px]" />
           </CardTitle>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Total amount today{" "}
-            {/* <TrendingUpIcon className="size-4" /> */}
+            {t("totalAmountToday")}
           </div>
           <div className="text-muted-foreground">
             {texts.today}
@@ -150,15 +116,14 @@ export function SectionCardsSkeleton({ texts }: { texts: DateTexts }) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Current month</CardDescription>
+          <CardDescription>{t("currentMonth")}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             <Skeleton className="h-9 w-[180px]" />
           </CardTitle>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Total amount for the current month{" "}
-            {/* <TrendingDownIcon className="size-4" /> */}
+            {t("totalAmountMonth")}
           </div>
           <div className="text-muted-foreground">
             {texts.monthRange}
@@ -167,15 +132,14 @@ export function SectionCardsSkeleton({ texts }: { texts: DateTexts }) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Transactions</CardDescription>
+          <CardDescription>{t("transactions")}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             <Skeleton className="h-9 w-[60px]" />
           </CardTitle>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Number of transactions{" "}
-            {/* <TrendingUpIcon className="size-4" /> */}
+            {t("numberOfTransactions")}
           </div>
           <div className="text-muted-foreground">
             {texts.monthRange}
@@ -184,17 +148,16 @@ export function SectionCardsSkeleton({ texts }: { texts: DateTexts }) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Items</CardDescription>
+          <CardDescription>{t("items")}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             <Skeleton className="h-9 w-[90px]" />
           </CardTitle>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Number of positions{" "}
-            {/* <TrendingUpIcon className="size-4" /> */}
+            {t("numberOfPositions")}
           </div>
-          <div className="text-muted-foreground">In transactions for {texts.month}</div>
+          <div className="text-muted-foreground">{t("inTransactionsFor", { month: texts.month })}</div>
         </CardFooter>
       </Card>
     </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations, useLocale } from "next-intl"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -37,6 +38,8 @@ interface DataItem {
 
 export function ChartAreaInteractive({ items }: { items: DataItem[] }) {
   const isMobile = useIsMobile()
+  const t = useTranslations("Dashboard")
+  const locale = useLocale()
   const [timeRange, setTimeRange] = React.useState("90d")
 
   // --- 1. Агрегация данных и извлечение валют ---
@@ -100,9 +103,9 @@ export function ChartAreaInteractive({ items }: { items: DataItem[] }) {
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Activity by Currency</CardTitle>
+        <CardTitle>{t("activityByCurrency")}</CardTitle>
         <CardDescription>
-          Showing total volume for {currencyKeys.join(", ")}
+          {t("showingVolume", { currencies: currencyKeys.join(", ") })}
         </CardDescription>
         <CardAction>
           <ToggleGroup
@@ -112,9 +115,9 @@ export function ChartAreaInteractive({ items }: { items: DataItem[] }) {
             variant="outline"
             className="hidden @[767px]/card:flex"
           >
-            <ToggleGroupItem value="90d">3 Months</ToggleGroupItem>
-            <ToggleGroupItem value="30d">30 Days</ToggleGroupItem>
-            <ToggleGroupItem value="7d">7 Days</ToggleGroupItem>
+            <ToggleGroupItem value="90d">{t("threeMonths")}</ToggleGroupItem>
+            <ToggleGroupItem value="30d">{t("thirtyDays")}</ToggleGroupItem>
+            <ToggleGroupItem value="7d">{t("sevenDays")}</ToggleGroupItem>
           </ToggleGroup>
           {/* Mobile Select можно добавить по аналогии */}
         </CardAction>
@@ -149,7 +152,7 @@ export function ChartAreaInteractive({ items }: { items: DataItem[] }) {
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
-                return new Date(value).toLocaleDateString("en-US", {
+                return new Date(value).toLocaleDateString(locale, {
                   month: "short",
                   day: "numeric",
                 })
