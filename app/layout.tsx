@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next"
 import { Geist, Geist_Mono, Inter } from "next/font/google"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
@@ -119,6 +120,7 @@ export default async function RootLayout({
           </DirectionProvider>
         </NextIntlClientProvider>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   )
