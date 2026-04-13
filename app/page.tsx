@@ -5,10 +5,81 @@ import { useLocale, useTranslations } from "next-intl"
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { ChartBarIcon, CurrencyDollarIcon, ShieldCheckIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "UnitCore Budget",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Web",
+  url: "https://budget.unitcore.io",
+  description:
+    "Track every expense, manage budgets, and understand your spending patterns. Free budget tracker app with smart analytics, multi-currency support, and 40+ categories.",
+  offers: [
+    {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "EUR",
+      name: "Free",
+      description: "Manual transaction entry, dashboard analytics, multi-currency support, unlimited history",
+    },
+    {
+      "@type": "Offer",
+      price: "1.00",
+      priceCurrency: "EUR",
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        price: "1.00",
+        priceCurrency: "EUR",
+        referenceQuantity: {
+          "@type": "QuantitativeValue",
+          value: "1",
+          unitCode: "WEE",
+        },
+      },
+      name: "Weekly Premium",
+      description: "Receipt scanning, smart text input, 40+ auto-detected categories",
+    },
+    {
+      "@type": "Offer",
+      price: "40.00",
+      priceCurrency: "EUR",
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        price: "40.00",
+        priceCurrency: "EUR",
+        referenceQuantity: {
+          "@type": "QuantitativeValue",
+          value: "1",
+          unitCode: "ANN",
+        },
+      },
+      name: "Yearly Premium",
+      description: "All premium features with 23% savings",
+    },
+  ],
+  featureList: [
+    "Expense tracking with 40+ categories",
+    "Smart analytics and interactive charts",
+    "Multi-currency support (EUR, USD, and more)",
+    "Receipt photo scanning",
+    "Smart text input for transactions",
+    "Available in English, Arabic, and Russian",
+  ],
+  inLanguage: ["en", "ar", "ru"],
+  author: {
+    "@type": "Person",
+    name: "Denis Popov",
+  },
+}
+
 export default function Page() {
   return (
     <div className="flex min-h-svh">
       <div className="flex w-full flex-col text-sm leading-loose">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <div className="absolute top-4 end-4 z-10">
           <LanguagePicker />
         </div>
