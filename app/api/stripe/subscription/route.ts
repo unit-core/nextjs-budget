@@ -14,14 +14,7 @@ export async function GET() {
       return NextResponse.json({ isPremium: false, isTrial: false, trialDaysLeft: 0 })
     }
 
-    // Check trial: user.created_at is set by Supabase Auth on registration
-    const createdAt = new Date(user.created_at)
-    const now = new Date()
-    const daysSinceRegistration = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24))
-    const trialDaysLeft = Math.max(0, TRIAL_DAYS - daysSinceRegistration)
-    const isTrial = trialDaysLeft > 0
-
-    // Try Stripe Sync Engine tables
+    // Try Stripe Sync Engine tables first
     const { data: syncData, error: syncError } = await supabase
       .from('stripe_subscriptions')
       .select(`
@@ -50,11 +43,14 @@ export async function GET() {
       if (customers.data.length > 0) {
         const subscriptions = await stripe.subscriptions.list({
           customer: customers.data[0].id,
-          status: 'active',
           limit: 1,
         })
 
-        if (subscriptions.data.length > 0) {
+        const activeSub = subscriptions.data.find(
+          (s) => s.status === 'active' || s.status === 'trialing'
+        )
+
+        if (activeSub) {
           return NextResponse.json({ isPremium: true, isTrial: false, trialDaysLeft: 0 })
         }
       }
@@ -62,7 +58,13 @@ export async function GET() {
       // Stripe unavailable — fall through to trial check
     }
 
-    // No active subscription — grant access if within trial period
+    // No active subscription — check registration-based free trial
+    const createdAt = new Date(user.created_at)
+    const now = new Date()
+    const daysSinceRegistration = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24))
+    const trialDaysLeft = Math.max(0, TRIAL_DAYS - daysSinceRegistration)
+    const isTrial = trialDaysLeft > 0
+
     return NextResponse.json({
       isPremium: isTrial,
       isTrial,
