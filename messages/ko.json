@@ -1,0 +1,367 @@
+{
+  "Settings": {
+    "language": "언어",
+    "layoutDirection": "레이아웃 방향",
+    "logOut": "로그아웃",
+    "upgradeToPremium": "프리미엄으로 업그레이드",
+    "manageSubscription": "구독 관리"
+  },
+  "Subscription": {
+    "premiumFeature": "프리미엄 기능",
+    "upgradeToPremium": "프리미엄으로 업그레이드",
+    "trialActive": "무료 체험 — {days, plural, other {#일}} 남음"
+  },
+  "Pricing": {
+    "title": "요금제",
+    "headline": "나에게 맞는 플랜을 선택하세요",
+    "subtitle": "이미지 업로드와 스마트 텍스트 입력으로 더 빠르게 지출을 추적할 수 있는 프리미엄 기능을 잠금 해제하세요.",
+    "weeklyName": "주간",
+    "yearlyName": "연간",
+    "perWeek": "/주",
+    "perYear": "/년",
+    "plusTax": "+ 해당 세금",
+    "weeklyDescription": "유연한 주간 플랜으로 프리미엄 기능을 체험하세요. 언제든지 취소 가능합니다.",
+    "yearlyDescription": "최고의 가치 — 주간 플랜 대비 20% 이상 절약하세요.",
+    "savePercent": "23% 절약",
+    "featureImageUpload": "영수증 사진으로 거래 생성",
+    "featureTextInput": "텍스트 설명으로 거래 생성",
+    "featureAllCategories": "40개 이상의 자동 감지 카테고리",
+    "featureBasicSupport": "이메일 지원",
+    "featurePrioritySupport": "우선 이메일 지원",
+    "featureEarlyAccess": "새로운 기능 조기 이용",
+    "getStarted": "시작하기",
+    "redirecting": "리디렉션 중...",
+    "manageSubscription": "구독 관리",
+    "alreadyPremium": "이미 활성화된 프리미엄 구독이 있습니다!",
+    "freeIncluded": "무료 플랜 포함 항목: 수동 거래 입력, 대시보드 분석, 다중 통화 지원, 무제한 기록.",
+    "backToDashboard": "대시보드로 돌아가기"
+  },
+  "Dashboard": {
+    "title": "대시보드",
+    "category": "카테고리",
+    "amount": "금액",
+    "noResults": "결과가 없습니다.",
+    "loading": "로딩 중...",
+    "transactions": "거래",
+    "today": "오늘",
+    "currentMonth": "이번 달",
+    "totalAmountToday": "오늘 총 금액",
+    "totalAmountMonth": "이번 달 총 금액",
+    "numberOfTransactions": "거래 수",
+    "numberOfPositions": "항목 수",
+    "inTransactionsFor": "{month} 거래 내역",
+    "items": "항목",
+    "activityByCurrency": "통화별 활동",
+    "showingVolume": "{currencies}의 총 거래량 표시",
+    "threeMonths": "3개월",
+    "thirtyDays": "30일",
+    "sevenDays": "7일",
+    "allTransactions": "모든 거래",
+    "columns": "열",
+    "header": "헤더",
+    "executedAt": "실행일",
+    "status": "상태",
+    "type": "유형",
+    "delete": "삭제",
+    "rowsPerPage": "페이지당 행 수",
+    "pageOf": "페이지 {current} / {total}",
+    "pendingTransactions": "대기 중인 거래",
+    "confirm": "확인",
+    "transactionDeleted": "거래가 삭제되었습니다",
+    "transactionDeletedDesc": "모든 관련 리소스도 삭제되었습니다",
+    "transactionsConfirmed": "거래가 확인되었습니다",
+    "transactionsConfirmedDesc": "{count}건의 거래가 확인됨으로 표시되었습니다",
+    "transactionsDeleted": "거래가 삭제되었습니다",
+    "transactionsDeletedDesc": "{count}건의 거래가 삭제되었습니다",
+    "addTransaction": "거래 추가",
+    "newTransaction": "새 거래",
+    "newTransactionDesc": "새 거래를 수동으로 생성합니다.",
+    "editTransactionDesc": "거래 세부 정보와 항목을 편집합니다.",
+    "name": "이름",
+    "somethingWentWrong": "거래를 불러오는 중 문제가 발생했습니다."
+  },
+  "Categories": {
+    "RENT": {
+      "name": "임대료",
+      "description": "아파트 또는 주택 임대료 — 예: 월 임대료 납부"
+    },
+    "MORTGAGE": {
+      "name": "주택담보대출",
+      "description": "주택 대출 상환 — 예: 월 주택담보대출 납부"
+    },
+    "UTILITIES": {
+      "name": "공과금",
+      "description": "전기, 수도, 가스, 난방 — 예: 전기 요금, 수도 요금"
+    },
+    "INTERNET": {
+      "name": "인터넷 & TV",
+      "description": "인터넷, 통신 요금, TV — 예: 광섬유, 휴대폰 요금제, 넷플릭스"
+    },
+    "HOUSEHOLD": {
+      "name": "가정용품",
+      "description": "생활용품 및 청소용품 — 예: 세제, 키친타올, 전구"
+    },
+    "GROCERIES": {
+      "name": "식료품",
+      "description": "슈퍼마켓 및 식품 쇼핑 — 예: 마트, 주간 장보기"
+    },
+    "RESTAURANTS": {
+      "name": "음식점 & 카페",
+      "description": "외식 및 카페 — 예: 레스토랑 점심, 친구와 저녁 식사"
+    },
+    "DELIVERY": {
+      "name": "음식 배달",
+      "description": "배달 음식 및 음식 앱 — 예: 배달의민족, 쿠팡이츠, 요기요"
+    },
+    "PUBLIC_TRANSPORT": {
+      "name": "대중교통",
+      "description": "버스, 지하철, 기차 — 예: 정기권, 편도 승차권, 트램"
+    },
+    "TAXI": {
+      "name": "택시 & 승차",
+      "description": "택시 및 승차 공유 — 예: 카카오택시, 공항 이동"
+    },
+    "FUEL": {
+      "name": "연료",
+      "description": "주유소 주유 — 예: 휘발유, 경유, 전기차 충전"
+    },
+    "CAR_SERVICE": {
+      "name": "차량 정비",
+      "description": "차량 수리 및 관리 — 예: 엔진오일 교환, 타이어 교체, 세차, 검사"
+    },
+    "PARKING": {
+      "name": "주차 & 통행료",
+      "description": "주차 요금 및 통행료 — 예: 주차장, 노상 주차, 고속도로 통행료"
+    },
+    "MEDICAL": {
+      "name": "의료 & 진료",
+      "description": "병원 방문 및 검사 — 예: 치과, 혈액 검사, 전문의 상담"
+    },
+    "PHARMACY": {
+      "name": "약국",
+      "description": "의약품 및 건강 제품 — 예: 처방약, 비타민, 구급상자"
+    },
+    "PERSONAL_CARE": {
+      "name": "개인 관리",
+      "description": "미용 및 관리 — 예: 이발, 스킨케어, 화장품, 미용실"
+    },
+    "SPORT": {
+      "name": "스포츠 & 피트니스",
+      "description": "체육관 및 스포츠 — 예: 헬스장 회원권, 요가 수업, 러닝화, 수영장 이용권"
+    },
+    "SUBSCRIPTIONS": {
+      "name": "구독",
+      "description": "정기 디지털 서비스 — 예: 넷플릭스, 스포티파이, iCloud, 유튜브 프리미엄"
+    },
+    "HOBBIES": {
+      "name": "취미",
+      "description": "개인 관심사 및 공예 — 예: 카메라 장비, 그림 용품, 게임"
+    },
+    "EVENTS": {
+      "name": "영화 & 이벤트",
+      "description": "엔터테인먼트 외출 — 예: 영화 티켓, 콘서트, 공연, 전시회"
+    },
+    "TRAVEL": {
+      "name": "여행 & 숙박",
+      "description": "여행 및 휴가 — 예: 항공편, 에어비앤비, 호텔, 여행자 보험"
+    },
+    "CLOTHING": {
+      "name": "의류 & 신발",
+      "description": "의복 및 액세서리 — 예: 재킷, 운동화, 시계, 선글라스"
+    },
+    "ELECTRONICS": {
+      "name": "전자기기 & 가젯",
+      "description": "기술 및 기기 — 예: 핸드폰, 노트북, 헤드폰, 충전기"
+    },
+    "PETS": {
+      "name": "반려동물",
+      "description": "반려동물 관리 및 용품 — 예: 사료, 동물병원, 고양이 모래, 미용"
+    },
+    "EDUCATION": {
+      "name": "강좌 & 교육",
+      "description": "학습 및 자기 개발 — 예: 온라인 강좌, 어학 수업, 워크숍"
+    },
+    "BOOKS": {
+      "name": "도서",
+      "description": "책 및 독서 — 예: 전자책, 오디오북, 잡지 구독"
+    },
+    "TAXES": {
+      "name": "세금",
+      "description": "정부 세금 — 예: 소득세, 재산세, 부가세 환급"
+    },
+    "INSURANCE": {
+      "name": "보험",
+      "description": "보험료 — 예: 건강보험, 자동차보험, 주택보험"
+    },
+    "LOANS": {
+      "name": "대출 & 부채",
+      "description": "대출 상환 — 예: 학자금 대출, 개인 대출, 신용카드 부채"
+    },
+    "BANK_FEES": {
+      "name": "은행 수수료",
+      "description": "은행 수수료 — 예: 계좌 유지비, ATM 수수료, 송금 수수료"
+    },
+    "SALARY": {
+      "name": "급여",
+      "description": "근로 소득 — 예: 월급, 보너스, 초과근무 수당"
+    },
+    "FREELANCE": {
+      "name": "프리랜서 & 프로젝트",
+      "description": "자영업 소득 — 예: 클라이언트 프로젝트, 컨설팅, 긱 워크"
+    },
+    "INVESTMENTS": {
+      "name": "투자 수익",
+      "description": "투자 수익 — 예: 주식 배당금, 암호화폐 수익, 채권 이자"
+    },
+    "RENTAL_INCOME": {
+      "name": "임대 수입",
+      "description": "부동산 임대 수입 — 예: 아파트 임대료 수령, 에어비앤비 수익"
+    },
+    "CASHBACK": {
+      "name": "캐시백 & 환불",
+      "description": "돈 돌려받기 — 예: 신용카드 캐시백, 매장 환불, 리베이트"
+    },
+    "GIFTS": {
+      "name": "선물",
+      "description": "금전적 선물 — 예: 생일 선물, 결혼 축의금, 명절 용돈"
+    },
+    "SALES": {
+      "name": "물품 판매",
+      "description": "개인 소지품 판매 — 예: 중고 휴대폰 판매, 중고 거래, 당근마켓"
+    },
+    "BUSINESS_EXPENSES": {
+      "name": "사업 비용",
+      "description": "업무 관련 비용 — 예: 사무용품, 비즈니스 점심, 공유 오피스"
+    },
+    "SOFTWARE_LICENSES": {
+      "name": "소프트웨어 & 앱",
+      "description": "유료 소프트웨어 — 예: Adobe, Microsoft 365, 도메인 갱신, 호스팅"
+    },
+    "HOME_IMPROVEMENT": {
+      "name": "주택 개선",
+      "description": "리모델링 및 가구 — 예: 새 가구, 페인트, 배관 수리, IKEA"
+    },
+    "SAVINGS": {
+      "name": "저축",
+      "description": "저축한 돈 — 예: 적금 이체, 비상 자금"
+    },
+    "REFUNDS": {
+      "name": "환불",
+      "description": "반환된 결제 — 예: 제품 반품, 서비스 취소, 과다 청구 환불"
+    },
+    "FINES": {
+      "name": "벌금",
+      "description": "과태료 — 예: 주차 위반 딱지, 과속 벌금, 연체 수수료"
+    },
+    "CHARITY": {
+      "name": "기부",
+      "description": "기부금 — 예: 적십자, 종교 기부, 크라우드펀딩"
+    },
+    "UNKNOWN": {
+      "name": "기타",
+      "description": "미분류 — 다른 카테고리에 해당하지 않는 거래"
+    }
+  },
+  "Auth": {
+    "login": "로그인",
+    "loginDescription": "계정에 로그인하려면 아래에 이메일을 입력하세요",
+    "email": "이메일",
+    "emailPlaceholder": "m@example.com",
+    "password": "비밀번호",
+    "forgotPassword": "비밀번호를 잊으셨나요?",
+    "loggingIn": "로그인 중...",
+    "orContinueWith": "또는 다음으로 계속",
+    "continueWithGoogle": "Google로 계속",
+    "continueWithApple": "Apple로 계속",
+    "noAccount": "계정이 없으신가요?",
+    "signUp": "회원가입",
+    "signUpTitle": "회원가입",
+    "signUpDescription": "새 계정 만들기",
+    "repeatPassword": "비밀번호 확인",
+    "creatingAccount": "계정 생성 중...",
+    "hasAccount": "이미 계정이 있으신가요?",
+    "passwordsNotMatch": "비밀번호가 일치하지 않습니다",
+    "resetPassword": "비밀번호 재설정",
+    "resetPasswordDescription": "이메일을 입력하시면 비밀번호 재설정 링크를 보내드립니다",
+    "sending": "전송 중...",
+    "sendResetEmail": "재설정 이메일 보내기",
+    "checkEmail": "이메일을 확인하세요",
+    "resetInstructionsSent": "비밀번호 재설정 안내가 전송되었습니다",
+    "resetEmailMessage": "이메일과 비밀번호로 등록하셨다면 비밀번호 재설정 이메일을 받으실 수 있습니다.",
+    "newPassword": "새 비밀번호",
+    "newPasswordDescription": "아래에 새 비밀번호를 입력해 주세요.",
+    "saving": "저장 중...",
+    "saveNewPassword": "새 비밀번호 저장",
+    "signUpSuccessTitle": "가입해 주셔서 감사합니다!",
+    "signUpSuccessDescription": "이메일을 확인하여 인증해 주세요",
+    "signUpSuccessMessage": "회원가입이 완료되었습니다. 로그인하기 전에 이메일을 확인하여 계정을 인증해 주세요.",
+    "errorTitle": "죄송합니다, 문제가 발생했습니다.",
+    "errorCode": "오류 코드: {code}",
+    "errorUnspecified": "알 수 없는 오류가 발생했습니다."
+  },
+  "HomePage": {
+    "whatsNew": "무료 사용",
+    "justShipped": "오늘부터 추적 시작",
+    "title": "내 돈을 직접 관리하세요",
+    "description": "모든 지출을 추적하고, 수입을 모니터링하고, 돈이 어디로 가는지 파악하세요. 더 많이 절약하고 더 현명하게 소비할 수 있도록 도와주는 간편한 가계부입니다.",
+    "getStarted": "무료로 시작",
+    "learnMore": "사용 방법 보기",
+    "featuresTitle": "재정 관리에 필요한 모든 것",
+    "boostTitle": "추측을 그만하고 가계부를 시작하세요.",
+    "boostDescription": "소비 습관을 드디어 이해하게 된 수천 명의 사용자와 함께하세요. 몇 초 만에 무료 계정을 만들고 재정 관리의 첫 걸음을 내딛으세요.",
+    "alreadyHaveAccount": "이미 계정이 있으신가요? 로그인",
+    "copyright": "© 2026 Denis Popov. All rights reserved."
+  },
+  "Features": {
+    "expenseTracking": "간편한 지출 추적",
+    "expenseTrackingDesc": "몇 초 만에 일일 지출을 기록하세요. 식료품, 임대료, 여행 등 40개 이상의 카테고리로 거래를 분류합니다.",
+    "smartAnalytics": "스마트 분석 & 차트",
+    "smartAnalyticsDesc": "인터랙티브 차트로 소비 패턴을 시각화하세요. 일별, 월별, 카테고리별 분석을 한눈에 확인할 수 있습니다.",
+    "multiCurrency": "다중 통화 지원",
+    "multiCurrencyDesc": "EUR, USD 및 기타 통화로 지출을 추적하세요. 여러 국가에서 돈을 관리하는 여행자와 해외 거주자에게 완벽합니다.",
+    "secureData": "안전 & 개인정보 보호",
+    "secureDataDesc": "귀하의 금융 데이터는 암호화되어 안전하게 저장됩니다. 제3자와 귀하의 정보를 공유하지 않습니다."
+  },
+  "EmptyState": {
+    "title": "돈 추적을 시작하세요",
+    "description": "아래에서 첫 번째 거래를 추가하고 차트, 카테고리, 월별 인사이트로 지출을 확인하세요.",
+    "stepLabel": "단계 {number}",
+    "step1Title": "거래 생성",
+    "step1Desc": "양식을 수동으로 작성하거나, 영수증 사진을 업로드하거나, 지출을 텍스트로 설명하세요 — 가장 쉬운 방법을 선택하세요.",
+    "step2Title": "저장하고 기다리기",
+    "step2Desc": "저장을 누르고 거래가 처리될 때까지 잠시 기다려 주세요. 이미지와 텍스트 입력은 자동으로 분류되며, 수동 입력은 선택한 카테고리가 사용됩니다.",
+    "step3Title": "대시보드 확인",
+    "step3Desc": "다시 돌아와서 대시보드를 살펴보세요 — 차트, 카테고리 분석, 월별 합계, 모든 거래 기록을 확인할 수 있습니다.",
+    "formTitle": "첫 번째 거래를 생성하세요",
+    "formDescription": "영수증을 업로드하거나, 텍스트로 설명하거나, 양식을 수동으로 작성하세요.",
+    "tabImage": "이미지",
+    "tabText": "텍스트",
+    "tabManual": "수동",
+    "textPlaceholder": "지출 내용을 입력하세요...",
+    "submit": "제출",
+    "transactionCreated": "거래가 생성되었습니다",
+    "processingDescription": "시스템이 이미 처리 중입니다"
+  },
+  "NavMain": {
+    "quickCreate": "빠른 생성",
+    "createTransactions": "거래 생성",
+    "drawerDescription": "영수증을 업로드하거나 자유롭게 지출을 설명하세요."
+  },
+  "TransactionForm": {
+    "name": "거래 이름",
+    "namePlaceholder": "예: 주간 장보기",
+    "type": "유형",
+    "expense": "지출",
+    "income": "수입",
+    "date": "날짜",
+    "items": "항목",
+    "addItem": "항목 추가",
+    "removeItem": "삭제",
+    "itemNamePlaceholder": "항목 이름",
+    "saving": "저장 중...",
+    "create": "거래 생성",
+    "update": "거래 수정",
+    "transactionCreated": "거래가 생성되었습니다",
+    "transactionUpdated": "거래가 수정되었습니다"
+  }
+}

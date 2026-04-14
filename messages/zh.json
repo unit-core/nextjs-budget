@@ -1,0 +1,367 @@
+{
+  "Settings": {
+    "language": "语言",
+    "layoutDirection": "布局方向",
+    "logOut": "退出登录",
+    "upgradeToPremium": "升级到高级版",
+    "manageSubscription": "管理订阅"
+  },
+  "Subscription": {
+    "premiumFeature": "高级功能",
+    "upgradeToPremium": "升级到高级版",
+    "trialActive": "免费试用 — 剩余 {days, plural, other {# 天}}"
+  },
+  "Pricing": {
+    "title": "定价",
+    "headline": "选择适合您的方案",
+    "subtitle": "解锁高级功能，通过图片上传和智能文本输入更快地追踪支出。",
+    "weeklyName": "每周",
+    "yearlyName": "每年",
+    "perWeek": "/周",
+    "perYear": "/年",
+    "plusTax": "+ 适用税费",
+    "weeklyDescription": "通过灵活的每周方案体验高级功能。随时取消。",
+    "yearlyDescription": "最佳性价比 — 与每周方案相比节省超过20%。",
+    "savePercent": "节省23%",
+    "featureImageUpload": "通过收据照片创建交易",
+    "featureTextInput": "通过文本描述创建交易",
+    "featureAllCategories": "40+ 自动检测类别",
+    "featureBasicSupport": "邮件支持",
+    "featurePrioritySupport": "优先邮件支持",
+    "featureEarlyAccess": "抢先体验新功能",
+    "getStarted": "开始使用",
+    "redirecting": "正在跳转...",
+    "manageSubscription": "管理订阅",
+    "alreadyPremium": "您已拥有有效的高级订阅！",
+    "freeIncluded": "免费方案包括：手动录入交易、仪表盘分析、多币种支持和无限历史记录。",
+    "backToDashboard": "返回仪表盘"
+  },
+  "Dashboard": {
+    "title": "仪表盘",
+    "category": "类别",
+    "amount": "金额",
+    "noResults": "无结果。",
+    "loading": "加载中...",
+    "transactions": "交易",
+    "today": "今天",
+    "currentMonth": "本月",
+    "totalAmountToday": "今日总金额",
+    "totalAmountMonth": "本月总金额",
+    "numberOfTransactions": "交易数量",
+    "numberOfPositions": "条目数量",
+    "inTransactionsFor": "{month}的交易",
+    "items": "条目",
+    "activityByCurrency": "按币种活动",
+    "showingVolume": "显示{currencies}的总交易量",
+    "threeMonths": "3个月",
+    "thirtyDays": "30天",
+    "sevenDays": "7天",
+    "allTransactions": "所有交易",
+    "columns": "列",
+    "header": "表头",
+    "executedAt": "执行时间",
+    "status": "状态",
+    "type": "类型",
+    "delete": "删除",
+    "rowsPerPage": "每页行数",
+    "pageOf": "第 {current} 页，共 {total} 页",
+    "pendingTransactions": "待处理交易",
+    "confirm": "确认",
+    "transactionDeleted": "交易已删除",
+    "transactionDeletedDesc": "所有相关资源也已移除",
+    "transactionsConfirmed": "交易已确认",
+    "transactionsConfirmedDesc": "{count} 笔交易已标记为已确认",
+    "transactionsDeleted": "交易已删除",
+    "transactionsDeletedDesc": "{count} 笔交易已删除",
+    "addTransaction": "添加交易",
+    "newTransaction": "新交易",
+    "newTransactionDesc": "手动创建新交易。",
+    "editTransactionDesc": "编辑交易详情和条目。",
+    "name": "名称",
+    "somethingWentWrong": "加载交易时出现问题。"
+  },
+  "Categories": {
+    "RENT": {
+      "name": "房租",
+      "description": "公寓或房屋租金 — 如月租付款"
+    },
+    "MORTGAGE": {
+      "name": "房贷",
+      "description": "住房贷款还款 — 如每月房贷分期"
+    },
+    "UTILITIES": {
+      "name": "水电燃气",
+      "description": "电费、水费、燃气费、供暖费 — 如电费账单、水费账单"
+    },
+    "INTERNET": {
+      "name": "网络与电视",
+      "description": "网络、手机套餐、电视 — 如光纤宽带、手机套餐、Netflix"
+    },
+    "HOUSEHOLD": {
+      "name": "家居用品",
+      "description": "家庭用品和清洁用品 — 如洗涤剂、纸巾、灯泡"
+    },
+    "GROCERIES": {
+      "name": "食品杂货",
+      "description": "超市和食品采购 — 如超市、每周食品采购"
+    },
+    "RESTAURANTS": {
+      "name": "餐厅与咖啡厅",
+      "description": "外出就餐和咖啡厅 — 如餐厅午餐、朋友聚餐"
+    },
+    "DELIVERY": {
+      "name": "外卖配送",
+      "description": "外卖和送餐应用 — 如美团外卖、饿了么"
+    },
+    "PUBLIC_TRANSPORT": {
+      "name": "公共交通",
+      "description": "公交、地铁、火车 — 如月票、单程票、有轨电车"
+    },
+    "TAXI": {
+      "name": "出租车与网约车",
+      "description": "出租车和网约车 — 如滴滴出行、机场接送"
+    },
+    "FUEL": {
+      "name": "燃油",
+      "description": "加油站加油 — 如汽油、柴油、电动车充电"
+    },
+    "CAR_SERVICE": {
+      "name": "汽车保养",
+      "description": "汽车维修和保养 — 如换机油、换轮胎、洗车、年检"
+    },
+    "PARKING": {
+      "name": "停车与过路费",
+      "description": "停车费和过路费 — 如停车场、路边停车、高速过路费"
+    },
+    "MEDICAL": {
+      "name": "医疗与就医",
+      "description": "看病和检查 — 如牙科、验血、专家门诊"
+    },
+    "PHARMACY": {
+      "name": "药房",
+      "description": "药品和健康产品 — 如处方药、维生素、急救箱"
+    },
+    "PERSONAL_CARE": {
+      "name": "个人护理",
+      "description": "美容和个人护理 — 如理发、护肤品、化妆品"
+    },
+    "SPORT": {
+      "name": "运动与健身",
+      "description": "健身房和运动 — 如健身会员、瑜伽课、跑步鞋、游泳卡"
+    },
+    "SUBSCRIPTIONS": {
+      "name": "订阅服务",
+      "description": "定期数字服务 — 如Netflix、Spotify、iCloud、YouTube Premium"
+    },
+    "HOBBIES": {
+      "name": "爱好",
+      "description": "个人兴趣和手工 — 如摄影器材、绘画用品、游戏"
+    },
+    "EVENTS": {
+      "name": "影院与活动",
+      "description": "娱乐活动 — 如电影票、演唱会、话剧、展览"
+    },
+    "TRAVEL": {
+      "name": "旅行与住宿",
+      "description": "出行和度假 — 如机票、民宿、酒店、旅行保险"
+    },
+    "CLOTHING": {
+      "name": "服装与鞋类",
+      "description": "服饰和配饰 — 如外套、运动鞋、手表、太阳镜"
+    },
+    "ELECTRONICS": {
+      "name": "电子产品",
+      "description": "科技产品和设备 — 如手机、笔记本电脑、耳机、充电器"
+    },
+    "PETS": {
+      "name": "宠物",
+      "description": "宠物护理和用品 — 如狗粮、宠物就医、猫砂、宠物美容"
+    },
+    "EDUCATION": {
+      "name": "课程与培训",
+      "description": "学习和发展 — 如在线课程、语言课、研讨会"
+    },
+    "BOOKS": {
+      "name": "书籍",
+      "description": "书籍和阅读 — 如电子书、有声书、杂志订阅"
+    },
+    "TAXES": {
+      "name": "税费",
+      "description": "政府税费 — 如所得税、房产税、增值税退税"
+    },
+    "INSURANCE": {
+      "name": "保险",
+      "description": "保险费用 — 如医疗保险、车险、家庭保险"
+    },
+    "LOANS": {
+      "name": "贷款与债务",
+      "description": "贷款偿还 — 如助学贷款、个人贷款、信用卡债务"
+    },
+    "BANK_FEES": {
+      "name": "银行手续费",
+      "description": "银行收费 — 如账户管理费、ATM手续费、转账手续费"
+    },
+    "SALARY": {
+      "name": "工资",
+      "description": "工作收入 — 如月薪、奖金、加班费"
+    },
+    "FREELANCE": {
+      "name": "自由职业",
+      "description": "自由职业收入 — 如客户项目、咨询、零工"
+    },
+    "INVESTMENTS": {
+      "name": "投资收益",
+      "description": "投资收益 — 如股息、加密货币利润、债券利息"
+    },
+    "RENTAL_INCOME": {
+      "name": "租金收入",
+      "description": "房产出租收入 — 如收到的公寓租金、民宿收入"
+    },
+    "CASHBACK": {
+      "name": "返现与退款",
+      "description": "返还的资金 — 如信用卡返现、商店退款、折扣返利"
+    },
+    "GIFTS": {
+      "name": "礼金",
+      "description": "礼金 — 如生日礼物、婚礼礼金、节日红包"
+    },
+    "SALES": {
+      "name": "物品出售",
+      "description": "出售个人物品 — 如在二手平台卖手机、车库甩卖、闲鱼"
+    },
+    "BUSINESS_EXPENSES": {
+      "name": "商业支出",
+      "description": "工作相关费用 — 如办公用品、商务午餐、共享办公空间"
+    },
+    "SOFTWARE_LICENSES": {
+      "name": "软件与应用",
+      "description": "付费软件 — 如Adobe、Microsoft 365、域名续费、服务器托管"
+    },
+    "HOME_IMPROVEMENT": {
+      "name": "家居装修",
+      "description": "装修和家具 — 如新家具、油漆、管道维修、宜家"
+    },
+    "SAVINGS": {
+      "name": "储蓄",
+      "description": "存起来的钱 — 如转入储蓄账户、应急基金"
+    },
+    "REFUNDS": {
+      "name": "退款",
+      "description": "退回的款项 — 如商品退货、取消服务、多收费退还"
+    },
+    "FINES": {
+      "name": "罚款",
+      "description": "罚款 — 如停车罚单、超速罚款、逾期缴费罚金"
+    },
+    "CHARITY": {
+      "name": "慈善捐赠",
+      "description": "捐款 — 如红十字会、寺庙/教堂捐赠、众筹捐助"
+    },
+    "UNKNOWN": {
+      "name": "其他",
+      "description": "未分类 — 不属于其他类别的交易"
+    }
+  },
+  "Auth": {
+    "login": "登录",
+    "loginDescription": "请在下方输入您的邮箱以登录账户",
+    "email": "邮箱",
+    "emailPlaceholder": "m@example.com",
+    "password": "密码",
+    "forgotPassword": "忘记密码？",
+    "loggingIn": "登录中...",
+    "orContinueWith": "或通过以下方式继续",
+    "continueWithGoogle": "使用 Google 继续",
+    "continueWithApple": "使用 Apple 继续",
+    "noAccount": "还没有账户？",
+    "signUp": "注册",
+    "signUpTitle": "注册",
+    "signUpDescription": "创建新账户",
+    "repeatPassword": "确认密码",
+    "creatingAccount": "正在创建账户...",
+    "hasAccount": "已有账户？",
+    "passwordsNotMatch": "两次输入的密码不一致",
+    "resetPassword": "重置密码",
+    "resetPasswordDescription": "请输入您的邮箱，我们将向您发送重置密码的链接",
+    "sending": "发送中...",
+    "sendResetEmail": "发送重置邮件",
+    "checkEmail": "请查收邮件",
+    "resetInstructionsSent": "密码重置说明已发送",
+    "resetEmailMessage": "如果您使用邮箱和密码注册，您将收到一封密码重置邮件。",
+    "newPassword": "新密码",
+    "newPasswordDescription": "请在下方输入您的新密码。",
+    "saving": "保存中...",
+    "saveNewPassword": "保存新密码",
+    "signUpSuccessTitle": "感谢您的注册！",
+    "signUpSuccessDescription": "请查收邮件进行确认",
+    "signUpSuccessMessage": "您已成功注册。请查收邮件确认您的账户后再登录。",
+    "errorTitle": "抱歉，出现了问题。",
+    "errorCode": "错误代码：{code}",
+    "errorUnspecified": "发生了未知错误。"
+  },
+  "HomePage": {
+    "whatsNew": "免费使用",
+    "justShipped": "立即开始记账",
+    "title": "掌控您的财务",
+    "description": "追踪每笔支出，监控您的收入，了解您的资金去向。简单的预算管理，帮助您存更多、花更聪明。",
+    "getStarted": "免费开始",
+    "learnMore": "了解工作原理",
+    "featuresTitle": "管理财务所需的一切",
+    "boostTitle": "不再猜测，开始预算。",
+    "boostDescription": "加入数千名终于了解自己消费习惯的用户。几秒钟即可创建免费账户，迈出实现财务清晰的第一步。",
+    "alreadyHaveAccount": "已有账户？登录",
+    "copyright": "© 2026 Denis Popov。保留所有权利。"
+  },
+  "Features": {
+    "expenseTracking": "轻松追踪支出",
+    "expenseTrackingDesc": "几秒钟内记录您的日常开支。将交易分类到40多个类别中，如食品杂货、房租、旅行等。",
+    "smartAnalytics": "智能分析与图表",
+    "smartAnalyticsDesc": "通过交互式图表可视化您的消费模式。一目了然地查看每日、每月和分类统计。",
+    "multiCurrency": "多币种支持",
+    "multiCurrencyDesc": "支持欧元、美元和其他货币的支出追踪。非常适合跨国管理资金的旅行者和海外人士。",
+    "secureData": "安全与隐私",
+    "secureDataDesc": "您的财务数据经过加密并安全存储。我们绝不会将您的信息分享给第三方。"
+  },
+  "EmptyState": {
+    "title": "开始追踪您的资金",
+    "description": "在下方添加您的第一笔交易，通过图表、分类和月度分析直观了解您的消费情况。",
+    "stepLabel": "步骤 {number}",
+    "step1Title": "创建交易",
+    "step1Desc": "手动填写表单、上传收据照片，或直接用文字描述您的支出 — 选择最方便的方式。",
+    "step2Title": "保存并等待",
+    "step2Desc": "点击保存，稍等片刻我们会处理您的交易。图片和文字录入会自动分类 — 手动录入使用您选择的类别。",
+    "step3Title": "查看仪表盘",
+    "step3Desc": "返回仪表盘浏览 — 查看图表、分类统计、月度汇总和所有交易的完整历史记录。",
+    "formTitle": "创建您的第一笔交易",
+    "formDescription": "上传收据、用文字描述，或手动填写表单。",
+    "tabImage": "图片",
+    "tabText": "文本",
+    "tabManual": "手动",
+    "textPlaceholder": "输入您的消费内容...",
+    "submit": "提交",
+    "transactionCreated": "交易已创建",
+    "processingDescription": "系统正在处理中"
+  },
+  "NavMain": {
+    "quickCreate": "快速创建",
+    "createTransactions": "创建交易",
+    "drawerDescription": "上传您的收据或用自己的话描述支出。"
+  },
+  "TransactionForm": {
+    "name": "交易名称",
+    "namePlaceholder": "如 每周食品采购",
+    "type": "类型",
+    "expense": "支出",
+    "income": "收入",
+    "date": "日期",
+    "items": "条目",
+    "addItem": "添加条目",
+    "removeItem": "移除",
+    "itemNamePlaceholder": "条目名称",
+    "saving": "保存中...",
+    "create": "创建交易",
+    "update": "更新交易",
+    "transactionCreated": "交易已创建",
+    "transactionUpdated": "交易已更新"
+  }
+}

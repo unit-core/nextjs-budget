@@ -1,0 +1,367 @@
+{
+  "Settings": {
+    "language": "Idioma",
+    "layoutDirection": "Direção do Layout",
+    "logOut": "Sair",
+    "upgradeToPremium": "Assinar Premium",
+    "manageSubscription": "Gerenciar Assinatura"
+  },
+  "Subscription": {
+    "premiumFeature": "Recurso Premium",
+    "upgradeToPremium": "Assinar Premium",
+    "trialActive": "Teste gratuito — {days, plural, one {# dia} other {# dias}} restante(s)"
+  },
+  "Pricing": {
+    "title": "Preços",
+    "headline": "Escolha o plano ideal para você",
+    "subtitle": "Desbloqueie recursos premium para rastrear despesas mais rápido com upload de imagem e entrada inteligente de texto.",
+    "weeklyName": "Semanal",
+    "yearlyName": "Anual",
+    "perWeek": "/semana",
+    "perYear": "/ano",
+    "plusTax": "+ impostos aplicáveis",
+    "weeklyDescription": "Experimente os recursos premium com um plano semanal flexível. Cancele a qualquer momento.",
+    "yearlyDescription": "Melhor custo-benefício — economize mais de 20% em comparação ao plano semanal.",
+    "savePercent": "Economize 23%",
+    "featureImageUpload": "Crie transações a partir de fotos de recibos",
+    "featureTextInput": "Crie transações a partir de descrições de texto",
+    "featureAllCategories": "Mais de 40 categorias detectadas automaticamente",
+    "featureBasicSupport": "Suporte por e-mail",
+    "featurePrioritySupport": "Suporte prioritário por e-mail",
+    "featureEarlyAccess": "Acesso antecipado a novos recursos",
+    "getStarted": "Começar",
+    "redirecting": "Redirecionando...",
+    "manageSubscription": "Gerenciar Assinatura",
+    "alreadyPremium": "Você já possui uma assinatura premium ativa!",
+    "freeIncluded": "O plano gratuito inclui: entrada manual de transações, análises no painel, suporte a múltiplas moedas e histórico ilimitado.",
+    "backToDashboard": "Voltar ao Painel"
+  },
+  "Dashboard": {
+    "title": "Painel",
+    "category": "Categoria",
+    "amount": "Valor",
+    "noResults": "Nenhum resultado.",
+    "loading": "Carregando...",
+    "transactions": "Transações",
+    "today": "Hoje",
+    "currentMonth": "Mês atual",
+    "totalAmountToday": "Valor total hoje",
+    "totalAmountMonth": "Valor total do mês atual",
+    "numberOfTransactions": "Número de transações",
+    "numberOfPositions": "Número de itens",
+    "inTransactionsFor": "Em transações para {month}",
+    "items": "Itens",
+    "activityByCurrency": "Atividade por Moeda",
+    "showingVolume": "Exibindo volume total para {currencies}",
+    "threeMonths": "3 Meses",
+    "thirtyDays": "30 Dias",
+    "sevenDays": "7 Dias",
+    "allTransactions": "Todas as Transações",
+    "columns": "Colunas",
+    "header": "Cabeçalho",
+    "executedAt": "Executado em",
+    "status": "Status",
+    "type": "Tipo",
+    "delete": "Excluir",
+    "rowsPerPage": "Linhas por página",
+    "pageOf": "Página {current} de {total}",
+    "pendingTransactions": "Transações Pendentes",
+    "confirm": "Confirmar",
+    "transactionDeleted": "Transação excluída",
+    "transactionDeletedDesc": "Todos os recursos também foram removidos",
+    "transactionsConfirmed": "Transações confirmadas",
+    "transactionsConfirmedDesc": "{count} transação(ões) marcada(s) como confirmada(s)",
+    "transactionsDeleted": "Transações excluídas",
+    "transactionsDeletedDesc": "{count} transação(ões) excluída(s)",
+    "addTransaction": "Adicionar Transação",
+    "newTransaction": "Nova Transação",
+    "newTransactionDesc": "Crie uma nova transação manualmente.",
+    "editTransactionDesc": "Edite os detalhes e itens da transação.",
+    "name": "Nome",
+    "somethingWentWrong": "Algo deu errado ao carregar as transações."
+  },
+  "Categories": {
+    "RENT": {
+      "name": "Aluguel",
+      "description": "Aluguel de apartamento ou casa — ex: pagamento mensal do aluguel"
+    },
+    "MORTGAGE": {
+      "name": "Financiamento Imobiliário",
+      "description": "Parcelas de financiamento imobiliário — ex: prestação mensal do imóvel"
+    },
+    "UTILITIES": {
+      "name": "Serviços Básicos",
+      "description": "Energia, água, gás, aquecimento — ex: conta de luz, conta de água"
+    },
+    "INTERNET": {
+      "name": "Internet e TV",
+      "description": "Internet, planos de celular, TV — ex: fibra óptica, plano de celular, Netflix"
+    },
+    "HOUSEHOLD": {
+      "name": "Casa e Limpeza",
+      "description": "Produtos domésticos e de limpeza — ex: detergente, papel toalha, lâmpadas"
+    },
+    "GROCERIES": {
+      "name": "Supermercado",
+      "description": "Compras de supermercado e alimentos — ex: Carrefour, Pão de Açúcar, compras semanais"
+    },
+    "RESTAURANTS": {
+      "name": "Restaurantes e Cafés",
+      "description": "Refeições fora e cafeterias — ex: almoço no restaurante, jantar com amigos"
+    },
+    "DELIVERY": {
+      "name": "Delivery de Comida",
+      "description": "Refeições e apps de entrega — ex: iFood, Uber Eats, Rappi"
+    },
+    "PUBLIC_TRANSPORT": {
+      "name": "Transporte Público",
+      "description": "Ônibus, metrô, trens — ex: passe mensal, bilhete avulso, viagem de trem"
+    },
+    "TAXI": {
+      "name": "Táxi e Corridas",
+      "description": "Táxi e transporte por aplicativo — ex: Uber, 99, transfer para o aeroporto"
+    },
+    "FUEL": {
+      "name": "Combustível",
+      "description": "Abastecimento no posto — ex: gasolina, etanol, diesel, recarga de veículo elétrico"
+    },
+    "CAR_SERVICE": {
+      "name": "Manutenção do Carro",
+      "description": "Reparos e manutenção do carro — ex: troca de óleo, troca de pneu, lavagem, revisão"
+    },
+    "PARKING": {
+      "name": "Estacionamento e Pedágios",
+      "description": "Taxas de estacionamento e pedágios — ex: garagem, parquímetro, pedágio de rodovia"
+    },
+    "MEDICAL": {
+      "name": "Médico e Consultas",
+      "description": "Consultas médicas e exames — ex: dentista, exame de sangue, consulta com especialista"
+    },
+    "PHARMACY": {
+      "name": "Farmácia",
+      "description": "Medicamentos e produtos de saúde — ex: receitas médicas, vitaminas, kit de primeiros socorros"
+    },
+    "PERSONAL_CARE": {
+      "name": "Cuidados Pessoais",
+      "description": "Higiene e beleza — ex: corte de cabelo, cuidados com a pele, cosméticos, barbearia"
+    },
+    "SPORT": {
+      "name": "Esporte e Fitness",
+      "description": "Academia e esportes — ex: mensalidade da academia, aula de yoga, tênis de corrida, piscina"
+    },
+    "SUBSCRIPTIONS": {
+      "name": "Assinaturas",
+      "description": "Serviços digitais recorrentes — ex: Netflix, Spotify, iCloud, YouTube Premium"
+    },
+    "HOBBIES": {
+      "name": "Hobbies",
+      "description": "Interesses pessoais e artesanato — ex: equipamento de fotografia, materiais de pintura, jogos"
+    },
+    "EVENTS": {
+      "name": "Cinema e Eventos",
+      "description": "Entretenimento e passeios — ex: ingressos de cinema, shows, teatro, exposições"
+    },
+    "TRAVEL": {
+      "name": "Viagens e Hotéis",
+      "description": "Viagens e férias — ex: passagens aéreas, Airbnb, hotel, seguro viagem"
+    },
+    "CLOTHING": {
+      "name": "Roupas e Calçados",
+      "description": "Vestuário e acessórios — ex: jaqueta, tênis, relógio, óculos de sol"
+    },
+    "ELECTRONICS": {
+      "name": "Eletrônicos e Gadgets",
+      "description": "Tecnologia e dispositivos — ex: celular, notebook, fones de ouvido, carregador"
+    },
+    "PETS": {
+      "name": "Pets",
+      "description": "Cuidados e produtos para animais — ex: ração, consulta veterinária, areia para gato, banho e tosa"
+    },
+    "EDUCATION": {
+      "name": "Cursos e Treinamentos",
+      "description": "Aprendizado e desenvolvimento — ex: curso online, aula de idiomas, workshop"
+    },
+    "BOOKS": {
+      "name": "Livros",
+      "description": "Livros e leitura — ex: livro no Kindle, audiolivro, assinatura de revista"
+    },
+    "TAXES": {
+      "name": "Impostos",
+      "description": "Impostos governamentais — ex: imposto de renda, IPTU, restituição de imposto"
+    },
+    "INSURANCE": {
+      "name": "Seguros",
+      "description": "Prêmios de seguro — ex: plano de saúde, seguro do carro, seguro residencial"
+    },
+    "LOANS": {
+      "name": "Empréstimos e Dívidas",
+      "description": "Pagamento de empréstimos — ex: empréstimo estudantil, empréstimo pessoal, dívida do cartão de crédito"
+    },
+    "BANK_FEES": {
+      "name": "Taxas Bancárias",
+      "description": "Tarifas bancárias — ex: manutenção de conta, taxa de caixa eletrônico, taxa de transferência"
+    },
+    "SALARY": {
+      "name": "Salário",
+      "description": "Renda de emprego — ex: salário mensal, bônus, horas extras"
+    },
+    "FREELANCE": {
+      "name": "Freelance e Projetos",
+      "description": "Renda autônoma — ex: projeto de cliente, consultoria, trabalho avulso"
+    },
+    "INVESTMENTS": {
+      "name": "Retornos de Investimento",
+      "description": "Ganhos de investimento — ex: dividendos de ações, lucro com cripto, juros de títulos"
+    },
+    "RENTAL_INCOME": {
+      "name": "Renda de Aluguel",
+      "description": "Ganhos com aluguel de imóveis — ex: aluguel recebido de apartamento, pagamento do Airbnb"
+    },
+    "CASHBACK": {
+      "name": "Cashback e Reembolsos",
+      "description": "Dinheiro de volta — ex: cashback do cartão de crédito, reembolso de loja, abatimento"
+    },
+    "GIFTS": {
+      "name": "Presentes",
+      "description": "Presentes em dinheiro — ex: presente de aniversário, presente de casamento, dinheiro de feriado"
+    },
+    "SALES": {
+      "name": "Venda de Itens",
+      "description": "Venda de pertences pessoais — ex: celular vendido no OLX, brechó, Enjoei"
+    },
+    "BUSINESS_EXPENSES": {
+      "name": "Despesas Empresariais",
+      "description": "Custos relacionados ao trabalho — ex: material de escritório, almoço de negócios, coworking"
+    },
+    "SOFTWARE_LICENSES": {
+      "name": "Software e Apps",
+      "description": "Software pago — ex: Adobe, Microsoft 365, renovação de domínio, hospedagem"
+    },
+    "HOME_IMPROVEMENT": {
+      "name": "Reforma e Decoração",
+      "description": "Reforma e mobília — ex: móveis novos, tinta, encanador, IKEA"
+    },
+    "SAVINGS": {
+      "name": "Poupança",
+      "description": "Dinheiro guardado — ex: transferência para conta poupança, reserva de emergência"
+    },
+    "REFUNDS": {
+      "name": "Devoluções",
+      "description": "Pagamentos devolvidos — ex: devolução de produto, serviço cancelado, cobrança indevida"
+    },
+    "FINES": {
+      "name": "Multas",
+      "description": "Penalidades — ex: multa de estacionamento, multa de velocidade, taxa por atraso"
+    },
+    "CHARITY": {
+      "name": "Caridade",
+      "description": "Doações — ex: Cruz Vermelha, doação para igreja/mesquita, vaquinha online"
+    },
+    "UNKNOWN": {
+      "name": "Outros",
+      "description": "Sem categoria — transações que não se encaixam em outras categorias"
+    }
+  },
+  "Auth": {
+    "login": "Entrar",
+    "loginDescription": "Digite seu e-mail abaixo para entrar na sua conta",
+    "email": "E-mail",
+    "emailPlaceholder": "m@example.com",
+    "password": "Senha",
+    "forgotPassword": "Esqueceu sua senha?",
+    "loggingIn": "Entrando...",
+    "orContinueWith": "Ou continue com",
+    "continueWithGoogle": "Continuar com Google",
+    "continueWithApple": "Continuar com Apple",
+    "noAccount": "Não tem uma conta?",
+    "signUp": "Cadastre-se",
+    "signUpTitle": "Cadastre-se",
+    "signUpDescription": "Crie uma nova conta",
+    "repeatPassword": "Repetir Senha",
+    "creatingAccount": "Criando conta...",
+    "hasAccount": "Já tem uma conta?",
+    "passwordsNotMatch": "As senhas não coincidem",
+    "resetPassword": "Redefinir Sua Senha",
+    "resetPasswordDescription": "Digite seu e-mail e enviaremos um link para redefinir sua senha",
+    "sending": "Enviando...",
+    "sendResetEmail": "Enviar e-mail de redefinição",
+    "checkEmail": "Verifique Seu E-mail",
+    "resetInstructionsSent": "Instruções de redefinição de senha enviadas",
+    "resetEmailMessage": "Se você se cadastrou usando e-mail e senha, receberá um e-mail para redefinir sua senha.",
+    "newPassword": "Nova senha",
+    "newPasswordDescription": "Por favor, digite sua nova senha abaixo.",
+    "saving": "Salvando...",
+    "saveNewPassword": "Salvar nova senha",
+    "signUpSuccessTitle": "Obrigado por se cadastrar!",
+    "signUpSuccessDescription": "Verifique seu e-mail para confirmar",
+    "signUpSuccessMessage": "Você se cadastrou com sucesso. Por favor, verifique seu e-mail para confirmar sua conta antes de entrar.",
+    "errorTitle": "Desculpe, algo deu errado.",
+    "errorCode": "Código de erro: {code}",
+    "errorUnspecified": "Ocorreu um erro não especificado."
+  },
+  "HomePage": {
+    "whatsNew": "Gratuito para usar",
+    "justShipped": "Comece a rastrear hoje",
+    "title": "Assuma o controle do seu dinheiro",
+    "description": "Rastreie cada despesa, monitore sua renda e entenda para onde vai seu dinheiro. Orçamento simples que ajuda você a economizar mais e gastar melhor.",
+    "getStarted": "Comece grátis",
+    "learnMore": "Veja como funciona",
+    "featuresTitle": "Tudo que você precisa para gerenciar suas finanças",
+    "boostTitle": "Pare de adivinhar. Comece a orçar.",
+    "boostDescription": "Junte-se a milhares de usuários que finalmente entendem seus hábitos de consumo. Crie sua conta gratuita em segundos e dê o primeiro passo rumo à clareza financeira.",
+    "alreadyHaveAccount": "Já tem uma conta? Entrar",
+    "copyright": "© 2026 Denis Popov. Todos os direitos reservados."
+  },
+  "Features": {
+    "expenseTracking": "Rastreamento de despesas sem esforço",
+    "expenseTrackingDesc": "Registre suas despesas diárias em segundos. Categorize transações em mais de 40 categorias como supermercado, aluguel, viagens e muito mais.",
+    "smartAnalytics": "Análises e gráficos inteligentes",
+    "smartAnalyticsDesc": "Visualize seus padrões de gastos com gráficos interativos. Veja detalhamentos diários, mensais e por categoria de forma rápida.",
+    "multiCurrency": "Suporte a múltiplas moedas",
+    "multiCurrencyDesc": "Rastreie despesas em EUR, USD e outras moedas. Perfeito para viajantes e expatriados que gerenciam dinheiro em diferentes países.",
+    "secureData": "Seguro e privado",
+    "secureDataDesc": "Seus dados financeiros são criptografados e armazenados com segurança. Nunca compartilhamos suas informações com terceiros."
+  },
+  "EmptyState": {
+    "title": "Comece a rastrear seu dinheiro",
+    "description": "Adicione sua primeira transação abaixo e veja seus gastos ganharem vida com gráficos, categorias e análises mensais.",
+    "stepLabel": "Passo {number}",
+    "step1Title": "Crie uma transação",
+    "step1Desc": "Preencha o formulário manualmente, envie uma foto do recibo ou apenas descreva sua despesa em texto — escolha o que for mais fácil.",
+    "step2Title": "Salve e aguarde",
+    "step2Desc": "Clique em salvar e nos dê um momento para processar sua transação. Entradas por imagem e texto são categorizadas automaticamente — as manuais usam a categoria que você escolher.",
+    "step3Title": "Confira seu painel",
+    "step3Desc": "Volte e explore seu painel — veja gráficos, detalhamentos por categoria, totais mensais e o histórico completo de todas as suas transações.",
+    "formTitle": "Crie sua primeira transação",
+    "formDescription": "Envie um recibo, descreva em palavras ou preencha o formulário manualmente.",
+    "tabImage": "Imagem",
+    "tabText": "Texto",
+    "tabManual": "Manual",
+    "textPlaceholder": "Apenas digite o que você gastou...",
+    "submit": "Enviar",
+    "transactionCreated": "Transação criada",
+    "processingDescription": "O sistema já está processando"
+  },
+  "NavMain": {
+    "quickCreate": "Criação Rápida",
+    "createTransactions": "Criar Transações",
+    "drawerDescription": "Envie seus recibos ou descreva despesas com suas próprias palavras."
+  },
+  "TransactionForm": {
+    "name": "Nome da Transação",
+    "namePlaceholder": "ex: Compras da semana",
+    "type": "Tipo",
+    "expense": "Despesa",
+    "income": "Receita",
+    "date": "Data",
+    "items": "Itens",
+    "addItem": "Adicionar item",
+    "removeItem": "Remover",
+    "itemNamePlaceholder": "Nome do item",
+    "saving": "Salvando...",
+    "create": "Criar Transação",
+    "update": "Atualizar Transação",
+    "transactionCreated": "Transação criada",
+    "transactionUpdated": "Transação atualizada"
+  }
+}
