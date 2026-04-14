@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/dashboard/", "/protected/", "/api/"],
+        disallow: ["/dashboard/", "/protected/", "/api/", "/preview/"],
       },
     ],
     sitemap: "https://budget.unitcore.io/sitemap.xml",

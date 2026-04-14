@@ -152,9 +152,16 @@ function HeroSection() {
               <img
                 alt="Budget Tracker Dashboard"
                 src={`/images/screenshots/project-app-screenshot-${locale}.png`}
-                width={2432}
-                height={1442}
-                className="w-304 rounded-md bg-gray-50 shadow-xl ring-1 ring-gray-900/10"
+                width={3840}
+                height={2160}
+                className="w-304 rounded-md bg-gray-50 shadow-xl ring-1 ring-gray-900/10 dark:hidden"
+              />
+              <img
+                alt="Budget Tracker Dashboard"
+                src={`/images/screenshots/project-app-screenshot-${locale}-dark.png`}
+                width={3840}
+                height={2160}
+                className="hidden w-304 rounded-md bg-gray-50 shadow-xl ring-1 ring-gray-900/10 dark:block"
               />
             </div>
           </div>
