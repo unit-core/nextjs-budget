@@ -191,7 +191,7 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ user, direction = "ltr", hasTransactions = true, ...props }: AppSidebarProps) {
-  const td = useTranslations("Dashboard")
+  const tn = useTranslations("NavMain")
   const side = direction === "rtl" ? "right" : "left"
 
   return (
@@ -212,7 +212,14 @@ export function AppSidebar({ user, direction = "ltr", hasTransactions = true, ..
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={[{ title: td("title"), url: "/dashboard", icon: <LayoutDashboardIcon /> }]} user={user} showQuickCreate={hasTransactions} />
+        <NavMain 
+          items={[
+            { title: tn("dashboard"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
+            { title: tn("templates"), url: "/templates", icon: <ListIcon /> },
+          ]} 
+          user={user} 
+          showQuickCreate={hasTransactions} 
+        />
         {/* <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>

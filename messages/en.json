@@ -211,10 +211,31 @@
     "transactionCreated": "Transaction has been created",
     "processingDescription": "The system is already processing"
   },
+  "Templates": {
+    "title": "Templates",
+    "header": "Name",
+    "type": "Type",
+    "amount": "Amount",
+    "createdAt": "Created at",
+    "columns": "Columns",
+    "rowsPerPage": "Rows per page",
+    "pageOf": "Page {current} of {total}",
+    "noResults": "No templates yet.",
+    "execute": "Execute",
+    "delete": "Delete",
+    "templateDeleted": "Template deleted",
+    "templateDeletedDesc": "Template has been removed",
+    "transactionCreated": "Transaction created",
+    "transactionCreatedDesc": "Transaction created from template",
+    "executeFailed": "Could not execute template",
+    "somethingWentWrong": "Something went wrong loading templates."
+  },
   "NavMain": {
     "quickCreate": "Quick Create",
     "createTransactions": "Create Transactions",
-    "drawerDescription": "Upload your receipts or describe expenses in your own words."
+    "drawerDescription": "Upload your receipts or describe expenses in your own words.",
+    "dashboard": "Dashboard",
+    "templates": "Templates"
   },
   "TransactionForm": {
     "name": "Transaction Name",

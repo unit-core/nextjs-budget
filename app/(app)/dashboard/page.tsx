@@ -1,18 +1,15 @@
 import { Suspense } from "react"
-import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 
 import { AllTransactionsDataTable } from "@/components/all-transactions-data-table"
-import { AppSidebar, type SidebarUser } from "@/components/app-sidebar"
+import { type SidebarUser } from "@/components/app-sidebar"
 import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 import { DashboardSkeleton } from "@/components/dashboard-skeleton"
 import { EmptyState } from "@/components/empty-state"
 import { MonthTransactionsDataTable } from "@/components/month-transactions-data-table"
 import { SectionCards, type DateTexts } from "@/components/section-cards"
-import { SiteHeader } from "@/components/site-header"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
-import { getDirection, getLocale } from "@/i18n/actions"
+import { getLocale } from "@/i18n/actions"
 import { createClient } from "@/lib/supabase/server"
 
 import type { Transaction } from "./types"
@@ -51,29 +48,13 @@ export default async function Page() {
   const sectionCardsTexts = buildDateTexts(new Date(), locale)
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <Suspense fallback={<AppSidebar variant="inset" user={null} />}>
-        <AsyncAppSidebar />
-      </Suspense>
-
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <Suspense fallback={<DashboardSkeleton />}>
-              <AsyncDashboardContent texts={sectionCardsTexts} />
-            </Suspense>
-          </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+    <div className="flex flex-1 flex-col">
+      <div className="@container/main flex flex-1 flex-col gap-2">
+        <Suspense fallback={<DashboardSkeleton />}>
+          <AsyncDashboardContent texts={sectionCardsTexts} />
+        </Suspense>
+      </div>
+    </div>
   )
 }
 
@@ -84,29 +65,6 @@ function buildDateTexts(today: Date, locale: string): DateTexts {
     month: formatMonth(today, locale),
     monthRange: `${formatLongDate(start, locale)} - ${formatLongDate(end, locale)}`,
   }
-}
-
-async function AsyncAppSidebar() {
-  const supabase = await createClient()
-  const direction = await getDirection()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  if (!user) redirect("/auth/login")
-
-  const sidebarUser: SidebarUser = { id: user.id, email: user.email ?? "-" }
-  const { count } = await supabase
-    .from("transactions")
-    .select("*", { count: "exact", head: true })
-
-  return (
-    <AppSidebar
-      variant="inset"
-      user={sidebarUser}
-      direction={direction}
-      hasTransactions={(count ?? 0) > 0}
-    />
-  )
 }
 
 async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
