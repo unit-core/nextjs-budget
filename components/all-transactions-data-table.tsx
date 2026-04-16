@@ -156,7 +156,7 @@ function DragHandle({ id }: { id: string }) {
   )
 }
 
-function createColumns(t: { header: string; executedAt: string; amount: string; delete: string; transactionDeleted: string; transactionDeletedDesc: string; editTransactionDesc: string }): ColumnDef<z.infer<typeof schema>>[] { return [
+function createColumns(t: { header: string; executedAt: string; amount: string; delete: string; transactionDeleted: string; transactionDeletedDesc: string; editTransactionDesc: string; createTemplate: string; templateCreated: string; templateCreatedDesc: string; templateCreateFailed: string }): ColumnDef<z.infer<typeof schema>>[] { return [
   {
     id: "select",
     header: ({ table }) => (
@@ -224,6 +224,68 @@ function createColumns(t: { header: string; executedAt: string; amount: string; 
           })
         }
       }
+      const createTemplate = async () => {
+        const supabase = createClient()
+        const { data: tx, error: fetchError } = await supabase
+          .from('transactions')
+          .select(`
+            name,
+            transaction_type,
+            folder_id,
+            transaction_items (
+              name,
+              amount,
+              currency_code,
+              category
+            )
+          `)
+          .eq('id', row.id)
+          .single()
+
+        if (fetchError || !tx) {
+          toast(t.templateCreateFailed, { position: 'top-center' })
+          return
+        }
+
+        const { data: template, error: templateError } = await supabase
+          .from('transaction_templates')
+          .insert({
+            folder_id: tx.folder_id,
+            name: tx.name,
+            transaction_type: tx.transaction_type,
+          })
+          .select('id')
+          .single()
+
+        if (templateError || !template) {
+          toast(t.templateCreateFailed, { position: 'top-center' })
+          return
+        }
+
+        const items = (tx.transaction_items ?? []).map((it: any) => ({
+          transaction_template_id: template.id,
+          transaction_folder_id: tx.folder_id,
+          name: it.name,
+          amount: it.amount,
+          currency_code: it.currency_code,
+          category: it.category,
+        }))
+
+        if (items.length > 0) {
+          const { error: itemsError } = await supabase
+            .from('transaction_item_templates')
+            .insert(items)
+          if (itemsError) {
+            toast(t.templateCreateFailed, { position: 'top-center' })
+            return
+          }
+        }
+
+        toast(t.templateCreated, {
+          position: 'top-center',
+          description: t.templateCreatedDesc,
+        })
+      }
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -236,7 +298,9 @@ function createColumns(t: { header: string; executedAt: string; amount: string; 
               <span className="sr-only">Open menu</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-32">
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuItem onClick={() => createTemplate()}>{t.createTemplate}</DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive" onClick={() => deleteTransaction()}>{t.delete}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -499,6 +563,10 @@ export function AllTransactionsDataTableSkeleton() {
     transactionDeleted: t("transactionDeleted"),
     transactionDeletedDesc: t("transactionDeletedDesc", { count: 0 }),
     editTransactionDesc: t("editTransactionDesc"),
+    createTemplate: t("createTemplate"),
+    templateCreated: t("templateCreated"),
+    templateCreatedDesc: t("templateCreatedDesc"),
+    templateCreateFailed: t("templateCreateFailed"),
   }), [t])
   const [data, setData] = React.useState(() => [])
   const [rowSelection, setRowSelection] = React.useState({})
@@ -795,6 +863,10 @@ export function AllTransactionsDataTable({
     transactionDeleted: t("transactionDeleted"),
     transactionDeletedDesc: t("transactionDeletedDesc", { count: 0 }),
     editTransactionDesc: t("editTransactionDesc"),
+    createTemplate: t("createTemplate"),
+    templateCreated: t("templateCreated"),
+    templateCreatedDesc: t("templateCreatedDesc"),
+    templateCreateFailed: t("templateCreateFailed"),
   }), [t])
   const [data, setData] = React.useState(() => initialData)
   const [rowSelection, setRowSelection] = React.useState({})
