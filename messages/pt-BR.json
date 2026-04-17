@@ -262,6 +262,72 @@
       "description": "Sem categoria — transações que não se encaixam em outras categorias"
     }
   },
+  "CategoryGroups": {
+    "CHARITY": {
+      "name": "Caridade",
+      "description": "Doações a entidades sem fins lucrativos e campanhas de financiamento coletivo."
+    },
+    "FOOD": {
+      "name": "Alimentação",
+      "description": "Supermercados, restaurantes e serviços de delivery."
+    },
+    "UTILITIES": {
+      "name": "Serviços",
+      "description": "Contas de eletricidade, gás, água, internet e telefone."
+    },
+    "TRANSPORT": {
+      "name": "Transporte",
+      "description": "Transporte público, combustível, manutenção do veículo e estacionamento."
+    },
+    "FINANCE": {
+      "name": "Finanças",
+      "description": "Impostos, seguros, pagamentos de empréstimos, tarifas bancárias e poupança."
+    },
+    "SHOPPING": {
+      "name": "Compras",
+      "description": "Roupas, eletrônicos e outras compras não essenciais."
+    },
+    "PETS": {
+      "name": "Animais de estimação",
+      "description": "Ração, veterinário, banho e tosa, e acessórios para pets."
+    },
+    "OTHER": {
+      "name": "Outros",
+      "description": "Transações diversas que não se encaixam em nenhuma outra categoria."
+    },
+    "EMPLOYMENT": {
+      "name": "Emprego",
+      "description": "Salário, remuneração e renda freelance."
+    },
+    "ENTERTAINMENT": {
+      "name": "Entretenimento",
+      "description": "Assinaturas, hobbies, eventos e viagens."
+    },
+    "BUSINESS": {
+      "name": "Negócios",
+      "description": "Serviços profissionais, suprimentos e software para uso empresarial."
+    },
+    "HOUSING": {
+      "name": "Moradia",
+      "description": "Aluguel, financiamento imobiliário, reformas e artigos domésticos."
+    },
+    "EXTRA": {
+      "name": "Renda extra",
+      "description": "Cashback, presentes, vendas de itens e reembolsos."
+    },
+    "PASSIVE": {
+      "name": "Renda passiva",
+      "description": "Rendimentos de investimentos, dividendos e aluguel de imóveis."
+    },
+    "EDUCATION": {
+      "name": "Educação",
+      "description": "Mensalidades, cursos, workshops e livros."
+    },
+    "HEALTH": {
+      "name": "Saúde",
+      "description": "Consultas médicas, medicamentos, higiene pessoal e atividades físicas."
+    }
+  },
   "Auth": {
     "login": "Entrar",
     "loginDescription": "Digite seu e-mail abaixo para entrar na sua conta",

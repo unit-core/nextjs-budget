@@ -81,51 +81,252 @@
     "somethingWentWrong": "Algo salió mal al cargar las transacciones."
   },
   "Categories": {
-    "RENT": { "name": "Alquiler", "description": "Alquiler de piso o casa — p. ej. pago mensual del alquiler" },
-    "MORTGAGE": { "name": "Hipoteca", "description": "Pagos del préstamo hipotecario — p. ej. cuota mensual de la hipoteca" },
-    "UTILITIES": { "name": "Suministros", "description": "Electricidad, agua, gas, calefacción — p. ej. factura de la luz, factura del agua" },
-    "INTERNET": { "name": "Internet y TV", "description": "Internet, telefonía, TV — p. ej. fibra óptica, tarifa móvil, Netflix" },
-    "HOUSEHOLD": { "name": "Hogar", "description": "Productos para el hogar y limpieza — p. ej. detergente, papel de cocina, bombillas" },
-    "GROCERIES": { "name": "Alimentación", "description": "Supermercado y compra de alimentos — p. ej. Carrefour, Lidl, compra semanal" },
-    "RESTAURANTS": { "name": "Restaurantes y cafeterías", "description": "Comer fuera y cafeterías — p. ej. almuerzo en un restaurante, cena con amigos" },
-    "DELIVERY": { "name": "Comida a domicilio", "description": "Comida a domicilio y apps de comida — p. ej. Uber Eats, Glovo, Just Eat" },
-    "PUBLIC_TRANSPORT": { "name": "Transporte público", "description": "Autobuses, metro, trenes — p. ej. abono mensual, billete sencillo, tranvía" },
-    "TAXI": { "name": "Taxi y viajes", "description": "Taxi y vehículos con conductor — p. ej. Uber, Bolt, Cabify, traslado al aeropuerto" },
-    "FUEL": { "name": "Combustible", "description": "Repostaje en gasolinera — p. ej. gasolina, diésel, carga de vehículo eléctrico" },
-    "CAR_SERVICE": { "name": "Mantenimiento del coche", "description": "Reparaciones y mantenimiento del coche — p. ej. cambio de aceite, cambio de neumáticos, lavado, ITV" },
-    "PARKING": { "name": "Aparcamiento y peajes", "description": "Tarifas de aparcamiento y autopistas — p. ej. garaje, parquímetro, peaje de autopista" },
-    "MEDICAL": { "name": "Médico y consultas", "description": "Visitas médicas y pruebas — p. ej. dentista, análisis de sangre, consulta de especialista" },
-    "PHARMACY": { "name": "Farmacia", "description": "Medicamentos y productos de salud — p. ej. recetas, vitaminas, botiquín" },
-    "PERSONAL_CARE": { "name": "Cuidado personal", "description": "Aseo y belleza — p. ej. corte de pelo, cuidado de la piel, cosméticos, peluquería" },
-    "SPORT": { "name": "Deporte y fitness", "description": "Gimnasio y deportes — p. ej. cuota del gimnasio, clase de yoga, zapatillas de running, abono de piscina" },
-    "SUBSCRIPTIONS": { "name": "Suscripciones", "description": "Servicios digitales recurrentes — p. ej. Netflix, Spotify, iCloud, YouTube Premium" },
-    "HOBBIES": { "name": "Aficiones", "description": "Intereses personales y manualidades — p. ej. equipo de fotografía, material de pintura, videojuegos" },
-    "EVENTS": { "name": "Cine y eventos", "description": "Ocio y salidas — p. ej. entradas de cine, conciertos, teatro, exposiciones" },
-    "TRAVEL": { "name": "Viajes y hoteles", "description": "Viajes y vacaciones — p. ej. vuelos, Airbnb, hotel, seguro de viaje" },
-    "CLOTHING": { "name": "Ropa y calzado", "description": "Ropa y accesorios — p. ej. chaqueta, zapatillas, reloj, gafas de sol" },
-    "ELECTRONICS": { "name": "Electrónica y gadgets", "description": "Tecnología y dispositivos — p. ej. teléfono, portátil, auriculares, cargador" },
-    "PETS": { "name": "Mascotas", "description": "Cuidado y productos para mascotas — p. ej. comida para perros, veterinario, arena para gatos, peluquería" },
-    "EDUCATION": { "name": "Cursos y formación", "description": "Aprendizaje y desarrollo — p. ej. curso online, clase de idiomas, taller" },
-    "BOOKS": { "name": "Libros", "description": "Libros y lectura — p. ej. libro en Kindle, audiolibro, suscripción a revista" },
-    "TAXES": { "name": "Impuestos", "description": "Impuestos estatales — p. ej. IRPF, IBI, devolución de IVA" },
-    "INSURANCE": { "name": "Seguros", "description": "Primas de seguros — p. ej. seguro médico, seguro de coche, seguro del hogar" },
-    "LOANS": { "name": "Préstamos y deudas", "description": "Pagos de préstamos — p. ej. préstamo estudiantil, préstamo personal, deuda de tarjeta de crédito" },
-    "BANK_FEES": { "name": "Comisiones bancarias", "description": "Cargos bancarios — p. ej. mantenimiento de cuenta, comisión de cajero, comisión de transferencia" },
-    "SALARY": { "name": "Salario", "description": "Ingresos laborales — p. ej. nómina mensual, bonus, horas extra" },
-    "FREELANCE": { "name": "Freelance y proyectos", "description": "Ingresos de autónomo — p. ej. proyecto para cliente, consultoría, trabajo por encargo" },
-    "INVESTMENTS": { "name": "Rendimientos de inversiones", "description": "Ganancias de inversiones — p. ej. dividendos de acciones, beneficios en cripto, intereses de bonos" },
-    "RENTAL_INCOME": { "name": "Ingresos por alquiler", "description": "Ingresos por alquiler de propiedades — p. ej. alquiler de piso recibido, pago de Airbnb" },
-    "CASHBACK": { "name": "Reembolsos y devoluciones", "description": "Dinero devuelto — p. ej. cashback de tarjeta de crédito, devolución en tienda, reembolso" },
-    "GIFTS": { "name": "Regalos", "description": "Regalos monetarios — p. ej. regalo de cumpleaños, regalo de boda, dinero en festividades" },
-    "SALES": { "name": "Venta de artículos", "description": "Venta de pertenencias personales — p. ej. móvil vendido en Wallapop, mercadillo, Vinted" },
-    "BUSINESS_EXPENSES": { "name": "Gastos de negocio", "description": "Costes relacionados con el trabajo — p. ej. material de oficina, comida de negocios, coworking" },
-    "SOFTWARE_LICENSES": { "name": "Software y aplicaciones", "description": "Software de pago — p. ej. Adobe, Microsoft 365, renovación de dominio, hosting" },
-    "HOME_IMPROVEMENT": { "name": "Mejoras del hogar", "description": "Reformas y mobiliario — p. ej. muebles nuevos, pintura, fontanero, IKEA" },
-    "SAVINGS": { "name": "Ahorros", "description": "Dinero reservado — p. ej. transferencia a cuenta de ahorro, fondo de emergencia" },
-    "REFUNDS": { "name": "Devoluciones", "description": "Pagos devueltos — p. ej. devolución de producto, servicio cancelado, cobro excesivo" },
-    "FINES": { "name": "Multas", "description": "Sanciones — p. ej. multa de aparcamiento, multa de velocidad, recargo por pago tardío" },
-    "CHARITY": { "name": "Caridad", "description": "Donaciones — p. ej. Cruz Roja, donación a mezquita/iglesia, GoFundMe" },
-    "UNKNOWN": { "name": "Otros", "description": "Sin categoría — transacciones que no encajan en otras categorías" }
+    "RENT": {
+      "name": "Alquiler",
+      "description": "Alquiler de piso o casa — p. ej. pago mensual del alquiler"
+    },
+    "MORTGAGE": {
+      "name": "Hipoteca",
+      "description": "Pagos del préstamo hipotecario — p. ej. cuota mensual de la hipoteca"
+    },
+    "UTILITIES": {
+      "name": "Suministros",
+      "description": "Electricidad, agua, gas, calefacción — p. ej. factura de la luz, factura del agua"
+    },
+    "INTERNET": {
+      "name": "Internet y TV",
+      "description": "Internet, telefonía, TV — p. ej. fibra óptica, tarifa móvil, Netflix"
+    },
+    "HOUSEHOLD": {
+      "name": "Hogar",
+      "description": "Productos para el hogar y limpieza — p. ej. detergente, papel de cocina, bombillas"
+    },
+    "GROCERIES": {
+      "name": "Alimentación",
+      "description": "Supermercado y compra de alimentos — p. ej. Carrefour, Lidl, compra semanal"
+    },
+    "RESTAURANTS": {
+      "name": "Restaurantes y cafeterías",
+      "description": "Comer fuera y cafeterías — p. ej. almuerzo en un restaurante, cena con amigos"
+    },
+    "DELIVERY": {
+      "name": "Comida a domicilio",
+      "description": "Comida a domicilio y apps de comida — p. ej. Uber Eats, Glovo, Just Eat"
+    },
+    "PUBLIC_TRANSPORT": {
+      "name": "Transporte público",
+      "description": "Autobuses, metro, trenes — p. ej. abono mensual, billete sencillo, tranvía"
+    },
+    "TAXI": {
+      "name": "Taxi y viajes",
+      "description": "Taxi y vehículos con conductor — p. ej. Uber, Bolt, Cabify, traslado al aeropuerto"
+    },
+    "FUEL": {
+      "name": "Combustible",
+      "description": "Repostaje en gasolinera — p. ej. gasolina, diésel, carga de vehículo eléctrico"
+    },
+    "CAR_SERVICE": {
+      "name": "Mantenimiento del coche",
+      "description": "Reparaciones y mantenimiento del coche — p. ej. cambio de aceite, cambio de neumáticos, lavado, ITV"
+    },
+    "PARKING": {
+      "name": "Aparcamiento y peajes",
+      "description": "Tarifas de aparcamiento y autopistas — p. ej. garaje, parquímetro, peaje de autopista"
+    },
+    "MEDICAL": {
+      "name": "Médico y consultas",
+      "description": "Visitas médicas y pruebas — p. ej. dentista, análisis de sangre, consulta de especialista"
+    },
+    "PHARMACY": {
+      "name": "Farmacia",
+      "description": "Medicamentos y productos de salud — p. ej. recetas, vitaminas, botiquín"
+    },
+    "PERSONAL_CARE": {
+      "name": "Cuidado personal",
+      "description": "Aseo y belleza — p. ej. corte de pelo, cuidado de la piel, cosméticos, peluquería"
+    },
+    "SPORT": {
+      "name": "Deporte y fitness",
+      "description": "Gimnasio y deportes — p. ej. cuota del gimnasio, clase de yoga, zapatillas de running, abono de piscina"
+    },
+    "SUBSCRIPTIONS": {
+      "name": "Suscripciones",
+      "description": "Servicios digitales recurrentes — p. ej. Netflix, Spotify, iCloud, YouTube Premium"
+    },
+    "HOBBIES": {
+      "name": "Aficiones",
+      "description": "Intereses personales y manualidades — p. ej. equipo de fotografía, material de pintura, videojuegos"
+    },
+    "EVENTS": {
+      "name": "Cine y eventos",
+      "description": "Ocio y salidas — p. ej. entradas de cine, conciertos, teatro, exposiciones"
+    },
+    "TRAVEL": {
+      "name": "Viajes y hoteles",
+      "description": "Viajes y vacaciones — p. ej. vuelos, Airbnb, hotel, seguro de viaje"
+    },
+    "CLOTHING": {
+      "name": "Ropa y calzado",
+      "description": "Ropa y accesorios — p. ej. chaqueta, zapatillas, reloj, gafas de sol"
+    },
+    "ELECTRONICS": {
+      "name": "Electrónica y gadgets",
+      "description": "Tecnología y dispositivos — p. ej. teléfono, portátil, auriculares, cargador"
+    },
+    "PETS": {
+      "name": "Mascotas",
+      "description": "Cuidado y productos para mascotas — p. ej. comida para perros, veterinario, arena para gatos, peluquería"
+    },
+    "EDUCATION": {
+      "name": "Cursos y formación",
+      "description": "Aprendizaje y desarrollo — p. ej. curso online, clase de idiomas, taller"
+    },
+    "BOOKS": {
+      "name": "Libros",
+      "description": "Libros y lectura — p. ej. libro en Kindle, audiolibro, suscripción a revista"
+    },
+    "TAXES": {
+      "name": "Impuestos",
+      "description": "Impuestos estatales — p. ej. IRPF, IBI, devolución de IVA"
+    },
+    "INSURANCE": {
+      "name": "Seguros",
+      "description": "Primas de seguros — p. ej. seguro médico, seguro de coche, seguro del hogar"
+    },
+    "LOANS": {
+      "name": "Préstamos y deudas",
+      "description": "Pagos de préstamos — p. ej. préstamo estudiantil, préstamo personal, deuda de tarjeta de crédito"
+    },
+    "BANK_FEES": {
+      "name": "Comisiones bancarias",
+      "description": "Cargos bancarios — p. ej. mantenimiento de cuenta, comisión de cajero, comisión de transferencia"
+    },
+    "SALARY": {
+      "name": "Salario",
+      "description": "Ingresos laborales — p. ej. nómina mensual, bonus, horas extra"
+    },
+    "FREELANCE": {
+      "name": "Freelance y proyectos",
+      "description": "Ingresos de autónomo — p. ej. proyecto para cliente, consultoría, trabajo por encargo"
+    },
+    "INVESTMENTS": {
+      "name": "Rendimientos de inversiones",
+      "description": "Ganancias de inversiones — p. ej. dividendos de acciones, beneficios en cripto, intereses de bonos"
+    },
+    "RENTAL_INCOME": {
+      "name": "Ingresos por alquiler",
+      "description": "Ingresos por alquiler de propiedades — p. ej. alquiler de piso recibido, pago de Airbnb"
+    },
+    "CASHBACK": {
+      "name": "Reembolsos y devoluciones",
+      "description": "Dinero devuelto — p. ej. cashback de tarjeta de crédito, devolución en tienda, reembolso"
+    },
+    "GIFTS": {
+      "name": "Regalos",
+      "description": "Regalos monetarios — p. ej. regalo de cumpleaños, regalo de boda, dinero en festividades"
+    },
+    "SALES": {
+      "name": "Venta de artículos",
+      "description": "Venta de pertenencias personales — p. ej. móvil vendido en Wallapop, mercadillo, Vinted"
+    },
+    "BUSINESS_EXPENSES": {
+      "name": "Gastos de negocio",
+      "description": "Costes relacionados con el trabajo — p. ej. material de oficina, comida de negocios, coworking"
+    },
+    "SOFTWARE_LICENSES": {
+      "name": "Software y aplicaciones",
+      "description": "Software de pago — p. ej. Adobe, Microsoft 365, renovación de dominio, hosting"
+    },
+    "HOME_IMPROVEMENT": {
+      "name": "Mejoras del hogar",
+      "description": "Reformas y mobiliario — p. ej. muebles nuevos, pintura, fontanero, IKEA"
+    },
+    "SAVINGS": {
+      "name": "Ahorros",
+      "description": "Dinero reservado — p. ej. transferencia a cuenta de ahorro, fondo de emergencia"
+    },
+    "REFUNDS": {
+      "name": "Devoluciones",
+      "description": "Pagos devueltos — p. ej. devolución de producto, servicio cancelado, cobro excesivo"
+    },
+    "FINES": {
+      "name": "Multas",
+      "description": "Sanciones — p. ej. multa de aparcamiento, multa de velocidad, recargo por pago tardío"
+    },
+    "CHARITY": {
+      "name": "Caridad",
+      "description": "Donaciones — p. ej. Cruz Roja, donación a mezquita/iglesia, GoFundMe"
+    },
+    "UNKNOWN": {
+      "name": "Otros",
+      "description": "Sin categoría — transacciones que no encajan en otras categorías"
+    }
+  },
+  "CategoryGroups": {
+    "CHARITY": {
+      "name": "Caridad",
+      "description": "Donaciones a organizaciones benéficas y campañas de crowdfunding."
+    },
+    "FOOD": {
+      "name": "Alimentación",
+      "description": "Supermercados, restaurantes y servicios de delivery."
+    },
+    "UTILITIES": {
+      "name": "Servicios",
+      "description": "Facturas de electricidad, gas, agua, internet y teléfono."
+    },
+    "TRANSPORT": {
+      "name": "Transporte",
+      "description": "Transporte público, combustible, mantenimiento del vehículo y aparcamiento."
+    },
+    "FINANCE": {
+      "name": "Finanzas",
+      "description": "Impuestos, seguros, préstamos, comisiones bancarias y ahorro."
+    },
+    "SHOPPING": {
+      "name": "Compras",
+      "description": "Ropa, electrónica y otras compras no esenciales."
+    },
+    "PETS": {
+      "name": "Mascotas",
+      "description": "Comida, veterinario, peluquería y accesorios para mascotas."
+    },
+    "OTHER": {
+      "name": "Otros",
+      "description": "Transacciones diversas que no encajan en ninguna otra categoría."
+    },
+    "EMPLOYMENT": {
+      "name": "Empleo",
+      "description": "Salario, sueldo e ingresos por trabajo autónomo."
+    },
+    "ENTERTAINMENT": {
+      "name": "Entretenimiento",
+      "description": "Suscripciones, hobbies, eventos y viajes."
+    },
+    "BUSINESS": {
+      "name": "Negocio",
+      "description": "Servicios profesionales, suministros y software para uso empresarial."
+    },
+    "HOUSING": {
+      "name": "Vivienda",
+      "description": "Alquiler, hipoteca, mejoras del hogar y suministros domésticos."
+    },
+    "EXTRA": {
+      "name": "Ingresos extra",
+      "description": "Cashback, regalos, ventas de artículos y reembolsos."
+    },
+    "PASSIVE": {
+      "name": "Ingresos pasivos",
+      "description": "Rendimientos de inversiones, dividendos e ingresos por alquiler."
+    },
+    "EDUCATION": {
+      "name": "Educación",
+      "description": "Matrículas, cursos, talleres y libros."
+    },
+    "HEALTH": {
+      "name": "Salud",
+      "description": "Atención médica, medicamentos, cuidado personal y fitness."
+    }
   },
   "Auth": {
     "login": "Iniciar sesión",

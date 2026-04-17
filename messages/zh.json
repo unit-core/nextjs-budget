@@ -262,6 +262,72 @@
       "description": "未分类 — 不属于其他类别的交易"
     }
   },
+  "CategoryGroups": {
+    "CHARITY": {
+      "name": "慈善",
+      "description": "向慈善机构和众筹活动的捐款。"
+    },
+    "FOOD": {
+      "name": "饮食",
+      "description": "超市购物、餐厅就餐和外卖送餐。"
+    },
+    "UTILITIES": {
+      "name": "公共事业",
+      "description": "水电气、网络和电话等账单。"
+    },
+    "TRANSPORT": {
+      "name": "交通",
+      "description": "公共交通、打车、燃油、车辆维修和停车费。"
+    },
+    "FINANCE": {
+      "name": "金融",
+      "description": "税款、保险、贷款还款、银行手续费和储蓄。"
+    },
+    "SHOPPING": {
+      "name": "购物",
+      "description": "服装、电子产品及其他非必要零售购买。"
+    },
+    "PETS": {
+      "name": "宠物",
+      "description": "宠物食品、兽医、美容和用品。"
+    },
+    "OTHER": {
+      "name": "其他",
+      "description": "不属于任何其他类别的杂项交易。"
+    },
+    "EMPLOYMENT": {
+      "name": "就业",
+      "description": "薪水、工资和自由职业收入。"
+    },
+    "ENTERTAINMENT": {
+      "name": "娱乐",
+      "description": "订阅、爱好、活动和旅行。"
+    },
+    "BUSINESS": {
+      "name": "商业",
+      "description": "专业服务、物资和商业用软件。"
+    },
+    "HOUSING": {
+      "name": "住房",
+      "description": "租金、房贷、家居改善和家用品。"
+    },
+    "EXTRA": {
+      "name": "额外收入",
+      "description": "返现、礼品、物品销售和退款。"
+    },
+    "PASSIVE": {
+      "name": "被动收入",
+      "description": "投资收益、股息和房产租赁收入。"
+    },
+    "EDUCATION": {
+      "name": "教育",
+      "description": "学费、课程、研讨会和书籍。"
+    },
+    "HEALTH": {
+      "name": "健康",
+      "description": "医疗护理、药品、个人卫生和健身。"
+    }
+  },
   "Auth": {
     "login": "登录",
     "loginDescription": "请在下方输入您的邮箱以登录账户",

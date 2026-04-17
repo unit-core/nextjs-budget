@@ -1,1 +1,433 @@
-{"Settings":{"language":"Lingua","layoutDirection":"Direzione del layout","logOut":"Esci","upgradeToPremium":"Passa a Premium","manageSubscription":"Gestisci abbonamento"},"Subscription":{"premiumFeature":"Funzionalità Premium","upgradeToPremium":"Passa a Premium","trialActive":"Prova gratuita — {days, plural, one {# giorno} other {# giorni}} rimanenti"},"Pricing":{"title":"Prezzi","headline":"Scegli il piano giusto per te","subtitle":"Sblocca le funzionalità premium per monitorare le spese più velocemente con il caricamento di immagini e l'inserimento intelligente del testo.","weeklyName":"Settimanale","yearlyName":"Annuale","perWeek":"/settimana","perYear":"/anno","plusTax":"+ tasse applicabili","weeklyDescription":"Prova le funzionalità premium con un piano settimanale flessibile. Annulla quando vuoi.","yearlyDescription":"Miglior rapporto qualità-prezzo — risparmia oltre il 20% rispetto al piano settimanale.","savePercent":"Risparmia il 23%","featureImageUpload":"Crea transazioni dalle foto degli scontrini","featureTextInput":"Crea transazioni dalle descrizioni testuali","featureAllCategories":"Oltre 40 categorie rilevate automaticamente","featureBasicSupport":"Supporto via email","featurePrioritySupport":"Supporto email prioritario","featureEarlyAccess":"Accesso anticipato alle nuove funzionalità","getStarted":"Inizia ora","redirecting":"Reindirizzamento...","manageSubscription":"Gestisci abbonamento","alreadyPremium":"Hai già un abbonamento premium attivo!","freeIncluded":"Il piano gratuito include: inserimento manuale delle transazioni, analisi della dashboard, supporto multivaluta e cronologia illimitata.","backToDashboard":"Torna alla Dashboard"},"Dashboard":{"title":"Dashboard","category":"Categoria","amount":"Importo","noResults":"Nessun risultato.","loading":"Caricamento...","transactions":"Transazioni","today":"Oggi","currentMonth":"Mese corrente","totalAmountToday":"Importo totale oggi","totalAmountMonth":"Importo totale per il mese corrente","numberOfTransactions":"Numero di transazioni","numberOfPositions":"Numero di voci","inTransactionsFor":"Nelle transazioni di {month}","items":"Articoli","activityByCurrency":"Attività per valuta","showingVolume":"Volume totale mostrato per {currencies}","threeMonths":"3 mesi","thirtyDays":"30 giorni","sevenDays":"7 giorni","allTransactions":"Tutte le transazioni","columns":"Colonne","header":"Intestazione","executedAt":"Eseguita il","status":"Stato","type":"Tipo","delete":"Elimina","rowsPerPage":"Righe per pagina","pageOf":"Pagina {current} di {total}","pendingTransactions":"Transazioni in sospeso","confirm":"Conferma","transactionDeleted":"La transazione è stata eliminata","transactionDeletedDesc":"Tutte le risorse sono state rimosse","transactionsConfirmed":"Transazioni confermate","transactionsConfirmedDesc":"{count} transazione/i contrassegnata/e come confermata/e","transactionsDeleted":"Transazioni eliminate","transactionsDeletedDesc":"{count} transazione/i eliminata/e","addTransaction":"Aggiungi transazione","newTransaction":"Nuova transazione","newTransactionDesc":"Crea una nuova transazione manualmente.","editTransactionDesc":"Modifica i dettagli della transazione e gli articoli.","name":"Nome","somethingWentWrong":"Si è verificato un errore durante il caricamento delle transazioni."},"Categories":{"RENT":{"name":"Affitto","description":"Affitto di appartamento o casa — es. canone mensile"},"MORTGAGE":{"name":"Mutuo","description":"Rate del mutuo — es. rata mensile del mutuo"},"UTILITIES":{"name":"Utenze","description":"Elettricità, acqua, gas, riscaldamento — es. bolletta della luce, bolletta dell'acqua"},"INTERNET":{"name":"Internet e TV","description":"Internet, piani telefonici, TV — es. fibra ottica, piano mobile, Netflix"},"HOUSEHOLD":{"name":"Casa","description":"Articoli per la casa e pulizia — es. detersivo, carta assorbente, lampadine"},"GROCERIES":{"name":"Spesa alimentare","description":"Supermercato e spesa — es. Carrefour, Lidl, spesa settimanale"},"RESTAURANTS":{"name":"Ristoranti e bar","description":"Mangiare fuori e caffetterie — es. pranzo al ristorante, cena con amici"},"DELIVERY":{"name":"Consegna cibo","description":"Pasti a domicilio e app di cibo — es. Uber Eats, Glovo, Wolt"},"PUBLIC_TRANSPORT":{"name":"Trasporto pubblico","description":"Autobus, metro, treni — es. abbonamento mensile, biglietto singolo, corsa in tram"},"TAXI":{"name":"Taxi e corse","description":"Taxi e ride-sharing — es. Uber, Bolt, Careem, trasferimento aeroportuale"},"FUEL":{"name":"Carburante","description":"Rifornimento alla stazione di servizio — es. benzina, diesel, ricarica EV"},"CAR_SERVICE":{"name":"Manutenzione auto","description":"Riparazioni e manutenzione auto — es. cambio olio, cambio gomme, autolavaggio, revisione"},"PARKING":{"name":"Parcheggio e pedaggi","description":"Costi di parcheggio e pedaggi stradali — es. garage, parchimetro, pedaggio autostradale"},"MEDICAL":{"name":"Medico e visite","description":"Visite mediche e analisi — es. dentista, analisi del sangue, visita specialistica"},"PHARMACY":{"name":"Farmacia","description":"Farmaci e prodotti sanitari — es. ricette, vitamine, kit di primo soccorso"},"PERSONAL_CARE":{"name":"Cura personale","description":"Cura del corpo e bellezza — es. taglio di capelli, skincare, cosmetici, barbiere"},"SPORT":{"name":"Sport e fitness","description":"Palestra e sport — es. abbonamento in palestra, lezione di yoga, scarpe da corsa, ingresso piscina"},"SUBSCRIPTIONS":{"name":"Abbonamenti","description":"Servizi digitali ricorrenti — es. Netflix, Spotify, iCloud, YouTube Premium"},"HOBBIES":{"name":"Hobby","description":"Interessi personali e attività creative — es. attrezzatura fotografica, materiale per pittura, gaming"},"EVENTS":{"name":"Cinema ed eventi","description":"Uscite di intrattenimento — es. biglietti del cinema, concerti, teatro, mostre"},"TRAVEL":{"name":"Viaggi e hotel","description":"Viaggi e vacanze — es. voli, Airbnb, hotel, assicurazione viaggio"},"CLOTHING":{"name":"Abbigliamento e scarpe","description":"Vestiti e accessori — es. giacca, sneakers, orologio, occhiali da sole"},"ELECTRONICS":{"name":"Elettronica e gadget","description":"Tecnologia e dispositivi — es. telefono, laptop, cuffie, caricatore"},"PETS":{"name":"Animali domestici","description":"Cura e accessori per animali — es. cibo per cani, visita veterinaria, lettiera per gatti, toelettatura"},"EDUCATION":{"name":"Corsi e formazione","description":"Apprendimento e sviluppo — es. corso online, lezione di lingua, workshop"},"BOOKS":{"name":"Libri","description":"Libri e lettura — es. libro Kindle, audiolibro, abbonamento a riviste"},"TAXES":{"name":"Tasse","description":"Tasse governative — es. imposta sul reddito, imposta sulla proprietà, rimborso IVA"},"INSURANCE":{"name":"Assicurazioni","description":"Premi assicurativi — es. assicurazione sanitaria, assicurazione auto, assicurazione casa"},"LOANS":{"name":"Prestiti e debiti","description":"Rimborso prestiti — es. prestito studentesco, prestito personale, debito carta di credito"},"BANK_FEES":{"name":"Commissioni bancarie","description":"Spese bancarie — es. manutenzione conto, commissione ATM, commissione bonifico"},"SALARY":{"name":"Stipendio","description":"Reddito da lavoro — es. stipendio mensile, bonus, straordinari"},"FREELANCE":{"name":"Freelance e progetti","description":"Reddito da lavoro autonomo — es. progetto per cliente, consulenza, lavoro a contratto"},"INVESTMENTS":{"name":"Rendimenti degli investimenti","description":"Guadagni da investimenti — es. dividendi azionari, profitto crypto, interessi obbligazionari"},"RENTAL_INCOME":{"name":"Reddito da affitto","description":"Guadagni da affitto immobiliare — es. affitto appartamento ricevuto, pagamento Airbnb"},"CASHBACK":{"name":"Cashback e rimborsi","description":"Soldi indietro — es. cashback carta di credito, rimborso negozio, sconto"},"GIFTS":{"name":"Regali","description":"Regali in denaro — es. regalo di compleanno, regalo di matrimonio, soldi per le feste"},"SALES":{"name":"Vendita di oggetti","description":"Vendita di oggetti personali — es. telefono venduto su eBay, vendita in garage, Vinted"},"BUSINESS_EXPENSES":{"name":"Spese aziendali","description":"Costi legati al lavoro — es. forniture per ufficio, pranzo di lavoro, spazio coworking"},"SOFTWARE_LICENSES":{"name":"Software e app","description":"Software a pagamento — es. Adobe, Microsoft 365, rinnovo dominio, hosting"},"HOME_IMPROVEMENT":{"name":"Ristrutturazione casa","description":"Ristrutturazione e arredamento — es. nuovi mobili, vernice, idraulico, IKEA"},"SAVINGS":{"name":"Risparmi","description":"Soldi messi da parte — es. trasferimento su conto risparmio, fondo di emergenza"},"REFUNDS":{"name":"Rimborsi","description":"Pagamenti restituiti — es. reso prodotto, servizio annullato, sovrapprezzo"},"FINES":{"name":"Multe","description":"Sanzioni — es. multa parcheggio, multa per eccesso di velocità, penale per ritardo di pagamento"},"CHARITY":{"name":"Beneficenza","description":"Donazioni — es. Croce Rossa, donazione moschea/chiesa, GoFundMe"},"UNKNOWN":{"name":"Altro","description":"Non categorizzato — transazioni che non rientrano in altre categorie"}},"Auth":{"login":"Accedi","loginDescription":"Inserisci la tua email qui sotto per accedere al tuo account","email":"Email","emailPlaceholder":"m@example.com","password":"Password","forgotPassword":"Password dimenticata?","loggingIn":"Accesso in corso...","orContinueWith":"Oppure continua con","continueWithGoogle":"Continua con Google","continueWithApple":"Continua con Apple","noAccount":"Non hai un account?","signUp":"Registrati","signUpTitle":"Registrati","signUpDescription":"Crea un nuovo account","repeatPassword":"Ripeti password","creatingAccount":"Creazione account in corso...","hasAccount":"Hai già un account?","passwordsNotMatch":"Le password non corrispondono","resetPassword":"Reimposta la tua password","resetPasswordDescription":"Inserisci la tua email e ti invieremo un link per reimpostare la password","sending":"Invio in corso...","sendResetEmail":"Invia email di reimpostazione","checkEmail":"Controlla la tua email","resetInstructionsSent":"Istruzioni per la reimpostazione della password inviate","resetEmailMessage":"Se ti sei registrato con email e password, riceverai un'email per la reimpostazione della password.","newPassword":"Nuova password","newPasswordDescription":"Inserisci la tua nuova password qui sotto.","saving":"Salvataggio...","saveNewPassword":"Salva nuova password","signUpSuccessTitle":"Grazie per la registrazione!","signUpSuccessDescription":"Controlla la tua email per confermare","signUpSuccessMessage":"Ti sei registrato con successo. Controlla la tua email per confermare il tuo account prima di accedere.","errorTitle":"Spiacenti, si è verificato un errore.","errorCode":"Codice errore: {code}","errorUnspecified":"Si è verificato un errore non specificato."},"HomePage":{"whatsNew":"Gratuito","justShipped":"Inizia a monitorare oggi","title":"Prendi il controllo dei tuoi soldi","description":"Monitora ogni spesa, controlla le tue entrate e scopri dove vanno i tuoi soldi. Un budget semplice che ti aiuta a risparmiare di più e spendere in modo più intelligente.","getStarted":"Inizia gratis","learnMore":"Scopri come funziona","featuresTitle":"Tutto ciò di cui hai bisogno per gestire le tue finanze","boostTitle":"Smetti di indovinare. Inizia a pianificare.","boostDescription":"Unisciti a migliaia di utenti che finalmente comprendono le proprie abitudini di spesa. Crea il tuo account gratuito in pochi secondi e fai il primo passo verso la chiarezza finanziaria.","alreadyHaveAccount":"Hai già un account? Accedi","copyright":"© 2026 Denis Popov. Tutti i diritti riservati."},"Features":{"expenseTracking":"Monitoraggio spese senza sforzo","expenseTrackingDesc":"Registra le tue spese quotidiane in pochi secondi. Categorizza le transazioni in oltre 40 categorie come spesa, affitto, viaggi e altro.","smartAnalytics":"Analisi e grafici intelligenti","smartAnalyticsDesc":"Visualizza i tuoi modelli di spesa con grafici interattivi. Consulta le ripartizioni giornaliere, mensili e per categoria a colpo d'occhio.","multiCurrency":"Supporto multivaluta","multiCurrencyDesc":"Monitora le spese in EUR, USD e altre valute. Perfetto per viaggiatori ed espatriati che gestiscono denaro in diversi paesi.","secureData":"Sicuro e privato","secureDataDesc":"I tuoi dati finanziari sono crittografati e conservati in modo sicuro. Non condividiamo mai le tue informazioni con terze parti."},"EmptyState":{"title":"Inizia a monitorare i tuoi soldi","description":"Aggiungi la tua prima transazione qui sotto e guarda le tue spese prendere vita con grafici, categorie e statistiche mensili.","stepLabel":"Passo {number}","step1Title":"Crea una transazione","step1Desc":"Compila il modulo manualmente, carica la foto di uno scontrino o descrivi la tua spesa con un testo — scegli il modo più semplice.","step2Title":"Salva e attendi","step2Desc":"Premi salva e dacci un momento per elaborare la tua transazione. Le voci da immagini e testo vengono categorizzate automaticamente — quelle manuali usano la categoria che scegli tu.","step3Title":"Controlla la tua dashboard","step3Desc":"Torna e esplora la tua dashboard — guarda grafici, ripartizioni per categoria, totali mensili e la cronologia completa di tutte le tue transazioni.","formTitle":"Crea la tua prima transazione","formDescription":"Carica uno scontrino, descrivilo a parole o compila il modulo manualmente.","tabImage":"Immagine","tabText":"Testo","tabManual":"Manuale","textPlaceholder":"Scrivi cosa hai speso...","submit":"Invia","transactionCreated":"La transazione è stata creata","processingDescription":"Il sistema sta già elaborando"},"NavMain":{"quickCreate":"Creazione rapida","createTransactions":"Crea transazioni","drawerDescription":"Carica i tuoi scontrini o descrivi le spese con le tue parole."},"TransactionForm":{"name":"Nome transazione","namePlaceholder":"es. Spesa settimanale","type":"Tipo","expense":"Spesa","income":"Entrata","date":"Data","items":"Articoli","addItem":"Aggiungi articolo","removeItem":"Rimuovi","itemNamePlaceholder":"Nome articolo","saving":"Salvataggio...","create":"Crea transazione","update":"Aggiorna transazione","transactionCreated":"Transazione creata","transactionUpdated":"Transazione aggiornata"}}
+{
+  "Settings": {
+    "language": "Lingua",
+    "layoutDirection": "Direzione del layout",
+    "logOut": "Esci",
+    "upgradeToPremium": "Passa a Premium",
+    "manageSubscription": "Gestisci abbonamento"
+  },
+  "Subscription": {
+    "premiumFeature": "Funzionalità Premium",
+    "upgradeToPremium": "Passa a Premium",
+    "trialActive": "Prova gratuita — {days, plural, one {# giorno} other {# giorni}} rimanenti"
+  },
+  "Pricing": {
+    "title": "Prezzi",
+    "headline": "Scegli il piano giusto per te",
+    "subtitle": "Sblocca le funzionalità premium per monitorare le spese più velocemente con il caricamento di immagini e l'inserimento intelligente del testo.",
+    "weeklyName": "Settimanale",
+    "yearlyName": "Annuale",
+    "perWeek": "/settimana",
+    "perYear": "/anno",
+    "plusTax": "+ tasse applicabili",
+    "weeklyDescription": "Prova le funzionalità premium con un piano settimanale flessibile. Annulla quando vuoi.",
+    "yearlyDescription": "Miglior rapporto qualità-prezzo — risparmia oltre il 20% rispetto al piano settimanale.",
+    "savePercent": "Risparmia il 23%",
+    "featureImageUpload": "Crea transazioni dalle foto degli scontrini",
+    "featureTextInput": "Crea transazioni dalle descrizioni testuali",
+    "featureAllCategories": "Oltre 40 categorie rilevate automaticamente",
+    "featureBasicSupport": "Supporto via email",
+    "featurePrioritySupport": "Supporto email prioritario",
+    "featureEarlyAccess": "Accesso anticipato alle nuove funzionalità",
+    "getStarted": "Inizia ora",
+    "redirecting": "Reindirizzamento...",
+    "manageSubscription": "Gestisci abbonamento",
+    "alreadyPremium": "Hai già un abbonamento premium attivo!",
+    "freeIncluded": "Il piano gratuito include: inserimento manuale delle transazioni, analisi della dashboard, supporto multivaluta e cronologia illimitata.",
+    "backToDashboard": "Torna alla Dashboard"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "category": "Categoria",
+    "amount": "Importo",
+    "noResults": "Nessun risultato.",
+    "loading": "Caricamento...",
+    "transactions": "Transazioni",
+    "today": "Oggi",
+    "currentMonth": "Mese corrente",
+    "totalAmountToday": "Importo totale oggi",
+    "totalAmountMonth": "Importo totale per il mese corrente",
+    "numberOfTransactions": "Numero di transazioni",
+    "numberOfPositions": "Numero di voci",
+    "inTransactionsFor": "Nelle transazioni di {month}",
+    "items": "Articoli",
+    "activityByCurrency": "Attività per valuta",
+    "showingVolume": "Volume totale mostrato per {currencies}",
+    "threeMonths": "3 mesi",
+    "thirtyDays": "30 giorni",
+    "sevenDays": "7 giorni",
+    "allTransactions": "Tutte le transazioni",
+    "columns": "Colonne",
+    "header": "Intestazione",
+    "executedAt": "Eseguita il",
+    "status": "Stato",
+    "type": "Tipo",
+    "delete": "Elimina",
+    "rowsPerPage": "Righe per pagina",
+    "pageOf": "Pagina {current} di {total}",
+    "pendingTransactions": "Transazioni in sospeso",
+    "confirm": "Conferma",
+    "transactionDeleted": "La transazione è stata eliminata",
+    "transactionDeletedDesc": "Tutte le risorse sono state rimosse",
+    "transactionsConfirmed": "Transazioni confermate",
+    "transactionsConfirmedDesc": "{count} transazione/i contrassegnata/e come confermata/e",
+    "transactionsDeleted": "Transazioni eliminate",
+    "transactionsDeletedDesc": "{count} transazione/i eliminata/e",
+    "addTransaction": "Aggiungi transazione",
+    "newTransaction": "Nuova transazione",
+    "newTransactionDesc": "Crea una nuova transazione manualmente.",
+    "editTransactionDesc": "Modifica i dettagli della transazione e gli articoli.",
+    "name": "Nome",
+    "somethingWentWrong": "Si è verificato un errore durante il caricamento delle transazioni."
+  },
+  "Categories": {
+    "RENT": {
+      "name": "Affitto",
+      "description": "Affitto di appartamento o casa — es. canone mensile"
+    },
+    "MORTGAGE": {
+      "name": "Mutuo",
+      "description": "Rate del mutuo — es. rata mensile del mutuo"
+    },
+    "UTILITIES": {
+      "name": "Utenze",
+      "description": "Elettricità, acqua, gas, riscaldamento — es. bolletta della luce, bolletta dell'acqua"
+    },
+    "INTERNET": {
+      "name": "Internet e TV",
+      "description": "Internet, piani telefonici, TV — es. fibra ottica, piano mobile, Netflix"
+    },
+    "HOUSEHOLD": {
+      "name": "Casa",
+      "description": "Articoli per la casa e pulizia — es. detersivo, carta assorbente, lampadine"
+    },
+    "GROCERIES": {
+      "name": "Spesa alimentare",
+      "description": "Supermercato e spesa — es. Carrefour, Lidl, spesa settimanale"
+    },
+    "RESTAURANTS": {
+      "name": "Ristoranti e bar",
+      "description": "Mangiare fuori e caffetterie — es. pranzo al ristorante, cena con amici"
+    },
+    "DELIVERY": {
+      "name": "Consegna cibo",
+      "description": "Pasti a domicilio e app di cibo — es. Uber Eats, Glovo, Wolt"
+    },
+    "PUBLIC_TRANSPORT": {
+      "name": "Trasporto pubblico",
+      "description": "Autobus, metro, treni — es. abbonamento mensile, biglietto singolo, corsa in tram"
+    },
+    "TAXI": {
+      "name": "Taxi e corse",
+      "description": "Taxi e ride-sharing — es. Uber, Bolt, Careem, trasferimento aeroportuale"
+    },
+    "FUEL": {
+      "name": "Carburante",
+      "description": "Rifornimento alla stazione di servizio — es. benzina, diesel, ricarica EV"
+    },
+    "CAR_SERVICE": {
+      "name": "Manutenzione auto",
+      "description": "Riparazioni e manutenzione auto — es. cambio olio, cambio gomme, autolavaggio, revisione"
+    },
+    "PARKING": {
+      "name": "Parcheggio e pedaggi",
+      "description": "Costi di parcheggio e pedaggi stradali — es. garage, parchimetro, pedaggio autostradale"
+    },
+    "MEDICAL": {
+      "name": "Medico e visite",
+      "description": "Visite mediche e analisi — es. dentista, analisi del sangue, visita specialistica"
+    },
+    "PHARMACY": {
+      "name": "Farmacia",
+      "description": "Farmaci e prodotti sanitari — es. ricette, vitamine, kit di primo soccorso"
+    },
+    "PERSONAL_CARE": {
+      "name": "Cura personale",
+      "description": "Cura del corpo e bellezza — es. taglio di capelli, skincare, cosmetici, barbiere"
+    },
+    "SPORT": {
+      "name": "Sport e fitness",
+      "description": "Palestra e sport — es. abbonamento in palestra, lezione di yoga, scarpe da corsa, ingresso piscina"
+    },
+    "SUBSCRIPTIONS": {
+      "name": "Abbonamenti",
+      "description": "Servizi digitali ricorrenti — es. Netflix, Spotify, iCloud, YouTube Premium"
+    },
+    "HOBBIES": {
+      "name": "Hobby",
+      "description": "Interessi personali e attività creative — es. attrezzatura fotografica, materiale per pittura, gaming"
+    },
+    "EVENTS": {
+      "name": "Cinema ed eventi",
+      "description": "Uscite di intrattenimento — es. biglietti del cinema, concerti, teatro, mostre"
+    },
+    "TRAVEL": {
+      "name": "Viaggi e hotel",
+      "description": "Viaggi e vacanze — es. voli, Airbnb, hotel, assicurazione viaggio"
+    },
+    "CLOTHING": {
+      "name": "Abbigliamento e scarpe",
+      "description": "Vestiti e accessori — es. giacca, sneakers, orologio, occhiali da sole"
+    },
+    "ELECTRONICS": {
+      "name": "Elettronica e gadget",
+      "description": "Tecnologia e dispositivi — es. telefono, laptop, cuffie, caricatore"
+    },
+    "PETS": {
+      "name": "Animali domestici",
+      "description": "Cura e accessori per animali — es. cibo per cani, visita veterinaria, lettiera per gatti, toelettatura"
+    },
+    "EDUCATION": {
+      "name": "Corsi e formazione",
+      "description": "Apprendimento e sviluppo — es. corso online, lezione di lingua, workshop"
+    },
+    "BOOKS": {
+      "name": "Libri",
+      "description": "Libri e lettura — es. libro Kindle, audiolibro, abbonamento a riviste"
+    },
+    "TAXES": {
+      "name": "Tasse",
+      "description": "Tasse governative — es. imposta sul reddito, imposta sulla proprietà, rimborso IVA"
+    },
+    "INSURANCE": {
+      "name": "Assicurazioni",
+      "description": "Premi assicurativi — es. assicurazione sanitaria, assicurazione auto, assicurazione casa"
+    },
+    "LOANS": {
+      "name": "Prestiti e debiti",
+      "description": "Rimborso prestiti — es. prestito studentesco, prestito personale, debito carta di credito"
+    },
+    "BANK_FEES": {
+      "name": "Commissioni bancarie",
+      "description": "Spese bancarie — es. manutenzione conto, commissione ATM, commissione bonifico"
+    },
+    "SALARY": {
+      "name": "Stipendio",
+      "description": "Reddito da lavoro — es. stipendio mensile, bonus, straordinari"
+    },
+    "FREELANCE": {
+      "name": "Freelance e progetti",
+      "description": "Reddito da lavoro autonomo — es. progetto per cliente, consulenza, lavoro a contratto"
+    },
+    "INVESTMENTS": {
+      "name": "Rendimenti degli investimenti",
+      "description": "Guadagni da investimenti — es. dividendi azionari, profitto crypto, interessi obbligazionari"
+    },
+    "RENTAL_INCOME": {
+      "name": "Reddito da affitto",
+      "description": "Guadagni da affitto immobiliare — es. affitto appartamento ricevuto, pagamento Airbnb"
+    },
+    "CASHBACK": {
+      "name": "Cashback e rimborsi",
+      "description": "Soldi indietro — es. cashback carta di credito, rimborso negozio, sconto"
+    },
+    "GIFTS": {
+      "name": "Regali",
+      "description": "Regali in denaro — es. regalo di compleanno, regalo di matrimonio, soldi per le feste"
+    },
+    "SALES": {
+      "name": "Vendita di oggetti",
+      "description": "Vendita di oggetti personali — es. telefono venduto su eBay, vendita in garage, Vinted"
+    },
+    "BUSINESS_EXPENSES": {
+      "name": "Spese aziendali",
+      "description": "Costi legati al lavoro — es. forniture per ufficio, pranzo di lavoro, spazio coworking"
+    },
+    "SOFTWARE_LICENSES": {
+      "name": "Software e app",
+      "description": "Software a pagamento — es. Adobe, Microsoft 365, rinnovo dominio, hosting"
+    },
+    "HOME_IMPROVEMENT": {
+      "name": "Ristrutturazione casa",
+      "description": "Ristrutturazione e arredamento — es. nuovi mobili, vernice, idraulico, IKEA"
+    },
+    "SAVINGS": {
+      "name": "Risparmi",
+      "description": "Soldi messi da parte — es. trasferimento su conto risparmio, fondo di emergenza"
+    },
+    "REFUNDS": {
+      "name": "Rimborsi",
+      "description": "Pagamenti restituiti — es. reso prodotto, servizio annullato, sovrapprezzo"
+    },
+    "FINES": {
+      "name": "Multe",
+      "description": "Sanzioni — es. multa parcheggio, multa per eccesso di velocità, penale per ritardo di pagamento"
+    },
+    "CHARITY": {
+      "name": "Beneficenza",
+      "description": "Donazioni — es. Croce Rossa, donazione moschea/chiesa, GoFundMe"
+    },
+    "UNKNOWN": {
+      "name": "Altro",
+      "description": "Non categorizzato — transazioni che non rientrano in altre categorie"
+    }
+  },
+  "CategoryGroups": {
+    "CHARITY": {
+      "name": "Beneficenza",
+      "description": "Donazioni ad associazioni di beneficenza e campagne di crowdfunding."
+    },
+    "FOOD": {
+      "name": "Alimentazione",
+      "description": "Spesa al supermercato, ristoranti e consegne a domicilio."
+    },
+    "UTILITIES": {
+      "name": "Utenze",
+      "description": "Bollette di elettricità, gas, acqua, internet e telefono."
+    },
+    "TRANSPORT": {
+      "name": "Trasporti",
+      "description": "Trasporti pubblici, carpooling, carburante, manutenzione auto e parcheggio."
+    },
+    "FINANCE": {
+      "name": "Finanze",
+      "description": "Tasse, assicurazioni, rimborso prestiti, spese bancarie e risparmio."
+    },
+    "SHOPPING": {
+      "name": "Shopping",
+      "description": "Abbigliamento, elettronica e altri acquisti non essenziali."
+    },
+    "PETS": {
+      "name": "Animali",
+      "description": "Cibo, veterinario, toelettatura e accessori per animali domestici."
+    },
+    "OTHER": {
+      "name": "Altro",
+      "description": "Transazioni varie che non rientrano in nessun'altra categoria."
+    },
+    "EMPLOYMENT": {
+      "name": "Lavoro",
+      "description": "Stipendio, salario e reddito da lavoro autonomo."
+    },
+    "ENTERTAINMENT": {
+      "name": "Intrattenimento",
+      "description": "Abbonamenti, hobby, eventi e viaggi."
+    },
+    "BUSINESS": {
+      "name": "Affari",
+      "description": "Servizi professionali, forniture e software per uso aziendale."
+    },
+    "HOUSING": {
+      "name": "Abitazione",
+      "description": "Affitto, mutuo, ristrutturazioni e articoli per la casa."
+    },
+    "EXTRA": {
+      "name": "Reddito extra",
+      "description": "Cashback, regali, vendite di oggetti e rimborsi."
+    },
+    "PASSIVE": {
+      "name": "Reddito passivo",
+      "description": "Rendimenti da investimenti, dividendi e reddito da affitto."
+    },
+    "EDUCATION": {
+      "name": "Istruzione",
+      "description": "Rette scolastiche, corsi, workshop e libri."
+    },
+    "HEALTH": {
+      "name": "Salute",
+      "description": "Cure mediche, farmaci, cura personale e fitness."
+    }
+  },
+  "Auth": {
+    "login": "Accedi",
+    "loginDescription": "Inserisci la tua email qui sotto per accedere al tuo account",
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "password": "Password",
+    "forgotPassword": "Password dimenticata?",
+    "loggingIn": "Accesso in corso...",
+    "orContinueWith": "Oppure continua con",
+    "continueWithGoogle": "Continua con Google",
+    "continueWithApple": "Continua con Apple",
+    "noAccount": "Non hai un account?",
+    "signUp": "Registrati",
+    "signUpTitle": "Registrati",
+    "signUpDescription": "Crea un nuovo account",
+    "repeatPassword": "Ripeti password",
+    "creatingAccount": "Creazione account in corso...",
+    "hasAccount": "Hai già un account?",
+    "passwordsNotMatch": "Le password non corrispondono",
+    "resetPassword": "Reimposta la tua password",
+    "resetPasswordDescription": "Inserisci la tua email e ti invieremo un link per reimpostare la password",
+    "sending": "Invio in corso...",
+    "sendResetEmail": "Invia email di reimpostazione",
+    "checkEmail": "Controlla la tua email",
+    "resetInstructionsSent": "Istruzioni per la reimpostazione della password inviate",
+    "resetEmailMessage": "Se ti sei registrato con email e password, riceverai un'email per la reimpostazione della password.",
+    "newPassword": "Nuova password",
+    "newPasswordDescription": "Inserisci la tua nuova password qui sotto.",
+    "saving": "Salvataggio...",
+    "saveNewPassword": "Salva nuova password",
+    "signUpSuccessTitle": "Grazie per la registrazione!",
+    "signUpSuccessDescription": "Controlla la tua email per confermare",
+    "signUpSuccessMessage": "Ti sei registrato con successo. Controlla la tua email per confermare il tuo account prima di accedere.",
+    "errorTitle": "Spiacenti, si è verificato un errore.",
+    "errorCode": "Codice errore: {code}",
+    "errorUnspecified": "Si è verificato un errore non specificato."
+  },
+  "HomePage": {
+    "whatsNew": "Gratuito",
+    "justShipped": "Inizia a monitorare oggi",
+    "title": "Prendi il controllo dei tuoi soldi",
+    "description": "Monitora ogni spesa, controlla le tue entrate e scopri dove vanno i tuoi soldi. Un budget semplice che ti aiuta a risparmiare di più e spendere in modo più intelligente.",
+    "getStarted": "Inizia gratis",
+    "learnMore": "Scopri come funziona",
+    "featuresTitle": "Tutto ciò di cui hai bisogno per gestire le tue finanze",
+    "boostTitle": "Smetti di indovinare. Inizia a pianificare.",
+    "boostDescription": "Unisciti a migliaia di utenti che finalmente comprendono le proprie abitudini di spesa. Crea il tuo account gratuito in pochi secondi e fai il primo passo verso la chiarezza finanziaria.",
+    "alreadyHaveAccount": "Hai già un account? Accedi",
+    "copyright": "© 2026 Denis Popov. Tutti i diritti riservati."
+  },
+  "Features": {
+    "expenseTracking": "Monitoraggio spese senza sforzo",
+    "expenseTrackingDesc": "Registra le tue spese quotidiane in pochi secondi. Categorizza le transazioni in oltre 40 categorie come spesa, affitto, viaggi e altro.",
+    "smartAnalytics": "Analisi e grafici intelligenti",
+    "smartAnalyticsDesc": "Visualizza i tuoi modelli di spesa con grafici interattivi. Consulta le ripartizioni giornaliere, mensili e per categoria a colpo d'occhio.",
+    "multiCurrency": "Supporto multivaluta",
+    "multiCurrencyDesc": "Monitora le spese in EUR, USD e altre valute. Perfetto per viaggiatori ed espatriati che gestiscono denaro in diversi paesi.",
+    "secureData": "Sicuro e privato",
+    "secureDataDesc": "I tuoi dati finanziari sono crittografati e conservati in modo sicuro. Non condividiamo mai le tue informazioni con terze parti."
+  },
+  "EmptyState": {
+    "title": "Inizia a monitorare i tuoi soldi",
+    "description": "Aggiungi la tua prima transazione qui sotto e guarda le tue spese prendere vita con grafici, categorie e statistiche mensili.",
+    "stepLabel": "Passo {number}",
+    "step1Title": "Crea una transazione",
+    "step1Desc": "Compila il modulo manualmente, carica la foto di uno scontrino o descrivi la tua spesa con un testo — scegli il modo più semplice.",
+    "step2Title": "Salva e attendi",
+    "step2Desc": "Premi salva e dacci un momento per elaborare la tua transazione. Le voci da immagini e testo vengono categorizzate automaticamente — quelle manuali usano la categoria che scegli tu.",
+    "step3Title": "Controlla la tua dashboard",
+    "step3Desc": "Torna e esplora la tua dashboard — guarda grafici, ripartizioni per categoria, totali mensili e la cronologia completa di tutte le tue transazioni.",
+    "formTitle": "Crea la tua prima transazione",
+    "formDescription": "Carica uno scontrino, descrivilo a parole o compila il modulo manualmente.",
+    "tabImage": "Immagine",
+    "tabText": "Testo",
+    "tabManual": "Manuale",
+    "textPlaceholder": "Scrivi cosa hai speso...",
+    "submit": "Invia",
+    "transactionCreated": "La transazione è stata creata",
+    "processingDescription": "Il sistema sta già elaborando"
+  },
+  "NavMain": {
+    "quickCreate": "Creazione rapida",
+    "createTransactions": "Crea transazioni",
+    "drawerDescription": "Carica i tuoi scontrini o descrivi le spese con le tue parole."
+  },
+  "TransactionForm": {
+    "name": "Nome transazione",
+    "namePlaceholder": "es. Spesa settimanale",
+    "type": "Tipo",
+    "expense": "Spesa",
+    "income": "Entrata",
+    "date": "Data",
+    "items": "Articoli",
+    "addItem": "Aggiungi articolo",
+    "removeItem": "Rimuovi",
+    "itemNamePlaceholder": "Nome articolo",
+    "saving": "Salvataggio...",
+    "create": "Crea transazione",
+    "update": "Aggiorna transazione",
+    "transactionCreated": "Transazione creata",
+    "transactionUpdated": "Transazione aggiornata"
+  }
+}

@@ -81,51 +81,252 @@
     "somethingWentWrong": "İşlemler yüklenirken bir hata oluştu."
   },
   "Categories": {
-    "RENT": { "name": "Kira", "description": "Daire veya ev kirası — örn. aylık kira ödemesi" },
-    "MORTGAGE": { "name": "Mortgage", "description": "Konut kredisi ödemeleri — örn. aylık mortgage taksiti" },
-    "UTILITIES": { "name": "Faturalar", "description": "Elektrik, su, doğalgaz, ısınma — örn. elektrik faturası, su faturası" },
-    "INTERNET": { "name": "İnternet & TV", "description": "İnternet, telefon planları, TV — örn. fiber optik, mobil plan, Netflix" },
-    "HOUSEHOLD": { "name": "Ev Gereçleri", "description": "Ev malzemeleri ve temizlik — örn. deterjan, kağıt havlu, ampul" },
-    "GROCERIES": { "name": "Market", "description": "Süpermarket ve gıda alışverişi — örn. Migros, BİM, haftalık market" },
-    "RESTAURANTS": { "name": "Restoranlar & Kafeler", "description": "Dışarıda yemek ve kafeler — örn. restoranda öğle yemeği, arkadaşlarla akşam yemeği" },
-    "DELIVERY": { "name": "Yemek Siparişi", "description": "Yemek siparişi ve uygulamalar — örn. Yemeksepeti, Getir, Trendyol Yemek" },
-    "PUBLIC_TRANSPORT": { "name": "Toplu Taşıma", "description": "Otobüs, metro, tren — örn. aylık abonman, tek bilet, tramvay" },
-    "TAXI": { "name": "Taksi & Yolculuk", "description": "Taksi ve araç paylaşımı — örn. Uber, BiTaksi, havaalanı transferi" },
-    "FUEL": { "name": "Yakıt", "description": "Benzin istasyonu — örn. benzin, motorin, elektrikli araç şarjı" },
-    "CAR_SERVICE": { "name": "Araç Bakımı", "description": "Araç tamir ve bakımı — örn. yağ değişimi, lastik değişimi, yıkama, muayene" },
-    "PARKING": { "name": "Park & Geçiş Ücreti", "description": "Park ücretleri ve otoyol geçişleri — örn. otopark, parkmetre, HGS/OGS" },
-    "MEDICAL": { "name": "Sağlık & Doktor", "description": "Doktor ziyaretleri ve testler — örn. diş hekimi, kan tahlili, uzman muayenesi" },
-    "PHARMACY": { "name": "Eczane", "description": "İlaçlar ve sağlık ürünleri — örn. reçeteli ilaç, vitamin, ilk yardım seti" },
-    "PERSONAL_CARE": { "name": "Kişisel Bakım", "description": "Bakım ve güzellik — örn. saç kesimi, cilt bakımı, kozmetik, berber" },
-    "SPORT": { "name": "Spor & Fitness", "description": "Spor salonu ve sporlar — örn. spor salonu üyeliği, yoga dersi, koşu ayakkabısı" },
-    "SUBSCRIPTIONS": { "name": "Abonelikler", "description": "Tekrarlayan dijital hizmetler — örn. Netflix, Spotify, iCloud, YouTube Premium" },
-    "HOBBIES": { "name": "Hobiler", "description": "Kişisel ilgi alanları ve el işleri — örn. fotoğraf ekipmanı, boya malzemeleri, oyun" },
-    "EVENTS": { "name": "Sinema & Etkinlikler", "description": "Eğlence etkinlikleri — örn. sinema bileti, konser, tiyatro, sergi" },
-    "TRAVEL": { "name": "Seyahat & Otel", "description": "Geziler ve tatiller — örn. uçak bileti, Airbnb, otel, seyahat sigortası" },
-    "CLOTHING": { "name": "Giyim & Ayakkabı", "description": "Kıyafet ve aksesuarlar — örn. ceket, spor ayakkabı, saat, güneş gözlüğü" },
-    "ELECTRONICS": { "name": "Elektronik & Cihazlar", "description": "Teknoloji ve cihazlar — örn. telefon, dizüstü bilgisayar, kulaklık, şarj aleti" },
-    "PETS": { "name": "Evcil Hayvanlar", "description": "Evcil hayvan bakımı ve malzemeleri — örn. köpek maması, veteriner, kedi kumu" },
-    "EDUCATION": { "name": "Kurslar & Eğitim", "description": "Öğrenme ve gelişim — örn. çevrimiçi kurs, dil kursu, atölye" },
-    "BOOKS": { "name": "Kitaplar", "description": "Kitaplar ve okuma — örn. Kindle kitabı, sesli kitap, dergi aboneliği" },
-    "TAXES": { "name": "Vergiler", "description": "Devlet vergileri — örn. gelir vergisi, emlak vergisi, KDV iadesi" },
-    "INSURANCE": { "name": "Sigorta", "description": "Sigorta primleri — örn. sağlık sigortası, kasko, konut sigortası" },
-    "LOANS": { "name": "Krediler & Borçlar", "description": "Kredi geri ödemeleri — örn. öğrenim kredisi, bireysel kredi, kredi kartı borcu" },
-    "BANK_FEES": { "name": "Banka Ücretleri", "description": "Bankacılık ücretleri — örn. hesap işletim ücreti, ATM ücreti, havale ücreti" },
-    "SALARY": { "name": "Maaş", "description": "İstihdam geliri — örn. aylık maaş, ikramiye, fazla mesai ücreti" },
-    "FREELANCE": { "name": "Serbest Çalışma & Projeler", "description": "Serbest meslek geliri — örn. müşteri projesi, danışmanlık, freelance iş" },
-    "INVESTMENTS": { "name": "Yatırım Getirileri", "description": "Yatırım kazançları — örn. hisse temettüsü, kripto karı, tahvil faizi" },
-    "RENTAL_INCOME": { "name": "Kira Geliri", "description": "Mülk kira kazançları — örn. alınan daire kirası, Airbnb ödemesi" },
-    "CASHBACK": { "name": "Cashback & İadeler", "description": "Para iadesi — örn. kredi kartı cashback, mağaza iadesi, indirim" },
-    "GIFTS": { "name": "Hediyeler", "description": "Parasal hediyeler — örn. doğum günü hediyesi, düğün hediyesi, bayram harçlığı" },
-    "SALES": { "name": "Eşya Satışı", "description": "Kişisel eşya satışı — örn. telefon satışı, ikinci el satış, Dolap" },
-    "BUSINESS_EXPENSES": { "name": "İş Giderleri", "description": "İşle ilgili maliyetler — örn. ofis malzemeleri, iş yemeği, ortak çalışma alanı" },
-    "SOFTWARE_LICENSES": { "name": "Yazılım & Uygulamalar", "description": "Ücretli yazılımlar — örn. Adobe, Microsoft 365, alan adı yenileme, hosting" },
-    "HOME_IMPROVEMENT": { "name": "Ev Tadilatı", "description": "Tadilat ve döşeme — örn. yeni mobilya, boya, tesisatçı, IKEA" },
-    "SAVINGS": { "name": "Birikim", "description": "Biriktirilen para — örn. tasarruf hesabına aktarım, acil durum fonu" },
-    "REFUNDS": { "name": "İadeler", "description": "Geri ödemeler — örn. ürün iadesi, iptal edilen hizmet, fazla ödeme" },
-    "FINES": { "name": "Cezalar", "description": "Para cezaları — örn. park cezası, hız cezası, gecikme ücreti" },
-    "CHARITY": { "name": "Bağış", "description": "Bağışlar — örn. Kızılay, cami/kilise bağışı, yardım kampanyası" },
-    "UNKNOWN": { "name": "Diğer", "description": "Kategorize edilmemiş — diğer kategorilere uymayan işlemler" }
+    "RENT": {
+      "name": "Kira",
+      "description": "Daire veya ev kirası — örn. aylık kira ödemesi"
+    },
+    "MORTGAGE": {
+      "name": "Mortgage",
+      "description": "Konut kredisi ödemeleri — örn. aylık mortgage taksiti"
+    },
+    "UTILITIES": {
+      "name": "Faturalar",
+      "description": "Elektrik, su, doğalgaz, ısınma — örn. elektrik faturası, su faturası"
+    },
+    "INTERNET": {
+      "name": "İnternet & TV",
+      "description": "İnternet, telefon planları, TV — örn. fiber optik, mobil plan, Netflix"
+    },
+    "HOUSEHOLD": {
+      "name": "Ev Gereçleri",
+      "description": "Ev malzemeleri ve temizlik — örn. deterjan, kağıt havlu, ampul"
+    },
+    "GROCERIES": {
+      "name": "Market",
+      "description": "Süpermarket ve gıda alışverişi — örn. Migros, BİM, haftalık market"
+    },
+    "RESTAURANTS": {
+      "name": "Restoranlar & Kafeler",
+      "description": "Dışarıda yemek ve kafeler — örn. restoranda öğle yemeği, arkadaşlarla akşam yemeği"
+    },
+    "DELIVERY": {
+      "name": "Yemek Siparişi",
+      "description": "Yemek siparişi ve uygulamalar — örn. Yemeksepeti, Getir, Trendyol Yemek"
+    },
+    "PUBLIC_TRANSPORT": {
+      "name": "Toplu Taşıma",
+      "description": "Otobüs, metro, tren — örn. aylık abonman, tek bilet, tramvay"
+    },
+    "TAXI": {
+      "name": "Taksi & Yolculuk",
+      "description": "Taksi ve araç paylaşımı — örn. Uber, BiTaksi, havaalanı transferi"
+    },
+    "FUEL": {
+      "name": "Yakıt",
+      "description": "Benzin istasyonu — örn. benzin, motorin, elektrikli araç şarjı"
+    },
+    "CAR_SERVICE": {
+      "name": "Araç Bakımı",
+      "description": "Araç tamir ve bakımı — örn. yağ değişimi, lastik değişimi, yıkama, muayene"
+    },
+    "PARKING": {
+      "name": "Park & Geçiş Ücreti",
+      "description": "Park ücretleri ve otoyol geçişleri — örn. otopark, parkmetre, HGS/OGS"
+    },
+    "MEDICAL": {
+      "name": "Sağlık & Doktor",
+      "description": "Doktor ziyaretleri ve testler — örn. diş hekimi, kan tahlili, uzman muayenesi"
+    },
+    "PHARMACY": {
+      "name": "Eczane",
+      "description": "İlaçlar ve sağlık ürünleri — örn. reçeteli ilaç, vitamin, ilk yardım seti"
+    },
+    "PERSONAL_CARE": {
+      "name": "Kişisel Bakım",
+      "description": "Bakım ve güzellik — örn. saç kesimi, cilt bakımı, kozmetik, berber"
+    },
+    "SPORT": {
+      "name": "Spor & Fitness",
+      "description": "Spor salonu ve sporlar — örn. spor salonu üyeliği, yoga dersi, koşu ayakkabısı"
+    },
+    "SUBSCRIPTIONS": {
+      "name": "Abonelikler",
+      "description": "Tekrarlayan dijital hizmetler — örn. Netflix, Spotify, iCloud, YouTube Premium"
+    },
+    "HOBBIES": {
+      "name": "Hobiler",
+      "description": "Kişisel ilgi alanları ve el işleri — örn. fotoğraf ekipmanı, boya malzemeleri, oyun"
+    },
+    "EVENTS": {
+      "name": "Sinema & Etkinlikler",
+      "description": "Eğlence etkinlikleri — örn. sinema bileti, konser, tiyatro, sergi"
+    },
+    "TRAVEL": {
+      "name": "Seyahat & Otel",
+      "description": "Geziler ve tatiller — örn. uçak bileti, Airbnb, otel, seyahat sigortası"
+    },
+    "CLOTHING": {
+      "name": "Giyim & Ayakkabı",
+      "description": "Kıyafet ve aksesuarlar — örn. ceket, spor ayakkabı, saat, güneş gözlüğü"
+    },
+    "ELECTRONICS": {
+      "name": "Elektronik & Cihazlar",
+      "description": "Teknoloji ve cihazlar — örn. telefon, dizüstü bilgisayar, kulaklık, şarj aleti"
+    },
+    "PETS": {
+      "name": "Evcil Hayvanlar",
+      "description": "Evcil hayvan bakımı ve malzemeleri — örn. köpek maması, veteriner, kedi kumu"
+    },
+    "EDUCATION": {
+      "name": "Kurslar & Eğitim",
+      "description": "Öğrenme ve gelişim — örn. çevrimiçi kurs, dil kursu, atölye"
+    },
+    "BOOKS": {
+      "name": "Kitaplar",
+      "description": "Kitaplar ve okuma — örn. Kindle kitabı, sesli kitap, dergi aboneliği"
+    },
+    "TAXES": {
+      "name": "Vergiler",
+      "description": "Devlet vergileri — örn. gelir vergisi, emlak vergisi, KDV iadesi"
+    },
+    "INSURANCE": {
+      "name": "Sigorta",
+      "description": "Sigorta primleri — örn. sağlık sigortası, kasko, konut sigortası"
+    },
+    "LOANS": {
+      "name": "Krediler & Borçlar",
+      "description": "Kredi geri ödemeleri — örn. öğrenim kredisi, bireysel kredi, kredi kartı borcu"
+    },
+    "BANK_FEES": {
+      "name": "Banka Ücretleri",
+      "description": "Bankacılık ücretleri — örn. hesap işletim ücreti, ATM ücreti, havale ücreti"
+    },
+    "SALARY": {
+      "name": "Maaş",
+      "description": "İstihdam geliri — örn. aylık maaş, ikramiye, fazla mesai ücreti"
+    },
+    "FREELANCE": {
+      "name": "Serbest Çalışma & Projeler",
+      "description": "Serbest meslek geliri — örn. müşteri projesi, danışmanlık, freelance iş"
+    },
+    "INVESTMENTS": {
+      "name": "Yatırım Getirileri",
+      "description": "Yatırım kazançları — örn. hisse temettüsü, kripto karı, tahvil faizi"
+    },
+    "RENTAL_INCOME": {
+      "name": "Kira Geliri",
+      "description": "Mülk kira kazançları — örn. alınan daire kirası, Airbnb ödemesi"
+    },
+    "CASHBACK": {
+      "name": "Cashback & İadeler",
+      "description": "Para iadesi — örn. kredi kartı cashback, mağaza iadesi, indirim"
+    },
+    "GIFTS": {
+      "name": "Hediyeler",
+      "description": "Parasal hediyeler — örn. doğum günü hediyesi, düğün hediyesi, bayram harçlığı"
+    },
+    "SALES": {
+      "name": "Eşya Satışı",
+      "description": "Kişisel eşya satışı — örn. telefon satışı, ikinci el satış, Dolap"
+    },
+    "BUSINESS_EXPENSES": {
+      "name": "İş Giderleri",
+      "description": "İşle ilgili maliyetler — örn. ofis malzemeleri, iş yemeği, ortak çalışma alanı"
+    },
+    "SOFTWARE_LICENSES": {
+      "name": "Yazılım & Uygulamalar",
+      "description": "Ücretli yazılımlar — örn. Adobe, Microsoft 365, alan adı yenileme, hosting"
+    },
+    "HOME_IMPROVEMENT": {
+      "name": "Ev Tadilatı",
+      "description": "Tadilat ve döşeme — örn. yeni mobilya, boya, tesisatçı, IKEA"
+    },
+    "SAVINGS": {
+      "name": "Birikim",
+      "description": "Biriktirilen para — örn. tasarruf hesabına aktarım, acil durum fonu"
+    },
+    "REFUNDS": {
+      "name": "İadeler",
+      "description": "Geri ödemeler — örn. ürün iadesi, iptal edilen hizmet, fazla ödeme"
+    },
+    "FINES": {
+      "name": "Cezalar",
+      "description": "Para cezaları — örn. park cezası, hız cezası, gecikme ücreti"
+    },
+    "CHARITY": {
+      "name": "Bağış",
+      "description": "Bağışlar — örn. Kızılay, cami/kilise bağışı, yardım kampanyası"
+    },
+    "UNKNOWN": {
+      "name": "Diğer",
+      "description": "Kategorize edilmemiş — diğer kategorilere uymayan işlemler"
+    }
+  },
+  "CategoryGroups": {
+    "CHARITY": {
+      "name": "Yardım",
+      "description": "Hayır kurumlarına ve crowdfunding kampanyalarına yapılan bağışlar."
+    },
+    "FOOD": {
+      "name": "Gıda",
+      "description": "Market alışverişi, restoran ve yemek teslimatı."
+    },
+    "UTILITIES": {
+      "name": "Faturalar",
+      "description": "Elektrik, gaz, su, internet ve telefon faturaları."
+    },
+    "TRANSPORT": {
+      "name": "Ulaşım",
+      "description": "Toplu taşıma, yakıt, araç bakımı ve park ücretleri."
+    },
+    "FINANCE": {
+      "name": "Finans",
+      "description": "Vergi, sigorta, kredi ödemeleri, banka ücretleri ve tasarruf."
+    },
+    "SHOPPING": {
+      "name": "Alışveriş",
+      "description": "Giysi, elektronik ve diğer zorunlu olmayan perakende alışverişler."
+    },
+    "PETS": {
+      "name": "Evcil Hayvanlar",
+      "description": "Mama, veteriner, bakım ve evcil hayvan aksesuarları."
+    },
+    "OTHER": {
+      "name": "Diğer",
+      "description": "Hiçbir kategoriye girmeyen çeşitli işlemler."
+    },
+    "EMPLOYMENT": {
+      "name": "İstihdam",
+      "description": "Maaş, ücret ve serbest meslek gelirleri."
+    },
+    "ENTERTAINMENT": {
+      "name": "Eğlence",
+      "description": "Abonelikler, hobiler, etkinlikler ve seyahat."
+    },
+    "BUSINESS": {
+      "name": "İş",
+      "description": "Profesyonel hizmetler, malzemeler ve iş amaçlı yazılımlar."
+    },
+    "HOUSING": {
+      "name": "Konut",
+      "description": "Kira, ipotek, ev iyileştirme ve ev gereçleri."
+    },
+    "EXTRA": {
+      "name": "Ek Gelir",
+      "description": "Para iadesi, hediyeler, satışlar ve geri ödemeler."
+    },
+    "PASSIVE": {
+      "name": "Pasif Gelir",
+      "description": "Yatırım getirileri, temettüler ve kira geliri."
+    },
+    "EDUCATION": {
+      "name": "Eğitim",
+      "description": "Okul ücretleri, kurslar, atölyeler ve kitaplar."
+    },
+    "HEALTH": {
+      "name": "Sağlık",
+      "description": "Tıbbi bakım, ilaçlar, kişisel bakım ve fitness."
+    }
   },
   "Auth": {
     "login": "Giriş Yap",

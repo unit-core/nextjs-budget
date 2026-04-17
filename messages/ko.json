@@ -262,6 +262,72 @@
       "description": "미분류 — 다른 카테고리에 해당하지 않는 거래"
     }
   },
+  "CategoryGroups": {
+    "CHARITY": {
+      "name": "자선",
+      "description": "자선단체 및 크라우드펀딩 캠페인에 대한 기부."
+    },
+    "FOOD": {
+      "name": "식비",
+      "description": "식료품, 외식, 음식 배달."
+    },
+    "UTILITIES": {
+      "name": "공과금",
+      "description": "전기, 가스, 수도, 인터넷, 전화 요금."
+    },
+    "TRANSPORT": {
+      "name": "교통",
+      "description": "대중교통, 카풀, 연료, 차량 유지비, 주차비."
+    },
+    "FINANCE": {
+      "name": "금융",
+      "description": "세금, 보험, 대출 상환, 은행 수수료, 저축."
+    },
+    "SHOPPING": {
+      "name": "쇼핑",
+      "description": "의류, 전자기기 및 기타 불필요한 소매 구매."
+    },
+    "PETS": {
+      "name": "반려동물",
+      "description": "반려동물 사료, 동물병원, 미용, 용품."
+    },
+    "OTHER": {
+      "name": "기타",
+      "description": "다른 카테고리에 속하지 않는 기타 거래."
+    },
+    "EMPLOYMENT": {
+      "name": "고용",
+      "description": "급여, 임금, 프리랜서 수입."
+    },
+    "ENTERTAINMENT": {
+      "name": "엔터테인먼트",
+      "description": "구독, 취미, 이벤트, 여행."
+    },
+    "BUSINESS": {
+      "name": "비즈니스",
+      "description": "전문 서비스, 물품, 업무용 소프트웨어."
+    },
+    "HOUSING": {
+      "name": "주거",
+      "description": "임대료, 주택담보대출, 인테리어, 생활용품."
+    },
+    "EXTRA": {
+      "name": "부가 수입",
+      "description": "캐시백, 선물, 물품 판매, 환불."
+    },
+    "PASSIVE": {
+      "name": "수동 소득",
+      "description": "투자 수익, 배당금, 임대 수입."
+    },
+    "EDUCATION": {
+      "name": "교육",
+      "description": "등록금, 강의, 워크숍, 도서."
+    },
+    "HEALTH": {
+      "name": "건강",
+      "description": "의료 서비스, 의약품, 개인 위생, 피트니스."
+    }
+  },
   "Auth": {
     "login": "로그인",
     "loginDescription": "계정에 로그인하려면 아래에 이메일을 입력하세요",

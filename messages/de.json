@@ -81,51 +81,252 @@
     "somethingWentWrong": "Beim Laden der Transaktionen ist ein Fehler aufgetreten."
   },
   "Categories": {
-    "RENT": { "name": "Miete", "description": "Wohnungs- oder Hausmiete — z. B. monatliche Mietzahlung" },
-    "MORTGAGE": { "name": "Hypothek", "description": "Immobilienkreditzahlungen — z. B. monatliche Hypothekenrate" },
-    "UTILITIES": { "name": "Nebenkosten", "description": "Strom, Wasser, Gas, Heizung — z. B. Stromrechnung, Wasserrechnung" },
-    "INTERNET": { "name": "Internet & TV", "description": "Internet, Mobilfunkverträge, TV — z. B. Glasfaser, Mobilfunktarif, Netflix" },
-    "HOUSEHOLD": { "name": "Haushalt", "description": "Haushaltswaren und Reinigung — z. B. Waschmittel, Küchenpapier, Glühbirnen" },
-    "GROCERIES": { "name": "Lebensmittel", "description": "Supermarkt und Lebensmitteleinkäufe — z. B. Carrefour, Lidl, Wocheneinkauf" },
-    "RESTAURANTS": { "name": "Restaurants & Cafés", "description": "Essen gehen und Cafés — z. B. Mittagessen im Restaurant, Abendessen mit Freunden" },
-    "DELIVERY": { "name": "Essenslieferung", "description": "Gelieferte Mahlzeiten und Liefer-Apps — z. B. Uber Eats, Glovo, Wolt" },
-    "PUBLIC_TRANSPORT": { "name": "Öffentliche Verkehrsmittel", "description": "Busse, U-Bahn, Züge — z. B. Monatskarte, Einzelfahrkarte, Straßenbahnfahrt" },
-    "TAXI": { "name": "Taxi & Fahrten", "description": "Taxi und Mitfahrdienste — z. B. Uber, Bolt, Careem, Flughafentransfer" },
-    "FUEL": { "name": "Kraftstoff", "description": "Tanken — z. B. Benzin, Diesel, E-Auto laden" },
-    "CAR_SERVICE": { "name": "Autowartung", "description": "Autoreparaturen und Pflege — z. B. Ölwechsel, Reifenwechsel, Autowäsche, TÜV" },
-    "PARKING": { "name": "Parken & Maut", "description": "Parkgebühren und Mautstraßen — z. B. Parkhaus, Parkuhr, Autobahnmaut" },
-    "MEDICAL": { "name": "Arzt & Medizin", "description": "Arztbesuche und Untersuchungen — z. B. Zahnarzt, Blutuntersuchung, Facharzttermin" },
-    "PHARMACY": { "name": "Apotheke", "description": "Medikamente und Gesundheitsprodukte — z. B. Rezepte, Vitamine, Erste-Hilfe-Set" },
-    "PERSONAL_CARE": { "name": "Körperpflege", "description": "Pflege und Schönheit — z. B. Haarschnitt, Hautpflege, Kosmetik, Friseur" },
-    "SPORT": { "name": "Sport & Fitness", "description": "Fitnessstudio und Sport — z. B. Fitnessmitgliedschaft, Yogakurs, Laufschuhe, Schwimmbadkarte" },
-    "SUBSCRIPTIONS": { "name": "Abonnements", "description": "Wiederkehrende digitale Dienste — z. B. Netflix, Spotify, iCloud, YouTube Premium" },
-    "HOBBIES": { "name": "Hobbys", "description": "Persönliche Interessen und Handwerk — z. B. Fotoausrüstung, Malbedarf, Gaming" },
-    "EVENTS": { "name": "Kino & Veranstaltungen", "description": "Unterhaltungsausgänge — z. B. Kinotickets, Konzerte, Theater, Ausstellungen" },
-    "TRAVEL": { "name": "Reisen & Hotels", "description": "Reisen und Urlaub — z. B. Flüge, Airbnb, Hotel, Reiseversicherung" },
-    "CLOTHING": { "name": "Kleidung & Schuhe", "description": "Bekleidung und Accessoires — z. B. Jacke, Sneakers, Uhr, Sonnenbrille" },
-    "ELECTRONICS": { "name": "Elektronik & Gadgets", "description": "Technik und Geräte — z. B. Handy, Laptop, Kopfhörer, Ladegerät" },
-    "PETS": { "name": "Haustiere", "description": "Tierpflege und Zubehör — z. B. Hundefutter, Tierarztbesuch, Katzenstreu, Fellpflege" },
-    "EDUCATION": { "name": "Kurse & Weiterbildung", "description": "Lernen und Entwicklung — z. B. Online-Kurs, Sprachkurs, Workshop" },
-    "BOOKS": { "name": "Bücher", "description": "Bücher und Lesen — z. B. Kindle-Buch, Hörbuch, Zeitschriftenabo" },
-    "TAXES": { "name": "Steuern", "description": "Staatliche Steuern — z. B. Einkommensteuer, Grundsteuer, Mehrwertsteuererstattung" },
-    "INSURANCE": { "name": "Versicherung", "description": "Versicherungsbeiträge — z. B. Krankenversicherung, Kfz-Versicherung, Hausratversicherung" },
-    "LOANS": { "name": "Kredite & Schulden", "description": "Kreditrückzahlungen — z. B. Studienkredit, Privatkredit, Kreditkartenschulden" },
-    "BANK_FEES": { "name": "Bankgebühren", "description": "Bankkosten — z. B. Kontoführung, Geldautomatengebühr, Überweisungsgebühr" },
-    "SALARY": { "name": "Gehalt", "description": "Einkommen aus Beschäftigung — z. B. monatliches Gehalt, Bonus, Überstundenvergütung" },
-    "FREELANCE": { "name": "Freiberuflich & Projekte", "description": "Einkommen aus Selbstständigkeit — z. B. Kundenprojekt, Beratung, Gig-Arbeit" },
-    "INVESTMENTS": { "name": "Anlagerenditen", "description": "Investitionsgewinne — z. B. Aktiendividenden, Kryptogewinn, Anleihezinsen" },
-    "RENTAL_INCOME": { "name": "Mieteinnahmen", "description": "Einnahmen aus Vermietung — z. B. erhaltene Wohnungsmiete, Airbnb-Auszahlung" },
-    "CASHBACK": { "name": "Cashback & Erstattungen", "description": "Geld zurück — z. B. Kreditkarten-Cashback, Ladenerstattung, Rabatt" },
-    "GIFTS": { "name": "Geschenke", "description": "Geldgeschenke — z. B. Geburtstagsgeschenk, Hochzeitsgeschenk, Feiertagsgeld" },
-    "SALES": { "name": "Verkauf von Gegenständen", "description": "Verkauf persönlicher Gegenstände — z. B. Handy auf eBay verkauft, Flohmarkt, Vinted" },
-    "BUSINESS_EXPENSES": { "name": "Geschäftsausgaben", "description": "Berufliche Kosten — z. B. Bürobedarf, Geschäftsessen, Coworking Space" },
-    "SOFTWARE_LICENSES": { "name": "Software & Apps", "description": "Kostenpflichtige Software — z. B. Adobe, Microsoft 365, Domain-Verlängerung, Hosting" },
-    "HOME_IMPROVEMENT": { "name": "Heimwerken", "description": "Renovierung und Einrichtung — z. B. neue Möbel, Farbe, Klempner, IKEA" },
-    "SAVINGS": { "name": "Ersparnisse", "description": "Zurückgelegtes Geld — z. B. Überweisung auf Sparkonto, Notfallfonds" },
-    "REFUNDS": { "name": "Rückerstattungen", "description": "Zurückgezahlte Beträge — z. B. Produktrückgabe, gekündigter Dienst, Überzahlung" },
-    "FINES": { "name": "Bußgelder", "description": "Strafen — z. B. Strafzettel, Geschwindigkeitsübertretung, Mahngebühr" },
-    "CHARITY": { "name": "Wohltätigkeit", "description": "Spenden — z. B. Rotes Kreuz, Moschee-/Kirchenspende, GoFundMe" },
-    "UNKNOWN": { "name": "Sonstiges", "description": "Nicht kategorisiert — Transaktionen, die in keine andere Kategorie passen" }
+    "RENT": {
+      "name": "Miete",
+      "description": "Wohnungs- oder Hausmiete — z. B. monatliche Mietzahlung"
+    },
+    "MORTGAGE": {
+      "name": "Hypothek",
+      "description": "Immobilienkreditzahlungen — z. B. monatliche Hypothekenrate"
+    },
+    "UTILITIES": {
+      "name": "Nebenkosten",
+      "description": "Strom, Wasser, Gas, Heizung — z. B. Stromrechnung, Wasserrechnung"
+    },
+    "INTERNET": {
+      "name": "Internet & TV",
+      "description": "Internet, Mobilfunkverträge, TV — z. B. Glasfaser, Mobilfunktarif, Netflix"
+    },
+    "HOUSEHOLD": {
+      "name": "Haushalt",
+      "description": "Haushaltswaren und Reinigung — z. B. Waschmittel, Küchenpapier, Glühbirnen"
+    },
+    "GROCERIES": {
+      "name": "Lebensmittel",
+      "description": "Supermarkt und Lebensmitteleinkäufe — z. B. Carrefour, Lidl, Wocheneinkauf"
+    },
+    "RESTAURANTS": {
+      "name": "Restaurants & Cafés",
+      "description": "Essen gehen und Cafés — z. B. Mittagessen im Restaurant, Abendessen mit Freunden"
+    },
+    "DELIVERY": {
+      "name": "Essenslieferung",
+      "description": "Gelieferte Mahlzeiten und Liefer-Apps — z. B. Uber Eats, Glovo, Wolt"
+    },
+    "PUBLIC_TRANSPORT": {
+      "name": "Öffentliche Verkehrsmittel",
+      "description": "Busse, U-Bahn, Züge — z. B. Monatskarte, Einzelfahrkarte, Straßenbahnfahrt"
+    },
+    "TAXI": {
+      "name": "Taxi & Fahrten",
+      "description": "Taxi und Mitfahrdienste — z. B. Uber, Bolt, Careem, Flughafentransfer"
+    },
+    "FUEL": {
+      "name": "Kraftstoff",
+      "description": "Tanken — z. B. Benzin, Diesel, E-Auto laden"
+    },
+    "CAR_SERVICE": {
+      "name": "Autowartung",
+      "description": "Autoreparaturen und Pflege — z. B. Ölwechsel, Reifenwechsel, Autowäsche, TÜV"
+    },
+    "PARKING": {
+      "name": "Parken & Maut",
+      "description": "Parkgebühren und Mautstraßen — z. B. Parkhaus, Parkuhr, Autobahnmaut"
+    },
+    "MEDICAL": {
+      "name": "Arzt & Medizin",
+      "description": "Arztbesuche und Untersuchungen — z. B. Zahnarzt, Blutuntersuchung, Facharzttermin"
+    },
+    "PHARMACY": {
+      "name": "Apotheke",
+      "description": "Medikamente und Gesundheitsprodukte — z. B. Rezepte, Vitamine, Erste-Hilfe-Set"
+    },
+    "PERSONAL_CARE": {
+      "name": "Körperpflege",
+      "description": "Pflege und Schönheit — z. B. Haarschnitt, Hautpflege, Kosmetik, Friseur"
+    },
+    "SPORT": {
+      "name": "Sport & Fitness",
+      "description": "Fitnessstudio und Sport — z. B. Fitnessmitgliedschaft, Yogakurs, Laufschuhe, Schwimmbadkarte"
+    },
+    "SUBSCRIPTIONS": {
+      "name": "Abonnements",
+      "description": "Wiederkehrende digitale Dienste — z. B. Netflix, Spotify, iCloud, YouTube Premium"
+    },
+    "HOBBIES": {
+      "name": "Hobbys",
+      "description": "Persönliche Interessen und Handwerk — z. B. Fotoausrüstung, Malbedarf, Gaming"
+    },
+    "EVENTS": {
+      "name": "Kino & Veranstaltungen",
+      "description": "Unterhaltungsausgänge — z. B. Kinotickets, Konzerte, Theater, Ausstellungen"
+    },
+    "TRAVEL": {
+      "name": "Reisen & Hotels",
+      "description": "Reisen und Urlaub — z. B. Flüge, Airbnb, Hotel, Reiseversicherung"
+    },
+    "CLOTHING": {
+      "name": "Kleidung & Schuhe",
+      "description": "Bekleidung und Accessoires — z. B. Jacke, Sneakers, Uhr, Sonnenbrille"
+    },
+    "ELECTRONICS": {
+      "name": "Elektronik & Gadgets",
+      "description": "Technik und Geräte — z. B. Handy, Laptop, Kopfhörer, Ladegerät"
+    },
+    "PETS": {
+      "name": "Haustiere",
+      "description": "Tierpflege und Zubehör — z. B. Hundefutter, Tierarztbesuch, Katzenstreu, Fellpflege"
+    },
+    "EDUCATION": {
+      "name": "Kurse & Weiterbildung",
+      "description": "Lernen und Entwicklung — z. B. Online-Kurs, Sprachkurs, Workshop"
+    },
+    "BOOKS": {
+      "name": "Bücher",
+      "description": "Bücher und Lesen — z. B. Kindle-Buch, Hörbuch, Zeitschriftenabo"
+    },
+    "TAXES": {
+      "name": "Steuern",
+      "description": "Staatliche Steuern — z. B. Einkommensteuer, Grundsteuer, Mehrwertsteuererstattung"
+    },
+    "INSURANCE": {
+      "name": "Versicherung",
+      "description": "Versicherungsbeiträge — z. B. Krankenversicherung, Kfz-Versicherung, Hausratversicherung"
+    },
+    "LOANS": {
+      "name": "Kredite & Schulden",
+      "description": "Kreditrückzahlungen — z. B. Studienkredit, Privatkredit, Kreditkartenschulden"
+    },
+    "BANK_FEES": {
+      "name": "Bankgebühren",
+      "description": "Bankkosten — z. B. Kontoführung, Geldautomatengebühr, Überweisungsgebühr"
+    },
+    "SALARY": {
+      "name": "Gehalt",
+      "description": "Einkommen aus Beschäftigung — z. B. monatliches Gehalt, Bonus, Überstundenvergütung"
+    },
+    "FREELANCE": {
+      "name": "Freiberuflich & Projekte",
+      "description": "Einkommen aus Selbstständigkeit — z. B. Kundenprojekt, Beratung, Gig-Arbeit"
+    },
+    "INVESTMENTS": {
+      "name": "Anlagerenditen",
+      "description": "Investitionsgewinne — z. B. Aktiendividenden, Kryptogewinn, Anleihezinsen"
+    },
+    "RENTAL_INCOME": {
+      "name": "Mieteinnahmen",
+      "description": "Einnahmen aus Vermietung — z. B. erhaltene Wohnungsmiete, Airbnb-Auszahlung"
+    },
+    "CASHBACK": {
+      "name": "Cashback & Erstattungen",
+      "description": "Geld zurück — z. B. Kreditkarten-Cashback, Ladenerstattung, Rabatt"
+    },
+    "GIFTS": {
+      "name": "Geschenke",
+      "description": "Geldgeschenke — z. B. Geburtstagsgeschenk, Hochzeitsgeschenk, Feiertagsgeld"
+    },
+    "SALES": {
+      "name": "Verkauf von Gegenständen",
+      "description": "Verkauf persönlicher Gegenstände — z. B. Handy auf eBay verkauft, Flohmarkt, Vinted"
+    },
+    "BUSINESS_EXPENSES": {
+      "name": "Geschäftsausgaben",
+      "description": "Berufliche Kosten — z. B. Bürobedarf, Geschäftsessen, Coworking Space"
+    },
+    "SOFTWARE_LICENSES": {
+      "name": "Software & Apps",
+      "description": "Kostenpflichtige Software — z. B. Adobe, Microsoft 365, Domain-Verlängerung, Hosting"
+    },
+    "HOME_IMPROVEMENT": {
+      "name": "Heimwerken",
+      "description": "Renovierung und Einrichtung — z. B. neue Möbel, Farbe, Klempner, IKEA"
+    },
+    "SAVINGS": {
+      "name": "Ersparnisse",
+      "description": "Zurückgelegtes Geld — z. B. Überweisung auf Sparkonto, Notfallfonds"
+    },
+    "REFUNDS": {
+      "name": "Rückerstattungen",
+      "description": "Zurückgezahlte Beträge — z. B. Produktrückgabe, gekündigter Dienst, Überzahlung"
+    },
+    "FINES": {
+      "name": "Bußgelder",
+      "description": "Strafen — z. B. Strafzettel, Geschwindigkeitsübertretung, Mahngebühr"
+    },
+    "CHARITY": {
+      "name": "Wohltätigkeit",
+      "description": "Spenden — z. B. Rotes Kreuz, Moschee-/Kirchenspende, GoFundMe"
+    },
+    "UNKNOWN": {
+      "name": "Sonstiges",
+      "description": "Nicht kategorisiert — Transaktionen, die in keine andere Kategorie passen"
+    }
+  },
+  "CategoryGroups": {
+    "CHARITY": {
+      "name": "Charity",
+      "description": "Spenden an gemeinnützige Organisationen und Crowdfunding-Kampagnen."
+    },
+    "FOOD": {
+      "name": "Ernährung",
+      "description": "Einkäufe im Supermarkt, Restaurantbesuche und Lieferdienste."
+    },
+    "UTILITIES": {
+      "name": "Nebenkosten",
+      "description": "Rechnungen für Strom, Gas, Wasser, Internet und Telefon."
+    },
+    "TRANSPORT": {
+      "name": "Transport",
+      "description": "ÖPNV, Mitfahrdienste, Kraftstoff, Fahrzeugwartung und Parken."
+    },
+    "FINANCE": {
+      "name": "Finanzen",
+      "description": "Steuern, Versicherungen, Kreditrückzahlungen, Bankgebühren und Sparen."
+    },
+    "SHOPPING": {
+      "name": "Einkaufen",
+      "description": "Kleidung, Elektronik und sonstige nicht notwendige Einkäufe."
+    },
+    "PETS": {
+      "name": "Haustiere",
+      "description": "Futter, Tierarzt, Pflege und Zubehör für Haustiere."
+    },
+    "OTHER": {
+      "name": "Sonstiges",
+      "description": "Verschiedene Transaktionen, die in keine andere Kategorie passen."
+    },
+    "EMPLOYMENT": {
+      "name": "Beschäftigung",
+      "description": "Gehalt, Lohn und Freelance-Einkommen."
+    },
+    "ENTERTAINMENT": {
+      "name": "Unterhaltung",
+      "description": "Abonnements, Hobbys, Veranstaltungen und Reisen."
+    },
+    "BUSINESS": {
+      "name": "Geschäft",
+      "description": "Professionelle Dienstleistungen, Materialien und Software für geschäftliche Zwecke."
+    },
+    "HOUSING": {
+      "name": "Wohnen",
+      "description": "Miete, Hypothek, Heimwerker und Haushaltsbedarf."
+    },
+    "EXTRA": {
+      "name": "Zusatzeinkommen",
+      "description": "Cashback, Geschenke, Verkäufe und Erstattungen."
+    },
+    "PASSIVE": {
+      "name": "Passives Einkommen",
+      "description": "Investitionserträge, Dividenden und Mieteinnahmen."
+    },
+    "EDUCATION": {
+      "name": "Bildung",
+      "description": "Studiengebühren, Kurse, Workshops und Bücher."
+    },
+    "HEALTH": {
+      "name": "Gesundheit",
+      "description": "Medizinische Versorgung, Medikamente, Körperpflege und Fitness."
+    }
   },
   "Auth": {
     "login": "Anmelden",

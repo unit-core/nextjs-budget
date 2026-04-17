@@ -80,6 +80,8 @@ export default function TransactionForm({
 }) {
   const isEdit = !!initialData?.id
   const t = useTranslations('TransactionForm')
+  const tc = useTranslations('Categories')
+  const tg = useTranslations('CategoryGroups')
   const locale = useLocale()
   const dateFnsLocale = dateFnsLocales[locale] || enUS
   const router = useRouter()
@@ -339,32 +341,44 @@ export default function TransactionForm({
                 >
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select category">
-                          {item.transaction_item_category_id
-                            ? categoryGroups
-                                .flatMap((g) => g.categories)
-                                .find((c) => c.id === item.transaction_item_category_id)?.name
-                            : 'Select category'}
+                          {(() => {
+                            const cat = item.transaction_item_category_id
+                              ? categoryGroups.flatMap((g) => g.categories).find((c) => c.id === item.transaction_item_category_id)
+                              : null
+                            if (!cat) return 'Select category'
+                            const nameKey = `${cat.name}.name` as Parameters<typeof tc>[0]
+                            return tc.has(nameKey) ? tc(nameKey) : cat.name
+                          })()}
                         </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                         {categoryGroups.map((group) => (
                           <SelectGroup key={group.id}>
                             <SelectLabel className="flex items-center gap-1.5">
-                              {group.name}
+                              {(() => {
+                                const gNameKey = `${group.name}.name` as Parameters<typeof tg>[0]
+                                return tg.has(gNameKey) ? tg(gNameKey) : group.name
+                              })()}
                               {group.owner_id === null && (
                                 <span className="text-[10px] font-normal text-muted-foreground">(system)</span>
                               )}
                             </SelectLabel>
-                            {group.categories.map((cat) => (
+                            {group.categories.map((cat) => {
+                              const cNameKey = `${cat.name}.name` as Parameters<typeof tc>[0]
+                              const cDescKey = `${cat.name}.description` as Parameters<typeof tc>[0]
+                              const catName = tc.has(cNameKey) ? tc(cNameKey) : cat.name
+                              const catDesc = tc.has(cDescKey) ? tc(cDescKey) : cat.description
+                              return (
                               <SelectItem key={cat.id} value={cat.id}>
                                 <div className="flex flex-col items-start py-0.5">
-                                  <span className="font-medium">{cat.name}</span>
-                                  {cat.description && (
-                                    <span className="text-xs text-muted-foreground">{cat.description}</span>
+                                  <span className="font-medium">{catName}</span>
+                                  {catDesc && (
+                                    <span className="text-xs text-muted-foreground">{catDesc}</span>
                                   )}
                                 </div>
                               </SelectItem>
-                            ))}
+                              )
+                            })}
                           </SelectGroup>
                         ))}
                     </SelectContent>

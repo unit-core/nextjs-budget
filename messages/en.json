@@ -85,51 +85,252 @@
     "somethingWentWrong": "Something went wrong loading transactions."
   },
   "Categories": {
-    "RENT": { "name": "Rent", "description": "Apartment or house rent — e.g. monthly lease payment" },
-    "MORTGAGE": { "name": "Mortgage", "description": "Home loan payments — e.g. monthly mortgage installment" },
-    "UTILITIES": { "name": "Utilities", "description": "Electricity, water, gas, heating — e.g. power bill, water bill" },
-    "INTERNET": { "name": "Internet & TV", "description": "Internet, phone plans, TV — e.g. fiber optic, mobile plan, Netflix" },
-    "HOUSEHOLD": { "name": "Household", "description": "Home supplies and cleaning — e.g. detergent, paper towels, light bulbs" },
-    "GROCERIES": { "name": "Groceries", "description": "Supermarket and food shopping — e.g. Carrefour, Lidl, weekly groceries" },
-    "RESTAURANTS": { "name": "Restaurants & Cafes", "description": "Dining out and coffee shops — e.g. lunch at a restaurant, dinner with friends" },
-    "DELIVERY": { "name": "Food Delivery", "description": "Delivered meals and food apps — e.g. Uber Eats, Glovo, Wolt" },
-    "PUBLIC_TRANSPORT": { "name": "Public Transport", "description": "Buses, metro, trains — e.g. monthly pass, single ticket, tram ride" },
-    "TAXI": { "name": "Taxi & Rides", "description": "Taxi and ride-sharing — e.g. Uber, Bolt, Careem, airport transfer" },
-    "FUEL": { "name": "Fuel", "description": "Gas station fill-ups — e.g. petrol, diesel, EV charging" },
-    "CAR_SERVICE": { "name": "Car Maintenance", "description": "Car repairs and upkeep — e.g. oil change, tire swap, car wash, inspection" },
-    "PARKING": { "name": "Parking & Tolls", "description": "Parking fees and toll roads — e.g. garage, street meter, highway toll" },
-    "MEDICAL": { "name": "Medical & Doctors", "description": "Doctor visits and tests — e.g. dentist, blood work, specialist consultation" },
-    "PHARMACY": { "name": "Pharmacy", "description": "Medications and health products — e.g. prescriptions, vitamins, first-aid kit" },
-    "PERSONAL_CARE": { "name": "Personal Care", "description": "Grooming and beauty — e.g. haircut, skincare, cosmetics, barber" },
-    "SPORT": { "name": "Sport & Fitness", "description": "Gym and sports — e.g. gym membership, yoga class, running shoes, pool pass" },
-    "SUBSCRIPTIONS": { "name": "Subscriptions", "description": "Recurring digital services — e.g. Netflix, Spotify, iCloud, YouTube Premium" },
-    "HOBBIES": { "name": "Hobbies", "description": "Personal interests and crafts — e.g. photography gear, painting supplies, gaming" },
-    "EVENTS": { "name": "Cinema & Events", "description": "Entertainment outings — e.g. movie tickets, concerts, theater, exhibitions" },
-    "TRAVEL": { "name": "Travel & Hotels", "description": "Trips and vacations — e.g. flights, Airbnb, hotel, travel insurance" },
-    "CLOTHING": { "name": "Clothing & Shoes", "description": "Apparel and accessories — e.g. jacket, sneakers, watch, sunglasses" },
-    "ELECTRONICS": { "name": "Electronics & Gadgets", "description": "Tech and devices — e.g. phone, laptop, headphones, charger" },
-    "PETS": { "name": "Pets", "description": "Pet care and supplies — e.g. dog food, vet visit, cat litter, grooming" },
-    "EDUCATION": { "name": "Courses & Training", "description": "Learning and development — e.g. online course, language class, workshop" },
-    "BOOKS": { "name": "Books", "description": "Books and reading — e.g. Kindle book, audiobook, magazine subscription" },
-    "TAXES": { "name": "Taxes", "description": "Government taxes — e.g. income tax, property tax, VAT refund" },
-    "INSURANCE": { "name": "Insurance", "description": "Insurance premiums — e.g. health insurance, car insurance, home insurance" },
-    "LOANS": { "name": "Loans & Debts", "description": "Loan repayments — e.g. student loan, personal loan, credit card debt" },
-    "BANK_FEES": { "name": "Bank Fees", "description": "Banking charges — e.g. account maintenance, ATM fee, wire transfer fee" },
-    "SALARY": { "name": "Salary", "description": "Employment income — e.g. monthly paycheck, bonus, overtime pay" },
-    "FREELANCE": { "name": "Freelance & Projects", "description": "Self-employed income — e.g. client project, consulting, gig work" },
-    "INVESTMENTS": { "name": "Investment Returns", "description": "Investment gains — e.g. stock dividends, crypto profit, bond interest" },
-    "RENTAL_INCOME": { "name": "Rental Income", "description": "Property rental earnings — e.g. apartment rent received, Airbnb payout" },
-    "CASHBACK": { "name": "Cashback & Refunds", "description": "Money back — e.g. credit card cashback, store refund, rebate" },
-    "GIFTS": { "name": "Gifts", "description": "Monetary gifts — e.g. birthday gift, wedding present, holiday cash" },
-    "SALES": { "name": "Sale of Items", "description": "Selling personal belongings — e.g. sold phone on eBay, garage sale, Vinted" },
-    "BUSINESS_EXPENSES": { "name": "Business Expenses", "description": "Work-related costs — e.g. office supplies, business lunch, coworking space" },
-    "SOFTWARE_LICENSES": { "name": "Software & Apps", "description": "Paid software — e.g. Adobe, Microsoft 365, domain renewal, hosting" },
-    "HOME_IMPROVEMENT": { "name": "Home Improvement", "description": "Renovation and furnishing — e.g. new furniture, paint, plumber, IKEA" },
-    "SAVINGS": { "name": "Savings", "description": "Money set aside — e.g. transfer to savings account, emergency fund" },
-    "REFUNDS": { "name": "Refunds", "description": "Returned payments — e.g. product return, cancelled service, overcharge" },
-    "FINES": { "name": "Fines", "description": "Penalties — e.g. parking ticket, speeding fine, late payment fee" },
-    "CHARITY": { "name": "Charity", "description": "Donations — e.g. Red Cross, mosque/church donation, GoFundMe" },
-    "UNKNOWN": { "name": "Other", "description": "Uncategorized — transactions that don't fit other categories" }
+    "RENT": {
+      "name": "Rent",
+      "description": "Apartment or house rent — e.g. monthly lease payment"
+    },
+    "MORTGAGE": {
+      "name": "Mortgage",
+      "description": "Home loan payments — e.g. monthly mortgage installment"
+    },
+    "UTILITIES": {
+      "name": "Utilities",
+      "description": "Electricity, water, gas, heating — e.g. power bill, water bill"
+    },
+    "INTERNET": {
+      "name": "Internet & TV",
+      "description": "Internet, phone plans, TV — e.g. fiber optic, mobile plan, Netflix"
+    },
+    "HOUSEHOLD": {
+      "name": "Household",
+      "description": "Home supplies and cleaning — e.g. detergent, paper towels, light bulbs"
+    },
+    "GROCERIES": {
+      "name": "Groceries",
+      "description": "Supermarket and food shopping — e.g. Carrefour, Lidl, weekly groceries"
+    },
+    "RESTAURANTS": {
+      "name": "Restaurants & Cafes",
+      "description": "Dining out and coffee shops — e.g. lunch at a restaurant, dinner with friends"
+    },
+    "DELIVERY": {
+      "name": "Food Delivery",
+      "description": "Delivered meals and food apps — e.g. Uber Eats, Glovo, Wolt"
+    },
+    "PUBLIC_TRANSPORT": {
+      "name": "Public Transport",
+      "description": "Buses, metro, trains — e.g. monthly pass, single ticket, tram ride"
+    },
+    "TAXI": {
+      "name": "Taxi & Rides",
+      "description": "Taxi and ride-sharing — e.g. Uber, Bolt, Careem, airport transfer"
+    },
+    "FUEL": {
+      "name": "Fuel",
+      "description": "Gas station fill-ups — e.g. petrol, diesel, EV charging"
+    },
+    "CAR_SERVICE": {
+      "name": "Car Maintenance",
+      "description": "Car repairs and upkeep — e.g. oil change, tire swap, car wash, inspection"
+    },
+    "PARKING": {
+      "name": "Parking & Tolls",
+      "description": "Parking fees and toll roads — e.g. garage, street meter, highway toll"
+    },
+    "MEDICAL": {
+      "name": "Medical & Doctors",
+      "description": "Doctor visits and tests — e.g. dentist, blood work, specialist consultation"
+    },
+    "PHARMACY": {
+      "name": "Pharmacy",
+      "description": "Medications and health products — e.g. prescriptions, vitamins, first-aid kit"
+    },
+    "PERSONAL_CARE": {
+      "name": "Personal Care",
+      "description": "Grooming and beauty — e.g. haircut, skincare, cosmetics, barber"
+    },
+    "SPORT": {
+      "name": "Sport & Fitness",
+      "description": "Gym and sports — e.g. gym membership, yoga class, running shoes, pool pass"
+    },
+    "SUBSCRIPTIONS": {
+      "name": "Subscriptions",
+      "description": "Recurring digital services — e.g. Netflix, Spotify, iCloud, YouTube Premium"
+    },
+    "HOBBIES": {
+      "name": "Hobbies",
+      "description": "Personal interests and crafts — e.g. photography gear, painting supplies, gaming"
+    },
+    "EVENTS": {
+      "name": "Cinema & Events",
+      "description": "Entertainment outings — e.g. movie tickets, concerts, theater, exhibitions"
+    },
+    "TRAVEL": {
+      "name": "Travel & Hotels",
+      "description": "Trips and vacations — e.g. flights, Airbnb, hotel, travel insurance"
+    },
+    "CLOTHING": {
+      "name": "Clothing & Shoes",
+      "description": "Apparel and accessories — e.g. jacket, sneakers, watch, sunglasses"
+    },
+    "ELECTRONICS": {
+      "name": "Electronics & Gadgets",
+      "description": "Tech and devices — e.g. phone, laptop, headphones, charger"
+    },
+    "PETS": {
+      "name": "Pets",
+      "description": "Pet care and supplies — e.g. dog food, vet visit, cat litter, grooming"
+    },
+    "EDUCATION": {
+      "name": "Courses & Training",
+      "description": "Learning and development — e.g. online course, language class, workshop"
+    },
+    "BOOKS": {
+      "name": "Books",
+      "description": "Books and reading — e.g. Kindle book, audiobook, magazine subscription"
+    },
+    "TAXES": {
+      "name": "Taxes",
+      "description": "Government taxes — e.g. income tax, property tax, VAT refund"
+    },
+    "INSURANCE": {
+      "name": "Insurance",
+      "description": "Insurance premiums — e.g. health insurance, car insurance, home insurance"
+    },
+    "LOANS": {
+      "name": "Loans & Debts",
+      "description": "Loan repayments — e.g. student loan, personal loan, credit card debt"
+    },
+    "BANK_FEES": {
+      "name": "Bank Fees",
+      "description": "Banking charges — e.g. account maintenance, ATM fee, wire transfer fee"
+    },
+    "SALARY": {
+      "name": "Salary",
+      "description": "Employment income — e.g. monthly paycheck, bonus, overtime pay"
+    },
+    "FREELANCE": {
+      "name": "Freelance & Projects",
+      "description": "Self-employed income — e.g. client project, consulting, gig work"
+    },
+    "INVESTMENTS": {
+      "name": "Investment Returns",
+      "description": "Investment gains — e.g. stock dividends, crypto profit, bond interest"
+    },
+    "RENTAL_INCOME": {
+      "name": "Rental Income",
+      "description": "Property rental earnings — e.g. apartment rent received, Airbnb payout"
+    },
+    "CASHBACK": {
+      "name": "Cashback & Refunds",
+      "description": "Money back — e.g. credit card cashback, store refund, rebate"
+    },
+    "GIFTS": {
+      "name": "Gifts",
+      "description": "Monetary gifts — e.g. birthday gift, wedding present, holiday cash"
+    },
+    "SALES": {
+      "name": "Sale of Items",
+      "description": "Selling personal belongings — e.g. sold phone on eBay, garage sale, Vinted"
+    },
+    "BUSINESS_EXPENSES": {
+      "name": "Business Expenses",
+      "description": "Work-related costs — e.g. office supplies, business lunch, coworking space"
+    },
+    "SOFTWARE_LICENSES": {
+      "name": "Software & Apps",
+      "description": "Paid software — e.g. Adobe, Microsoft 365, domain renewal, hosting"
+    },
+    "HOME_IMPROVEMENT": {
+      "name": "Home Improvement",
+      "description": "Renovation and furnishing — e.g. new furniture, paint, plumber, IKEA"
+    },
+    "SAVINGS": {
+      "name": "Savings",
+      "description": "Money set aside — e.g. transfer to savings account, emergency fund"
+    },
+    "REFUNDS": {
+      "name": "Refunds",
+      "description": "Returned payments — e.g. product return, cancelled service, overcharge"
+    },
+    "FINES": {
+      "name": "Fines",
+      "description": "Penalties — e.g. parking ticket, speeding fine, late payment fee"
+    },
+    "CHARITY": {
+      "name": "Charity",
+      "description": "Donations — e.g. Red Cross, mosque/church donation, GoFundMe"
+    },
+    "UNKNOWN": {
+      "name": "Other",
+      "description": "Uncategorized — transactions that don't fit other categories"
+    }
+  },
+  "CategoryGroups": {
+    "CHARITY": {
+      "name": "Charity",
+      "description": "Donations to charities, non-profits, and crowdfunding campaigns."
+    },
+    "FOOD": {
+      "name": "Food",
+      "description": "Groceries, dining out, and food delivery."
+    },
+    "UTILITIES": {
+      "name": "Utilities",
+      "description": "Electricity, gas, water, internet, and phone bills."
+    },
+    "TRANSPORT": {
+      "name": "Transport",
+      "description": "Public transit, ride-sharing, fuel, car maintenance, and parking."
+    },
+    "FINANCE": {
+      "name": "Finance",
+      "description": "Taxes, insurance, loan repayments, bank fees, and savings."
+    },
+    "SHOPPING": {
+      "name": "Shopping",
+      "description": "Clothing, electronics, and other non-essential retail purchases."
+    },
+    "PETS": {
+      "name": "Pets",
+      "description": "Pet food, vet visits, grooming, and supplies."
+    },
+    "OTHER": {
+      "name": "Other",
+      "description": "Miscellaneous transactions that don't fit any other category."
+    },
+    "EMPLOYMENT": {
+      "name": "Employment",
+      "description": "Salary, wages, and freelance income."
+    },
+    "ENTERTAINMENT": {
+      "name": "Entertainment",
+      "description": "Subscriptions, hobbies, events, and travel."
+    },
+    "BUSINESS": {
+      "name": "Business",
+      "description": "Professional services, supplies, and software for business use."
+    },
+    "HOUSING": {
+      "name": "Housing",
+      "description": "Rent, mortgage, home improvement, and household supplies."
+    },
+    "EXTRA": {
+      "name": "Extra Income",
+      "description": "Cashback, gifts, item sales, and refunds."
+    },
+    "PASSIVE": {
+      "name": "Passive Income",
+      "description": "Investment returns, dividends, and rental income."
+    },
+    "EDUCATION": {
+      "name": "Education",
+      "description": "Tuition fees, courses, workshops, and books."
+    },
+    "HEALTH": {
+      "name": "Health",
+      "description": "Medical care, medications, personal care, and fitness."
+    }
   },
   "Auth": {
     "login": "Login",

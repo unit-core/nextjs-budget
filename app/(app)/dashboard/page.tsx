@@ -83,6 +83,7 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
   const supabase = await createClient()
   const locale = await getLocale()
   const td = await getTranslations("Dashboard")
+  const tg = await getTranslations("CategoryGroups")
 
   const {
     data: { user },
@@ -116,7 +117,15 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
   )
 
   const summary = buildSummary(monthAggregate, locale)
-  const categoryRows = buildCategoryRows(monthAggregate.categories, locale)
+  const categoryRows = buildCategoryRows(monthAggregate.categories, locale, (key) => {
+    const nameKey = `${key}.name` as Parameters<typeof tg>[0]
+    const descKey = `${key}.description` as Parameters<typeof tg>[0]
+    if (!tg.has(nameKey)) return undefined
+    return {
+      name: tg(nameKey),
+      description: tg.has(descKey) ? tg(descKey) : undefined,
+    }
+  })
   const chartItems = buildChartItems(transactions)
   const confirmedRows = transactions
     .filter(isConfirmed)

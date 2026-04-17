@@ -29,19 +29,26 @@ export function buildSummary(agg: MonthAggregate, locale: string): DateValues {
   }
 }
 
+type GroupLookup = (key: string) => { name: string; description?: string } | undefined
+
 export function buildCategoryRows(
   categories: CategoryAggregate[],
   locale: string,
+  lookupGroup?: GroupLookup,
 ): CategoryRow[] {
-  return categories.map((entry) => ({
-    name: entry.group?.name ?? "Uncategorized",
-    description: entry.group?.description || undefined,
-    amount: formatCurrencyTotals(entry.totals, locale),
-    transactions: entry.transactions.map((tx) => ({
-      name: tx.name,
-      amount: formatCurrencyTotals(tx.totals, locale),
-    })),
-  }))
+  return categories.map((entry) => {
+    const groupKey = entry.group?.name
+    const translated = groupKey && lookupGroup ? lookupGroup(groupKey) : undefined
+    return {
+      name: translated?.name ?? entry.group?.name ?? "Uncategorized",
+      description: (translated?.description ?? entry.group?.description) || undefined,
+      amount: formatCurrencyTotals(entry.totals, locale),
+      transactions: entry.transactions.map((tx) => ({
+        name: tx.name,
+        amount: formatCurrencyTotals(tx.totals, locale),
+      })),
+    }
+  })
 }
 
 export function buildTransactionRow(tx: Transaction, locale: string): TransactionRow {
