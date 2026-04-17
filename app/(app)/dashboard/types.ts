@@ -12,13 +12,31 @@ export type TransactionStatus = "IDLE" | "CONFIRMED" | "UNDERSTANDING" | (string
 /** Known `transactions.transaction_type` values. Falls back to `string`. */
 export type TransactionType = "EXPENSE" | "INCOME" | (string & {})
 
+/** Row shape from `public.transaction_item_category_groups`. owner_id null = system group (read-only). */
+export interface TransactionItemCategoryGroup {
+  id: string
+  name: string
+  description: string
+  owner_id: string | null
+  type: string
+}
+
+/** Row shape from `public.transaction_item_categories`. owner_id null = system category (read-only). */
+export interface TransactionItemCategory {
+  id: string
+  name: string
+  description: string
+  owner_id: string | null
+  category_group: TransactionItemCategoryGroup
+}
+
 /** Row shape selected from `public.transaction_items`. */
 export interface TransactionItem {
   id: string
   name: string
   amount: number
   currency_code: string
-  category: string
+  transaction_item_categories: TransactionItemCategory | null
   executed_at: string
 }
 

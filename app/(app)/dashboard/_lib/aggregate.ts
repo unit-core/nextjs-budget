@@ -3,6 +3,7 @@ import {
   type ChartItem,
   type Transaction,
   type TransactionItem,
+  type TransactionItemCategoryGroup,
 } from "../types"
 import { type DateRange, isSameDay, isWithinRange } from "./date-range"
 
@@ -13,7 +14,7 @@ export interface CategoryTransaction {
 }
 
 export interface CategoryAggregate {
-  category: string
+  group: TransactionItemCategoryGroup | null
   totals: Record<string, number>
   transactions: CategoryTransaction[]
 }
@@ -65,15 +66,17 @@ export function aggregateMonth(
       addAmount(monthTotals, item.currency_code, item.amount)
       if (executedToday) addAmount(todayTotals, item.currency_code, item.amount)
 
-      let categoryEntry = categoryMap.get(item.category)
+      const group = item.transaction_item_categories?.category_group ?? null
+      const groupKey = group?.id ?? "__uncategorized__"
+      let categoryEntry = categoryMap.get(groupKey)
       if (!categoryEntry) {
-        categoryEntry = { category: item.category, totals: {}, transactions: [] }
-        categoryMap.set(item.category, categoryEntry)
-        txIndex.set(item.category, new Map())
+        categoryEntry = { group, totals: {}, transactions: [] }
+        categoryMap.set(groupKey, categoryEntry)
+        txIndex.set(groupKey, new Map())
       }
       addAmount(categoryEntry.totals, item.currency_code, item.amount)
 
-      const txMap = txIndex.get(item.category)!
+      const txMap = txIndex.get(groupKey)!
       let txEntry = txMap.get(tx.id)
       if (!txEntry) {
         txEntry = { id: tx.id, name: tx.name || "-", totals: {} }

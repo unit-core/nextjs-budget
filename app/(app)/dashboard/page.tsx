@@ -38,8 +38,20 @@ const TRANSACTIONS_SELECT = `
     name,
     amount,
     currency_code,
-    category,
-    executed_at
+    executed_at,
+    transaction_item_categories!transaction_item_category_id (
+      id,
+      name,
+      description,
+      owner_id,
+      category_group:transaction_item_category_groups!transaction_item_category_group_id (
+        id,
+        name,
+        description,
+        owner_id,
+        type
+      )
+    )
   )
 `
 
@@ -71,7 +83,6 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
   const supabase = await createClient()
   const locale = await getLocale()
   const td = await getTranslations("Dashboard")
-  const tc = await getTranslations("Categories")
 
   const {
     data: { user },
@@ -84,6 +95,10 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
     .from("transactions")
     .select(TRANSACTIONS_SELECT)
     .order("executed_at", { ascending: false })
+
+  console.log(data?.map((element) => {
+    return element.transaction_items
+  }))
 
   if (error || !data) {
     return <div className="p-4 text-destructive">{td("somethingWentWrong")}</div>
@@ -101,7 +116,7 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
   )
 
   const summary = buildSummary(monthAggregate, locale)
-  const categoryRows = buildCategoryRows(monthAggregate.categories, locale, tc)
+  const categoryRows = buildCategoryRows(monthAggregate.categories, locale)
   const chartItems = buildChartItems(transactions)
   const confirmedRows = transactions
     .filter(isConfirmed)

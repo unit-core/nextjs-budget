@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { toast } from 'sonner'
 import { PlusIcon, TrashIcon, CalendarIcon } from 'lucide-react'
@@ -15,7 +15,9 @@ import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -29,28 +31,30 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
-const CATEGORIES = [
-  'RENT', 'MORTGAGE', 'UTILITIES', 'INTERNET', 'HOUSEHOLD',
-  'GROCERIES', 'RESTAURANTS', 'DELIVERY', 'PUBLIC_TRANSPORT', 'TAXI',
-  'FUEL', 'CAR_SERVICE', 'PARKING', 'MEDICAL', 'PHARMACY',
-  'PERSONAL_CARE', 'SPORT', 'SUBSCRIPTIONS', 'HOBBIES', 'EVENTS',
-  'TRAVEL', 'CLOTHING', 'ELECTRONICS', 'PETS', 'EDUCATION',
-  'BOOKS', 'TAXES', 'INSURANCE', 'LOANS', 'BANK_FEES',
-  'SALARY', 'FREELANCE', 'INVESTMENTS', 'RENTAL_INCOME', 'CASHBACK',
-  'GIFTS', 'SALES', 'BUSINESS_EXPENSES', 'SOFTWARE_LICENSES',
-  'HOME_IMPROVEMENT', 'SAVINGS', 'REFUNDS', 'FINES', 'CHARITY', 'UNKNOWN',
-] as const
-
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'PLN', 'UAH', 'RUB', 'TRY', 'AED', 'SAR'] as const
 
 const dateFnsLocales: Record<string, typeof enUS> = { en: enUS, ru, ar }
+
+interface CategoryOption {
+  id: string
+  name: string
+  description: string
+  owner_id: string | null
+}
+
+interface CategoryGroupOption {
+  id: string
+  name: string
+  owner_id: string | null
+  categories: CategoryOption[]
+}
 
 interface TransactionItem {
   id?: string
   name: string
   amount: string
   currency_code: string
-  category: string
+  transaction_item_category_id: string | null
 }
 
 interface TransactionData {
@@ -64,7 +68,7 @@ interface TransactionData {
 }
 
 function defaultItem(): TransactionItem {
-  return { name: '', amount: '', currency_code: 'EUR', category: 'UNKNOWN' }
+  return { name: '', amount: '', currency_code: 'EUR', transaction_item_category_id: null }
 }
 
 export default function TransactionForm({
@@ -76,7 +80,6 @@ export default function TransactionForm({
 }) {
   const isEdit = !!initialData?.id
   const t = useTranslations('TransactionForm')
-  const tc = useTranslations('Categories')
   const locale = useLocale()
   const dateFnsLocale = dateFnsLocales[locale] || enUS
   const router = useRouter()
@@ -93,6 +96,37 @@ export default function TransactionForm({
   )
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [categoryGroups, setCategoryGroups] = useState<CategoryGroupOption[]>([])
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase
+      .from('transaction_item_category_groups')
+      .select(`
+        id,
+        name,
+        owner_id,
+        transaction_item_categories (
+          id,
+          name,
+          description,
+          owner_id
+        )
+      `)
+      .order('name')
+      .then(({ data }) => {
+        if (data) {
+          setCategoryGroups(
+            data.map((g: any) => ({
+              id: g.id,
+              name: g.name,
+              owner_id: g.owner_id,
+              categories: g.transaction_item_categories ?? [],
+            }))
+          )
+        }
+      })
+  }, [])
 
   const updateItem = (index: number, field: keyof TransactionItem, value: string) => {
     setItems(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item))
@@ -148,7 +182,7 @@ export default function TransactionForm({
                   name: item.name.trim(),
                   amount: parseFloat(item.amount) || 0,
                   currency_code: item.currency_code,
-                  category: item.category,
+                  transaction_item_category_id: item.transaction_item_category_id ?? null,
                   executed_at: executedAt.toISOString(),
                 }))
             )
@@ -184,7 +218,7 @@ export default function TransactionForm({
                   name: item.name.trim(),
                   amount: parseFloat(item.amount) || 0,
                   currency_code: item.currency_code,
-                  category: item.category,
+                  transaction_item_category_id: item.transaction_item_category_id ?? null,
                   executed_at: executedAt.toISOString(),
                 }))
             )
@@ -300,23 +334,38 @@ export default function TransactionForm({
                     onChange={(e) => updateItem(index, 'name', e.target.value)}
                 />
                 <Select
-                    value={item.category}
-                    onValueChange={(v) => updateItem(index, 'category', v)}
+                    value={item.transaction_item_category_id ?? ''}
+                    onValueChange={(v) => updateItem(index, 'transaction_item_category_id', v || null as any)}
                 >
                     <SelectTrigger className="w-full">
-                        <SelectValue>
-                        {/* This renders only the name in the trigger when a value is selected */}
-                        {item.category ? tc(`${item.category}.name`) : tc('placeholder_text')}
+                        <SelectValue placeholder="Select category">
+                          {item.transaction_item_category_id
+                            ? categoryGroups
+                                .flatMap((g) => g.categories)
+                                .find((c) => c.id === item.transaction_item_category_id)?.name
+                            : 'Select category'}
                         </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                        {CATEGORIES.map((cat) => (
-                        <SelectItem key={cat} value={cat}>
-                            <div className="flex flex-col items-start p-2">
-                                <span className="font-semibold">{tc(`${cat}.name`)}</span>
-                                <span className="text-xs text-muted-foreground">{tc(`${cat}.description`)}</span>
-                            </div>
-                        </SelectItem>
+                        {categoryGroups.map((group) => (
+                          <SelectGroup key={group.id}>
+                            <SelectLabel className="flex items-center gap-1.5">
+                              {group.name}
+                              {group.owner_id === null && (
+                                <span className="text-[10px] font-normal text-muted-foreground">(system)</span>
+                              )}
+                            </SelectLabel>
+                            {group.categories.map((cat) => (
+                              <SelectItem key={cat.id} value={cat.id}>
+                                <div className="flex flex-col items-start py-0.5">
+                                  <span className="font-medium">{cat.name}</span>
+                                  {cat.description && (
+                                    <span className="text-xs text-muted-foreground">{cat.description}</span>
+                                  )}
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
                         ))}
                     </SelectContent>
                 </Select>

@@ -236,7 +236,7 @@ function createColumns(t: { header: string; executedAt: string; amount: string; 
               name,
               amount,
               currency_code,
-              category
+              transaction_item_category_id
             )
           `)
           .eq('id', row.id)
@@ -268,7 +268,7 @@ function createColumns(t: { header: string; executedAt: string; amount: string; 
           name: it.name,
           amount: it.amount,
           currency_code: it.currency_code,
-          category: it.category,
+          transaction_item_category_id: it.transaction_item_category_id ?? null,
         }))
 
         if (items.length > 0) {
@@ -1224,7 +1224,7 @@ function TableCellViewer({ item, editTransactionDesc }: { item: z.infer<typeof s
     executed_at: string
     status: string
     folder_id: string
-    items: { id: string; name: string; amount: string; currency_code: string; category: string }[]
+    items: { id: string; name: string; amount: string; currency_code: string; transaction_item_category_id: string | null }[]
   } | null>(null)
   const [loading, setLoading] = React.useState(false)
 
@@ -1245,7 +1245,7 @@ function TableCellViewer({ item, editTransactionDesc }: { item: z.infer<typeof s
           name,
           amount,
           currency_code,
-          category
+          transaction_item_category_id
         )
       `)
       .eq('id', item.id)
@@ -1264,7 +1264,7 @@ function TableCellViewer({ item, editTransactionDesc }: { item: z.infer<typeof s
           name: i.name,
           amount: String(i.amount),
           currency_code: i.currency_code,
-          category: i.category,
+          transaction_item_category_id: i.transaction_item_category_id ?? null,
         })),
       })
     }

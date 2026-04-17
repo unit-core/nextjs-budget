@@ -1,4 +1,3 @@
-import type { getTranslations } from "next-intl/server"
 import type { z } from "zod"
 
 import type { schema as allTransactionsSchema } from "@/components/all-transactions-data-table"
@@ -11,8 +10,6 @@ import {
   sumItemsByCurrency,
 } from "./aggregate"
 import { formatCurrencyTotals, formatLongDate } from "./format"
-
-type Translator = Awaited<ReturnType<typeof getTranslations>>
 
 export type TransactionRow = z.infer<typeof allTransactionsSchema>
 
@@ -35,25 +32,16 @@ export function buildSummary(agg: MonthAggregate, locale: string): DateValues {
 export function buildCategoryRows(
   categories: CategoryAggregate[],
   locale: string,
-  translateCategory: Translator,
 ): CategoryRow[] {
-  return categories.map((entry) => {
-    const nameKey = `${entry.category}.name`
-    const descriptionKey = `${entry.category}.description`
-    return {
-      name: translateCategory.has(nameKey)
-        ? translateCategory(nameKey)
-        : entry.category,
-      description: translateCategory.has(descriptionKey)
-        ? translateCategory(descriptionKey)
-        : undefined,
-      amount: formatCurrencyTotals(entry.totals, locale),
-      transactions: entry.transactions.map((tx) => ({
-        name: tx.name,
-        amount: formatCurrencyTotals(tx.totals, locale),
-      })),
-    }
-  })
+  return categories.map((entry) => ({
+    name: entry.group?.name ?? "Uncategorized",
+    description: entry.group?.description || undefined,
+    amount: formatCurrencyTotals(entry.totals, locale),
+    transactions: entry.transactions.map((tx) => ({
+      name: tx.name,
+      amount: formatCurrencyTotals(tx.totals, locale),
+    })),
+  }))
 }
 
 export function buildTransactionRow(tx: Transaction, locale: string): TransactionRow {
