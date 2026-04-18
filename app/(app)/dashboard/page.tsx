@@ -3,8 +3,7 @@ import { getTranslations } from "next-intl/server"
 
 import { AllTransactionsDataTable } from "@/components/all-transactions-data-table"
 import { type SidebarUser } from "@/components/app-sidebar"
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
-import { ChartPieCategories } from "@/components/chart-pie-categories"
+import { ChartCombined } from "@/components/chart-combined"
 import { DashboardSkeleton } from "@/components/dashboard-skeleton"
 import { EmptyState } from "@/components/empty-state"
 import { MonthTransactionsDataTable } from "@/components/month-transactions-data-table"
@@ -134,13 +133,8 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
   return (
     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
       <SectionCards texts={texts} values={summary} />
-      <div className="px-4 lg:px-6 grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6 items-stretch">
-        <div className="xl:col-span-1 flex">
-          <ChartPieCategories categories={monthAggregate.categories} />
-        </div>
-        <div className="xl:col-span-2 flex">
-          <ChartAreaInteractive items={chartItems} />
-        </div>
+      <div className="px-4 lg:px-6">
+        <ChartCombined categories={monthAggregate.categories} items={chartItems} />
       </div>
       {/* <MonthTransactionsDataTable
         data={categoryRows}
