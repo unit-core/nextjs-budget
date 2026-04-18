@@ -6,20 +6,19 @@ import { type SidebarUser } from "@/components/app-sidebar"
 import { ChartCombined } from "@/components/chart-combined"
 import { DashboardSkeleton } from "@/components/dashboard-skeleton"
 import { EmptyState } from "@/components/empty-state"
-import { MonthTransactionsDataTable } from "@/components/month-transactions-data-table"
 import { SectionCards, type DateTexts } from "@/components/section-cards"
 
 import { getLocale } from "@/i18n/actions"
 import { createClient } from "@/lib/supabase/server"
 
 import type { Transaction } from "./types"
+import { CONFIRMED_STATUS } from "./types"
 import {
   aggregateMonth,
   buildChartItems,
-  confirmedInRange,
   isConfirmed,
 } from "./_lib/aggregate"
-import { getMonthRange } from "./_lib/date-range"
+import { getMonthRange, parseMonthParam } from "./_lib/date-range"
 import { formatLongDate, formatMonth, formatWeekdayLong } from "./_lib/format"
 import {
   buildCategoryRows,
@@ -55,31 +54,54 @@ const TRANSACTIONS_SELECT = `
   )
 `
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ month?: string }>
+}) {
+  const { month } = await searchParams
+  const selectedDate = parseMonthParam(month)
   const locale = await getLocale()
-  const sectionCardsTexts = buildDateTexts(new Date(), locale)
+  const sectionCardsTexts = buildDateTexts(selectedDate, locale)
+  const today = new Date()
+  const isCurrentMonth =
+    selectedDate.getFullYear() === today.getFullYear() &&
+    selectedDate.getMonth() === today.getMonth()
 
   return (
     <div className="flex flex-1 flex-col">
       <div className="@container/main flex flex-1 flex-col gap-2">
         <Suspense fallback={<DashboardSkeleton />}>
-          <AsyncDashboardContent texts={sectionCardsTexts} />
+          <AsyncDashboardContent
+            texts={sectionCardsTexts}
+            selectedDate={selectedDate}
+            isCurrentMonth={isCurrentMonth}
+          />
         </Suspense>
       </div>
     </div>
   )
 }
 
-function buildDateTexts(today: Date, locale: string): DateTexts {
-  const { start, end } = getMonthRange(today)
+function buildDateTexts(date: Date, locale: string): DateTexts {
+  const today = new Date()
+  const { start, end } = getMonthRange(date)
   return {
     today: formatWeekdayLong(today, locale),
-    month: formatMonth(today, locale),
+    month: formatMonth(date, locale),
     monthRange: `${formatLongDate(start, locale)} - ${formatLongDate(end, locale)}`,
   }
 }
 
-async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
+async function AsyncDashboardContent({
+  texts,
+  selectedDate,
+  isCurrentMonth,
+}: {
+  texts: DateTexts
+  selectedDate: Date
+  isCurrentMonth: boolean
+}) {
   const supabase = await createClient()
   const locale = await getLocale()
   const td = await getTranslations("Dashboard")
@@ -92,25 +114,36 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
     ? { id: user.id, email: user.email ?? "-" }
     : null
 
-  const { data, error } = await supabase
-    .from("transactions")
-    .select(TRANSACTIONS_SELECT)
-    .order("executed_at", { ascending: false })
+  const { start, end } = getMonthRange(selectedDate)
 
-  if (error || !data) {
+  const [confirmedResult, pendingResult] = await Promise.all([
+    supabase
+      .from("transactions")
+      .select(TRANSACTIONS_SELECT)
+      .eq("status", CONFIRMED_STATUS)
+      .gte("executed_at", start.toISOString())
+      .lte("executed_at", end.toISOString())
+      .order("executed_at", { ascending: false }),
+    supabase
+      .from("transactions")
+      .select(TRANSACTIONS_SELECT)
+      .neq("status", CONFIRMED_STATUS)
+      .order("executed_at", { ascending: false }),
+  ])
+
+  if (confirmedResult.error || pendingResult.error) {
     return <div className="p-4 text-destructive">{td("somethingWentWrong")}</div>
   }
 
-  const transactions = data as unknown as Transaction[]
-  if (transactions.length === 0) {
+  const confirmedTransactions = confirmedResult.data as unknown as Transaction[]
+  const pendingTransactions = pendingResult.data as unknown as Transaction[]
+
+  if (confirmedTransactions.length === 0 && pendingTransactions.length === 0) {
     return <EmptyState user={sidebarUser} />
   }
 
   const today = new Date()
-  const monthAggregate = aggregateMonth(
-    confirmedInRange(transactions, getMonthRange(today)),
-    today,
-  )
+  const monthAggregate = aggregateMonth(confirmedTransactions, today)
 
   const summary = buildSummary(monthAggregate, locale)
   const categoryRows = buildCategoryRows(monthAggregate.categories, locale, (key) => {
@@ -122,29 +155,22 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
       description: tg.has(descKey) ? tg(descKey) : undefined,
     }
   })
-  const chartItems = buildChartItems(transactions)
-  const confirmedRows = transactions
+  const chartItems = buildChartItems(confirmedTransactions)
+  const confirmedRows = confirmedTransactions
     .filter(isConfirmed)
     .map((tx) => buildTransactionRow(tx, locale))
-  const pendingRows = transactions
-    .filter((tx) => !isConfirmed(tx))
-    .map((tx) => buildTransactionRow(tx, locale))
+  const pendingRows = pendingTransactions.map((tx) => buildTransactionRow(tx, locale))
 
   return (
     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-      <SectionCards texts={texts} values={summary} />
+      <SectionCards texts={texts} values={summary} isCurrentMonth={isCurrentMonth} />
       <div className="px-4 lg:px-6">
-        <ChartCombined categories={monthAggregate.categories} items={chartItems} />
+        <ChartCombined
+          categories={monthAggregate.categories}
+          items={chartItems}
+          selectedDate={selectedDate}
+        />
       </div>
-      {/* <MonthTransactionsDataTable
-        data={categoryRows}
-        translations={{
-          category: td("category"),
-          amount: td("amount"),
-          noResults: td("noResults"),
-          loading: td("loading"),
-        }}
-      /> */}
       <AllTransactionsDataTable data={confirmedRows} pendingData={pendingRows} />
     </div>
   )

@@ -45,9 +45,10 @@ interface DataItem {
 interface Props {
   categories: CategoryAggregate[]
   items: DataItem[]
+  selectedDate: Date
 }
 
-export function ChartCombined({ categories, items }: Props) {
+export function ChartCombined({ categories, items, selectedDate }: Props) {
   const locale = useLocale()
   const t = useTranslations("Dashboard")
   const tg = useTranslations("CategoryGroups")
@@ -68,11 +69,10 @@ export function ChartCombined({ categories, items }: Props) {
   const [activeCurrency, setActiveCurrency] = React.useState<string>("")
   const currency = currencies.includes(activeCurrency) ? activeCurrency : (currencies[0] ?? "")
 
-  // --- bar chart data (current month, all days) ---
+  // --- bar chart data (selected month, all days) ---
   const barData = React.useMemo(() => {
-    const now = new Date()
-    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
-    const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0)
+    const monthStart = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
+    const monthEnd = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0)
     const dailyMap = new Map<string, Record<string, any>>()
 
     items.forEach((item) => {
@@ -93,7 +93,7 @@ export function ChartCombined({ categories, items }: Props) {
       cursor.setDate(cursor.getDate() + 1)
     }
     return allDates
-  }, [items])
+  }, [items, selectedDate])
 
   // --- pie slices ---
   const slices = React.useMemo(() => {
@@ -148,8 +148,8 @@ export function ChartCombined({ categories, items }: Props) {
       <CardHeader className="flex flex-col items-stretch border-b p-0! sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:py-0!">
           <CardTitle>{t("activityByCurrency")}</CardTitle>
-          <CardDescription>
-            {new Date().toLocaleDateString(locale, { month: "long", year: "numeric" })}
+          <CardDescription className="capitalize">
+            {selectedDate.toLocaleDateString(locale, { month: "long", year: "numeric" })}
           </CardDescription>
         </div>
         <div className="flex">
