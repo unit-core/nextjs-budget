@@ -69,6 +69,10 @@
     "confirm": "تأكيد",
     "transactionDeleted": "تم حذف المعاملة",
     "transactionDeletedDesc": "تمت إزالة جميع الموارد أيضاً",
+    "createTemplate": "إنشاء نموذج",
+    "templateCreated": "تم إنشاء النموذج",
+    "templateCreatedDesc": "تم حفظ المعاملة كنموذج",
+    "templateCreateFailed": "تعذّر إنشاء النموذج",
     "transactionsConfirmed": "تم تأكيد المعاملات",
     "transactionsConfirmedDesc": "تم تأكيد {count} معاملة",
     "transactionsDeleted": "تم حذف المعاملات",
@@ -408,10 +412,31 @@
     "transactionCreated": "تم إنشاء المعاملة",
     "processingDescription": "النظام يقوم بالمعالجة بالفعل"
   },
+  "Templates": {
+    "title": "النماذج",
+    "header": "الاسم",
+    "type": "النوع",
+    "amount": "المبلغ",
+    "createdAt": "تاريخ الإنشاء",
+    "columns": "الأعمدة",
+    "rowsPerPage": "صفوف في الصفحة",
+    "pageOf": "صفحة {current} من {total}",
+    "noResults": "لا توجد نماذج بعد.",
+    "execute": "تنفيذ",
+    "delete": "حذف",
+    "templateDeleted": "تم حذف النموذج",
+    "templateDeletedDesc": "تم إزالة النموذج",
+    "transactionCreated": "تم إنشاء المعاملة",
+    "transactionCreatedDesc": "تم إنشاء المعاملة من النموذج",
+    "executeFailed": "تعذّر تنفيذ النموذج",
+    "somethingWentWrong": "حدث خطأ أثناء تحميل النماذج."
+  },
   "NavMain": {
     "quickCreate": "إنشاء سريع",
     "createTransactions": "إنشاء معاملات",
-    "drawerDescription": "حمّل إيصالاتك أو اكتب مصاريفك بكلماتك الخاصة."
+    "drawerDescription": "حمّل إيصالاتك أو اكتب مصاريفك بكلماتك الخاصة.",
+    "dashboard": "لوحة التحكم",
+    "templates": "النماذج"
   },
   "TransactionForm": {
     "name": "اسم المعاملة",

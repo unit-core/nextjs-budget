@@ -69,6 +69,10 @@
     "confirm": "Confirmer",
     "transactionDeleted": "La transaction a été supprimée",
     "transactionDeletedDesc": "Toutes les ressources associées ont également été supprimées",
+    "createTemplate": "Créer un modèle",
+    "templateCreated": "Modèle créé",
+    "templateCreatedDesc": "Transaction enregistrée comme modèle",
+    "templateCreateFailed": "Impossible de créer le modèle",
     "transactionsConfirmed": "Transactions confirmées",
     "transactionsConfirmedDesc": "{count} transaction(s) marquée(s) comme confirmée(s)",
     "transactionsDeleted": "Transactions supprimées",
@@ -408,10 +412,31 @@
     "transactionCreated": "La transaction a été créée",
     "processingDescription": "Le système est déjà en train de traiter"
   },
+  "Templates": {
+    "title": "Modèles",
+    "header": "Nom",
+    "type": "Type",
+    "amount": "Montant",
+    "createdAt": "Créé le",
+    "columns": "Colonnes",
+    "rowsPerPage": "Lignes par page",
+    "pageOf": "Page {current} sur {total}",
+    "noResults": "Aucun modèle pour l'instant.",
+    "execute": "Exécuter",
+    "delete": "Supprimer",
+    "templateDeleted": "Modèle supprimé",
+    "templateDeletedDesc": "Le modèle a été supprimé",
+    "transactionCreated": "Transaction créée",
+    "transactionCreatedDesc": "Transaction créée à partir du modèle",
+    "executeFailed": "Impossible d'exécuter le modèle",
+    "somethingWentWrong": "Une erreur est survenue lors du chargement des modèles."
+  },
   "NavMain": {
     "quickCreate": "Création rapide",
     "createTransactions": "Créer des transactions",
-    "drawerDescription": "Envoyez vos reçus ou décrivez vos dépenses avec vos propres mots."
+    "drawerDescription": "Envoyez vos reçus ou décrivez vos dépenses avec vos propres mots.",
+    "dashboard": "Tableau de bord",
+    "templates": "Modèles"
   },
   "TransactionForm": {
     "name": "Nom de la transaction",

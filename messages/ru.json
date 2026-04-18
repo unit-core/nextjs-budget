@@ -69,6 +69,10 @@
     "confirm": "Подтвердить",
     "transactionDeleted": "Транзакция удалена",
     "transactionDeletedDesc": "Все ресурсы также удалены",
+    "createTemplate": "Создать шаблон",
+    "templateCreated": "Шаблон создан",
+    "templateCreatedDesc": "Транзакция сохранена как шаблон",
+    "templateCreateFailed": "Не удалось создать шаблон",
     "transactionsConfirmed": "Транзакции подтверждены",
     "transactionsConfirmedDesc": "{count} транзакций подтверждено",
     "transactionsDeleted": "Транзакции удалены",
@@ -408,10 +412,31 @@
     "transactionCreated": "Транзакция создана",
     "processingDescription": "Система уже обрабатывает"
   },
+  "Templates": {
+    "title": "Шаблоны",
+    "header": "Название",
+    "type": "Тип",
+    "amount": "Сумма",
+    "createdAt": "Создано",
+    "columns": "Столбцы",
+    "rowsPerPage": "Строк на странице",
+    "pageOf": "Страница {current} из {total}",
+    "noResults": "Шаблонов пока нет.",
+    "execute": "Выполнить",
+    "delete": "Удалить",
+    "templateDeleted": "Шаблон удалён",
+    "templateDeletedDesc": "Шаблон был удалён",
+    "transactionCreated": "Транзакция создана",
+    "transactionCreatedDesc": "Транзакция создана из шаблона",
+    "executeFailed": "Не удалось выполнить шаблон",
+    "somethingWentWrong": "Произошла ошибка при загрузке шаблонов."
+  },
   "NavMain": {
     "quickCreate": "Быстрое создание",
     "createTransactions": "Создать транзакции",
-    "drawerDescription": "Загрузите чеки или опишите расходы своими словами."
+    "drawerDescription": "Загрузите чеки или опишите расходы своими словами.",
+    "dashboard": "Панель",
+    "templates": "Шаблоны"
   },
   "TransactionForm": {
     "name": "Название транзакции",

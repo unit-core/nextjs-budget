@@ -69,6 +69,10 @@
     "confirm": "Bevestigen",
     "transactionDeleted": "Transactie is verwijderd",
     "transactionDeletedDesc": "Alle bronnen zijn ook verwijderd",
+    "createTemplate": "Sjabloon aanmaken",
+    "templateCreated": "Sjabloon aangemaakt",
+    "templateCreatedDesc": "Transactie opgeslagen als sjabloon",
+    "templateCreateFailed": "Kon sjabloon niet aanmaken",
     "transactionsConfirmed": "Transacties bevestigd",
     "transactionsConfirmedDesc": "{count} transactie(s) gemarkeerd als bevestigd",
     "transactionsDeleted": "Transacties verwijderd",
@@ -408,10 +412,31 @@
     "transactionCreated": "Transactie is aangemaakt",
     "processingDescription": "Het systeem is al aan het verwerken"
   },
+  "Templates": {
+    "title": "Sjablonen",
+    "header": "Naam",
+    "type": "Type",
+    "amount": "Bedrag",
+    "createdAt": "Aangemaakt op",
+    "columns": "Kolommen",
+    "rowsPerPage": "Rijen per pagina",
+    "pageOf": "Pagina {current} van {total}",
+    "noResults": "Nog geen sjablonen.",
+    "execute": "Uitvoeren",
+    "delete": "Verwijderen",
+    "templateDeleted": "Sjabloon verwijderd",
+    "templateDeletedDesc": "Sjabloon is verwijderd",
+    "transactionCreated": "Transactie aangemaakt",
+    "transactionCreatedDesc": "Transactie aangemaakt vanuit sjabloon",
+    "executeFailed": "Kon sjabloon niet uitvoeren",
+    "somethingWentWrong": "Er is iets misgegaan bij het laden van sjablonen."
+  },
   "NavMain": {
     "quickCreate": "Snel aanmaken",
     "createTransactions": "Transacties aanmaken",
-    "drawerDescription": "Upload je bonnetjes of beschrijf uitgaven in je eigen woorden."
+    "drawerDescription": "Upload je bonnetjes of beschrijf uitgaven in je eigen woorden.",
+    "dashboard": "Dashboard",
+    "templates": "Sjablonen"
   },
   "TransactionForm": {
     "name": "Transactienaam",

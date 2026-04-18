@@ -69,6 +69,10 @@
     "confirm": "Onayla",
     "transactionDeleted": "İşlem silindi",
     "transactionDeletedDesc": "Tüm kaynaklar da kaldırıldı",
+    "createTemplate": "Şablon oluştur",
+    "templateCreated": "Şablon oluşturuldu",
+    "templateCreatedDesc": "İşlem şablon olarak kaydedildi",
+    "templateCreateFailed": "Şablon oluşturulamadı",
     "transactionsConfirmed": "İşlemler onaylandı",
     "transactionsConfirmedDesc": "{count} işlem onaylandı olarak işaretlendi",
     "transactionsDeleted": "İşlemler silindi",
@@ -408,10 +412,31 @@
     "transactionCreated": "İşlem oluşturuldu",
     "processingDescription": "Sistem zaten işliyor"
   },
+  "Templates": {
+    "title": "Şablonlar",
+    "header": "Ad",
+    "type": "Tür",
+    "amount": "Tutar",
+    "createdAt": "Oluşturulma tarihi",
+    "columns": "Sütunlar",
+    "rowsPerPage": "Sayfa başına satır",
+    "pageOf": "Sayfa {current} / {total}",
+    "noResults": "Henüz şablon yok.",
+    "execute": "Uygula",
+    "delete": "Sil",
+    "templateDeleted": "Şablon silindi",
+    "templateDeletedDesc": "Şablon kaldırıldı",
+    "transactionCreated": "İşlem oluşturuldu",
+    "transactionCreatedDesc": "Şablondan işlem oluşturuldu",
+    "executeFailed": "Şablon uygulanamadı",
+    "somethingWentWrong": "Şablonlar yüklenirken bir hata oluştu."
+  },
   "NavMain": {
     "quickCreate": "Hızlı Oluştur",
     "createTransactions": "İşlem Oluştur",
-    "drawerDescription": "Fişlerinizi yükleyin veya harcamalarınızı kendi kelimelerinizle açıklayın."
+    "drawerDescription": "Fişlerinizi yükleyin veya harcamalarınızı kendi kelimelerinizle açıklayın.",
+    "dashboard": "Pano",
+    "templates": "Şablonlar"
   },
   "TransactionForm": {
     "name": "İşlem Adı",

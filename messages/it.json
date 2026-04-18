@@ -69,6 +69,10 @@
     "confirm": "Conferma",
     "transactionDeleted": "La transazione è stata eliminata",
     "transactionDeletedDesc": "Tutte le risorse sono state rimosse",
+    "createTemplate": "Crea modello",
+    "templateCreated": "Modello creato",
+    "templateCreatedDesc": "Transazione salvata come modello",
+    "templateCreateFailed": "Impossibile creare il modello",
     "transactionsConfirmed": "Transazioni confermate",
     "transactionsConfirmedDesc": "{count} transazione/i contrassegnata/e come confermata/e",
     "transactionsDeleted": "Transazioni eliminate",
@@ -408,10 +412,31 @@
     "transactionCreated": "La transazione è stata creata",
     "processingDescription": "Il sistema sta già elaborando"
   },
+  "Templates": {
+    "title": "Modelli",
+    "header": "Nome",
+    "type": "Tipo",
+    "amount": "Importo",
+    "createdAt": "Creato il",
+    "columns": "Colonne",
+    "rowsPerPage": "Righe per pagina",
+    "pageOf": "Pagina {current} di {total}",
+    "noResults": "Nessun modello ancora.",
+    "execute": "Esegui",
+    "delete": "Elimina",
+    "templateDeleted": "Modello eliminato",
+    "templateDeletedDesc": "Il modello è stato rimosso",
+    "transactionCreated": "Transazione creata",
+    "transactionCreatedDesc": "Transazione creata dal modello",
+    "executeFailed": "Impossibile eseguire il modello",
+    "somethingWentWrong": "Si è verificato un errore durante il caricamento dei modelli."
+  },
   "NavMain": {
     "quickCreate": "Creazione rapida",
     "createTransactions": "Crea transazioni",
-    "drawerDescription": "Carica i tuoi scontrini o descrivi le spese con le tue parole."
+    "drawerDescription": "Carica i tuoi scontrini o descrivi le spese con le tue parole.",
+    "dashboard": "Dashboard",
+    "templates": "Modelli"
   },
   "TransactionForm": {
     "name": "Nome transazione",

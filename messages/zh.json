@@ -69,6 +69,10 @@
     "confirm": "确认",
     "transactionDeleted": "交易已删除",
     "transactionDeletedDesc": "所有相关资源也已移除",
+    "createTemplate": "创建模板",
+    "templateCreated": "模板已创建",
+    "templateCreatedDesc": "交易已保存为模板",
+    "templateCreateFailed": "无法创建模板",
     "transactionsConfirmed": "交易已确认",
     "transactionsConfirmedDesc": "{count} 笔交易已标记为已确认",
     "transactionsDeleted": "交易已删除",
@@ -408,10 +412,31 @@
     "transactionCreated": "交易已创建",
     "processingDescription": "系统正在处理中"
   },
+  "Templates": {
+    "title": "模板",
+    "header": "名称",
+    "type": "类型",
+    "amount": "金额",
+    "createdAt": "创建时间",
+    "columns": "列",
+    "rowsPerPage": "每页行数",
+    "pageOf": "第 {current} 页，共 {total} 页",
+    "noResults": "暂无模板。",
+    "execute": "执行",
+    "delete": "删除",
+    "templateDeleted": "模板已删除",
+    "templateDeletedDesc": "模板已被移除",
+    "transactionCreated": "交易已创建",
+    "transactionCreatedDesc": "从模板创建的交易",
+    "executeFailed": "无法执行模板",
+    "somethingWentWrong": "加载模板时出现问题。"
+  },
   "NavMain": {
     "quickCreate": "快速创建",
     "createTransactions": "创建交易",
-    "drawerDescription": "上传您的收据或用自己的话描述支出。"
+    "drawerDescription": "上传您的收据或用自己的话描述支出。",
+    "dashboard": "仪表盘",
+    "templates": "模板"
   },
   "TransactionForm": {
     "name": "交易名称",

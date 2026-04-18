@@ -69,6 +69,10 @@
     "confirm": "Bestätigen",
     "transactionDeleted": "Transaktion wurde gelöscht",
     "transactionDeletedDesc": "Alle Ressourcen wurden ebenfalls entfernt",
+    "createTemplate": "Vorlage erstellen",
+    "templateCreated": "Vorlage erstellt",
+    "templateCreatedDesc": "Transaktion als Vorlage gespeichert",
+    "templateCreateFailed": "Vorlage konnte nicht erstellt werden",
     "transactionsConfirmed": "Transaktionen bestätigt",
     "transactionsConfirmedDesc": "{count} Transaktion(en) als bestätigt markiert",
     "transactionsDeleted": "Transaktionen gelöscht",
@@ -408,10 +412,31 @@
     "transactionCreated": "Transaktion wurde erstellt",
     "processingDescription": "Das System verarbeitet bereits"
   },
+  "Templates": {
+    "title": "Vorlagen",
+    "header": "Name",
+    "type": "Typ",
+    "amount": "Betrag",
+    "createdAt": "Erstellt am",
+    "columns": "Spalten",
+    "rowsPerPage": "Zeilen pro Seite",
+    "pageOf": "Seite {current} von {total}",
+    "noResults": "Noch keine Vorlagen.",
+    "execute": "Ausführen",
+    "delete": "Löschen",
+    "templateDeleted": "Vorlage gelöscht",
+    "templateDeletedDesc": "Vorlage wurde entfernt",
+    "transactionCreated": "Transaktion erstellt",
+    "transactionCreatedDesc": "Transaktion aus Vorlage erstellt",
+    "executeFailed": "Vorlage konnte nicht ausgeführt werden",
+    "somethingWentWrong": "Beim Laden der Vorlagen ist ein Fehler aufgetreten."
+  },
   "NavMain": {
     "quickCreate": "Schnell erstellen",
     "createTransactions": "Transaktionen erstellen",
-    "drawerDescription": "Lade deine Kassenbons hoch oder beschreibe Ausgaben in deinen eigenen Worten."
+    "drawerDescription": "Lade deine Kassenbons hoch oder beschreibe Ausgaben in deinen eigenen Worten.",
+    "dashboard": "Dashboard",
+    "templates": "Vorlagen"
   },
   "TransactionForm": {
     "name": "Transaktionsname",

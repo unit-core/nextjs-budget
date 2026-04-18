@@ -69,6 +69,10 @@
     "confirm": "Підтвердити",
     "transactionDeleted": "Транзакцію видалено",
     "transactionDeletedDesc": "Усі ресурси також видалено",
+    "createTemplate": "Створити шаблон",
+    "templateCreated": "Шаблон створено",
+    "templateCreatedDesc": "Транзакцію збережено як шаблон",
+    "templateCreateFailed": "Не вдалося створити шаблон",
     "transactionsConfirmed": "Транзакції підтверджено",
     "transactionsConfirmedDesc": "{count, plural, one {# транзакцію} few {# транзакції} other {# транзакцій}} позначено як підтверджені",
     "transactionsDeleted": "Транзакції видалено",
@@ -408,10 +412,31 @@
     "transactionCreated": "Транзакцію створено",
     "processingDescription": "Система вже обробляє"
   },
+  "Templates": {
+    "title": "Шаблони",
+    "header": "Назва",
+    "type": "Тип",
+    "amount": "Сума",
+    "createdAt": "Створено",
+    "columns": "Стовпці",
+    "rowsPerPage": "Рядків на сторінці",
+    "pageOf": "Сторінка {current} з {total}",
+    "noResults": "Шаблонів поки немає.",
+    "execute": "Виконати",
+    "delete": "Видалити",
+    "templateDeleted": "Шаблон видалено",
+    "templateDeletedDesc": "Шаблон було видалено",
+    "transactionCreated": "Транзакцію створено",
+    "transactionCreatedDesc": "Транзакцію створено з шаблону",
+    "executeFailed": "Не вдалося виконати шаблон",
+    "somethingWentWrong": "Щось пішло не так при завантаженні шаблонів."
+  },
   "NavMain": {
     "quickCreate": "Швидке створення",
     "createTransactions": "Створити транзакції",
-    "drawerDescription": "Завантажте чеки або опишіть витрати своїми словами."
+    "drawerDescription": "Завантажте чеки або опишіть витрати своїми словами.",
+    "dashboard": "Панель",
+    "templates": "Шаблони"
   },
   "TransactionForm": {
     "name": "Назва транзакції",

@@ -97,10 +97,6 @@ async function AsyncDashboardContent({ texts }: { texts: DateTexts }) {
     .select(TRANSACTIONS_SELECT)
     .order("executed_at", { ascending: false })
 
-  console.log(data?.map((element) => {
-    return element.transaction_items
-  }))
-
   if (error || !data) {
     return <div className="p-4 text-destructive">{td("somethingWentWrong")}</div>
   }

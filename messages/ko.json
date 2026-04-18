@@ -69,6 +69,10 @@
     "confirm": "확인",
     "transactionDeleted": "거래가 삭제되었습니다",
     "transactionDeletedDesc": "모든 관련 리소스도 삭제되었습니다",
+    "createTemplate": "템플릿 만들기",
+    "templateCreated": "템플릿이 생성되었습니다",
+    "templateCreatedDesc": "거래가 템플릿으로 저장되었습니다",
+    "templateCreateFailed": "템플릿을 생성할 수 없습니다",
     "transactionsConfirmed": "거래가 확인되었습니다",
     "transactionsConfirmedDesc": "{count}건의 거래가 확인됨으로 표시되었습니다",
     "transactionsDeleted": "거래가 삭제되었습니다",
@@ -408,10 +412,31 @@
     "transactionCreated": "거래가 생성되었습니다",
     "processingDescription": "시스템이 이미 처리 중입니다"
   },
+  "Templates": {
+    "title": "템플릿",
+    "header": "이름",
+    "type": "유형",
+    "amount": "금액",
+    "createdAt": "생성일",
+    "columns": "열",
+    "rowsPerPage": "페이지당 행 수",
+    "pageOf": "페이지 {current} / {total}",
+    "noResults": "아직 템플릿이 없습니다.",
+    "execute": "실행",
+    "delete": "삭제",
+    "templateDeleted": "템플릿이 삭제되었습니다",
+    "templateDeletedDesc": "템플릿이 제거되었습니다",
+    "transactionCreated": "거래가 생성되었습니다",
+    "transactionCreatedDesc": "템플릿으로 거래가 생성되었습니다",
+    "executeFailed": "템플릿을 실행할 수 없습니다",
+    "somethingWentWrong": "템플릿을 불러오는 중 문제가 발생했습니다."
+  },
   "NavMain": {
     "quickCreate": "빠른 생성",
     "createTransactions": "거래 생성",
-    "drawerDescription": "영수증을 업로드하거나 자유롭게 지출을 설명하세요."
+    "drawerDescription": "영수증을 업로드하거나 자유롭게 지출을 설명하세요.",
+    "dashboard": "대시보드",
+    "templates": "템플릿"
   },
   "TransactionForm": {
     "name": "거래 이름",

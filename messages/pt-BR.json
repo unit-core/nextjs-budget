@@ -69,6 +69,10 @@
     "confirm": "Confirmar",
     "transactionDeleted": "Transação excluída",
     "transactionDeletedDesc": "Todos os recursos também foram removidos",
+    "createTemplate": "Criar modelo",
+    "templateCreated": "Modelo criado",
+    "templateCreatedDesc": "Transação salva como modelo",
+    "templateCreateFailed": "Não foi possível criar o modelo",
     "transactionsConfirmed": "Transações confirmadas",
     "transactionsConfirmedDesc": "{count} transação(ões) marcada(s) como confirmada(s)",
     "transactionsDeleted": "Transações excluídas",
@@ -408,10 +412,31 @@
     "transactionCreated": "Transação criada",
     "processingDescription": "O sistema já está processando"
   },
+  "Templates": {
+    "title": "Modelos",
+    "header": "Nome",
+    "type": "Tipo",
+    "amount": "Valor",
+    "createdAt": "Criado em",
+    "columns": "Colunas",
+    "rowsPerPage": "Linhas por página",
+    "pageOf": "Página {current} de {total}",
+    "noResults": "Nenhum modelo ainda.",
+    "execute": "Executar",
+    "delete": "Excluir",
+    "templateDeleted": "Modelo excluído",
+    "templateDeletedDesc": "O modelo foi removido",
+    "transactionCreated": "Transação criada",
+    "transactionCreatedDesc": "Transação criada a partir do modelo",
+    "executeFailed": "Não foi possível executar o modelo",
+    "somethingWentWrong": "Algo deu errado ao carregar os modelos."
+  },
   "NavMain": {
     "quickCreate": "Criação Rápida",
     "createTransactions": "Criar Transações",
-    "drawerDescription": "Envie seus recibos ou descreva despesas com suas próprias palavras."
+    "drawerDescription": "Envie seus recibos ou descreva despesas com suas próprias palavras.",
+    "dashboard": "Painel",
+    "templates": "Modelos"
   },
   "TransactionForm": {
     "name": "Nome da Transação",

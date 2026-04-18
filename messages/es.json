@@ -69,6 +69,10 @@
     "confirm": "Confirmar",
     "transactionDeleted": "La transacción ha sido eliminada",
     "transactionDeletedDesc": "Todos los recursos también han sido eliminados",
+    "createTemplate": "Crear plantilla",
+    "templateCreated": "Plantilla creada",
+    "templateCreatedDesc": "Transacción guardada como plantilla",
+    "templateCreateFailed": "No se pudo crear la plantilla",
     "transactionsConfirmed": "Transacciones confirmadas",
     "transactionsConfirmedDesc": "{count} transacción/transacciones marcadas como confirmadas",
     "transactionsDeleted": "Transacciones eliminadas",
@@ -408,10 +412,31 @@
     "transactionCreated": "La transacción ha sido creada",
     "processingDescription": "El sistema ya está procesando"
   },
+  "Templates": {
+    "title": "Plantillas",
+    "header": "Nombre",
+    "type": "Tipo",
+    "amount": "Importe",
+    "createdAt": "Creado el",
+    "columns": "Columnas",
+    "rowsPerPage": "Filas por página",
+    "pageOf": "Página {current} de {total}",
+    "noResults": "Aún no hay plantillas.",
+    "execute": "Ejecutar",
+    "delete": "Eliminar",
+    "templateDeleted": "Plantilla eliminada",
+    "templateDeletedDesc": "La plantilla ha sido eliminada",
+    "transactionCreated": "Transacción creada",
+    "transactionCreatedDesc": "Transacción creada desde plantilla",
+    "executeFailed": "No se pudo ejecutar la plantilla",
+    "somethingWentWrong": "Algo salió mal al cargar las plantillas."
+  },
   "NavMain": {
     "quickCreate": "Creación rápida",
     "createTransactions": "Crear transacciones",
-    "drawerDescription": "Sube tus recibos o describe los gastos con tus propias palabras."
+    "drawerDescription": "Sube tus recibos o describe los gastos con tus propias palabras.",
+    "dashboard": "Panel",
+    "templates": "Plantillas"
   },
   "TransactionForm": {
     "name": "Nombre de la transacción",
