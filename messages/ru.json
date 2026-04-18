@@ -82,7 +82,9 @@
     "newTransactionDesc": "Создать транзакцию вручную.",
     "editTransactionDesc": "Редактирование деталей и позиций транзакции.",
     "name": "Название",
-    "somethingWentWrong": "Произошла ошибка при загрузке транзакций."
+    "somethingWentWrong": "Произошла ошибка при загрузке транзакций.",
+    "spendingByCategory": "Расходы по категориям",
+    "monthlyBreakdown": "Разбивка за текущий месяц по валюте"
   },
   "Categories": {
     "RENT": {

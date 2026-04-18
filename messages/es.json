@@ -82,7 +82,9 @@
     "newTransactionDesc": "Crear una nueva transacción manualmente.",
     "editTransactionDesc": "Editar detalles y artículos de la transacción.",
     "name": "Nombre",
-    "somethingWentWrong": "Algo salió mal al cargar las transacciones."
+    "somethingWentWrong": "Algo salió mal al cargar las transacciones.",
+    "spendingByCategory": "Gastos por categoría",
+    "monthlyBreakdown": "Desglose del mes actual por divisa"
   },
   "Categories": {
     "RENT": {

@@ -82,7 +82,9 @@
     "newTransactionDesc": "Create a new transaction manually.",
     "editTransactionDesc": "Edit transaction details and items.",
     "name": "Name",
-    "somethingWentWrong": "Something went wrong loading transactions."
+    "somethingWentWrong": "Something went wrong loading transactions.",
+    "spendingByCategory": "Spending by Category",
+    "monthlyBreakdown": "Current month breakdown per currency"
   },
   "Categories": {
     "RENT": {

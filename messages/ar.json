@@ -82,7 +82,9 @@
     "newTransactionDesc": "إنشاء معاملة جديدة يدوياً.",
     "editTransactionDesc": "تعديل تفاصيل وعناصر المعاملة.",
     "name": "الاسم",
-    "somethingWentWrong": "حدث خطأ أثناء تحميل المعاملات."
+    "somethingWentWrong": "حدث خطأ أثناء تحميل المعاملات.",
+    "spendingByCategory": "الإنفاق حسب الفئة",
+    "monthlyBreakdown": "تفصيل الشهر الحالي حسب العملة"
   },
   "Categories": {
     "RENT": {

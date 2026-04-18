@@ -82,7 +82,9 @@
     "newTransactionDesc": "Créer une nouvelle transaction manuellement.",
     "editTransactionDesc": "Modifier les détails et les articles de la transaction.",
     "name": "Nom",
-    "somethingWentWrong": "Une erreur est survenue lors du chargement des transactions."
+    "somethingWentWrong": "Une erreur est survenue lors du chargement des transactions.",
+    "spendingByCategory": "Dépenses par catégorie",
+    "monthlyBreakdown": "Ventilation du mois en cours par devise"
   },
   "Categories": {
     "RENT": {

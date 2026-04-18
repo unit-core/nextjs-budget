@@ -82,7 +82,9 @@
     "newTransactionDesc": "Erstelle eine neue Transaktion manuell.",
     "editTransactionDesc": "Transaktionsdetails und Positionen bearbeiten.",
     "name": "Name",
-    "somethingWentWrong": "Beim Laden der Transaktionen ist ein Fehler aufgetreten."
+    "somethingWentWrong": "Beim Laden der Transaktionen ist ein Fehler aufgetreten.",
+    "spendingByCategory": "Ausgaben nach Kategorie",
+    "monthlyBreakdown": "Aufschlüsselung des aktuellen Monats nach Währung"
   },
   "Categories": {
     "RENT": {

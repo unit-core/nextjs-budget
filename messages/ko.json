@@ -82,7 +82,9 @@
     "newTransactionDesc": "새 거래를 수동으로 생성합니다.",
     "editTransactionDesc": "거래 세부 정보와 항목을 편집합니다.",
     "name": "이름",
-    "somethingWentWrong": "거래를 불러오는 중 문제가 발생했습니다."
+    "somethingWentWrong": "거래를 불러오는 중 문제가 발생했습니다.",
+    "spendingByCategory": "카테고리별 지출",
+    "monthlyBreakdown": "통화별 현재 월 내역"
   },
   "Categories": {
     "RENT": {

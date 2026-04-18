@@ -82,7 +82,9 @@
     "newTransactionDesc": "Maak handmatig een nieuwe transactie aan.",
     "editTransactionDesc": "Bewerk transactiegegevens en artikelen.",
     "name": "Naam",
-    "somethingWentWrong": "Er is iets misgegaan bij het laden van transacties."
+    "somethingWentWrong": "Er is iets misgegaan bij het laden van transacties.",
+    "spendingByCategory": "Uitgaven per categorie",
+    "monthlyBreakdown": "Maandoverzicht per valuta"
   },
   "Categories": {
     "RENT": {

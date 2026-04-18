@@ -82,7 +82,9 @@
     "newTransactionDesc": "手动创建新交易。",
     "editTransactionDesc": "编辑交易详情和条目。",
     "name": "名称",
-    "somethingWentWrong": "加载交易时出现问题。"
+    "somethingWentWrong": "加载交易时出现问题。",
+    "spendingByCategory": "按类别支出",
+    "monthlyBreakdown": "当月货币明细"
   },
   "Categories": {
     "RENT": {

@@ -82,7 +82,9 @@
     "newTransactionDesc": "Manuel olarak yeni bir işlem oluşturun.",
     "editTransactionDesc": "İşlem detaylarını ve kalemlerini düzenleyin.",
     "name": "Ad",
-    "somethingWentWrong": "İşlemler yüklenirken bir hata oluştu."
+    "somethingWentWrong": "İşlemler yüklenirken bir hata oluştu.",
+    "spendingByCategory": "Kategoriye göre harcamalar",
+    "monthlyBreakdown": "Geçerli ay dövize göre dökümü"
   },
   "Categories": {
     "RENT": {
