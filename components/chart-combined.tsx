@@ -18,13 +18,6 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import type { CategoryAggregate } from "@/app/(app)/dashboard/_lib/aggregate"
 import { formatCurrency } from "@/app/(app)/dashboard/_lib/format"
 
@@ -40,6 +33,8 @@ interface DataItem {
   executed_at: string
   currency_code: string
   amount: number | string
+  category_group_id: string
+  category_group_name: string | null
 }
 
 interface Props {
@@ -69,33 +64,7 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
   const [activeCurrency, setActiveCurrency] = React.useState<string>("")
   const currency = currencies.includes(activeCurrency) ? activeCurrency : (currencies[0] ?? "")
 
-  // --- bar chart data (selected month, all days) ---
-  const barData = React.useMemo(() => {
-    const monthStart = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
-    const monthEnd = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0)
-    const dailyMap = new Map<string, Record<string, any>>()
-
-    items.forEach((item) => {
-      const date = new Date(item.executed_at)
-      if (date < monthStart || date > monthEnd) return
-      const dateKey = date.toISOString().split("T")[0]
-      const code = item.currency_code || "Unknown"
-      const val = Number(item.amount) || 0
-      if (!dailyMap.has(dateKey)) dailyMap.set(dateKey, { date: dateKey })
-      dailyMap.get(dateKey)![code] = (dailyMap.get(dateKey)![code] || 0) + val
-    })
-
-    const allDates: Record<string, any>[] = []
-    const cursor = new Date(monthStart)
-    while (cursor <= monthEnd) {
-      const dateKey = cursor.toISOString().split("T")[0]
-      allDates.push(dailyMap.get(dateKey) ?? { date: dateKey })
-      cursor.setDate(cursor.getDate() + 1)
-    }
-    return allDates
-  }, [items, selectedDate])
-
-  // --- pie slices ---
+  // --- pie slices (also the canonical category order used for bar stacking + colors) ---
   const slices = React.useMemo(() => {
     return categories
       .filter((cat) => (cat.totals[currency] ?? 0) > 0)
@@ -104,8 +73,16 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
         const nameKey = key ? (`${key}.name` as Parameters<typeof tg>[0]) : null
         const label = nameKey && tg.has(nameKey) ? tg(nameKey) : (key ?? t("noResults"))
         const colorKey = `cat_${i}`
-        return { colorKey, label, amount: cat.totals[currency], fill: `var(--color-${colorKey})` }
+        const groupId = cat.group?.id ?? "__uncategorized__"
+        return {
+          colorKey,
+          label,
+          groupId,
+          amount: cat.totals[currency],
+          fill: `var(--color-${colorKey})`,
+        }
       })
+      .sort((a, b) => b.amount - a.amount)
   }, [categories, currency, tg, t])
 
   const pieConfig = React.useMemo(() => {
@@ -116,14 +93,52 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
     return config
   }, [slices])
 
-  const barConfig = React.useMemo<ChartConfig>(() => ({
-    views: { label: t("amount") },
-    [currency]: { label: currency, color: CHART_COLORS[currencies.indexOf(currency) % CHART_COLORS.length] },
-  }), [currency, currencies, t])
+  // Map groupId -> colorKey so bar stacks share colors with pie slices.
+  const groupIdToColorKey = React.useMemo(() => {
+    const map = new Map<string, string>()
+    slices.forEach((s) => map.set(s.groupId, s.colorKey))
+    return map
+  }, [slices])
 
-  const [activeColorKey, setActiveColorKey] = React.useState<string>("")
-  const resolvedKey = slices.find((s) => s.colorKey === activeColorKey)?.colorKey ?? slices[0]?.colorKey ?? ""
-  const activeIndex = slices.findIndex((s) => s.colorKey === resolvedKey)
+  // --- bar chart data (selected month, all days), stacked by category ---
+  const barData = React.useMemo(() => {
+    const monthStart = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
+    const monthEnd = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0)
+    const dailyMap = new Map<string, Record<string, any>>()
+
+    items.forEach((item) => {
+      if ((item.currency_code || "Unknown") !== currency) return
+      const date = new Date(item.executed_at)
+      if (date < monthStart || date > monthEnd) return
+      const dateKey = date.toISOString().split("T")[0]
+      const colorKey = groupIdToColorKey.get(item.category_group_id)
+      if (!colorKey) return
+      const val = Number(item.amount) || 0
+      if (!dailyMap.has(dateKey)) dailyMap.set(dateKey, { date: dateKey })
+      const row = dailyMap.get(dateKey)!
+      row[colorKey] = (row[colorKey] || 0) + val
+    })
+
+    const allDates: Record<string, any>[] = []
+    const cursor = new Date(monthStart)
+    while (cursor <= monthEnd) {
+      const dateKey = cursor.toISOString().split("T")[0]
+      allDates.push(dailyMap.get(dateKey) ?? { date: dateKey })
+      cursor.setDate(cursor.getDate() + 1)
+    }
+    return allDates
+  }, [items, selectedDate, currency, groupIdToColorKey])
+
+  const barConfig = React.useMemo<ChartConfig>(() => {
+    const config: ChartConfig = { views: { label: t("amount") } }
+    slices.forEach((s, i) => {
+      config[s.colorKey] = { label: s.label, color: CHART_COLORS[i % CHART_COLORS.length] }
+    })
+    return config
+  }, [slices, t])
+
+  // Biggest slice first (slices already sorted desc).
+  const activeIndex = 0
   const activeSlice = slices[activeIndex]
 
   const pieId = `pie-${currency}`
@@ -176,63 +191,41 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
           {slices.length === 0 ? (
             <p className="text-sm text-muted-foreground py-8">{t("noResults")}</p>
           ) : (
-            <>
-              <div className="flex w-full justify-end mb-2">
-                <Select value={resolvedKey} onValueChange={setActiveColorKey}>
-                  <SelectTrigger className="h-7 w-[160px] rounded-lg pl-2.5">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent align="end" className="rounded-xl">
-                    {slices.map((s) => (
-                      <SelectItem key={s.colorKey} value={s.colorKey} className="rounded-lg [&_span]:flex">
-                        <div className="flex items-center gap-2 text-xs">
-                          <span
-                            className="flex h-3 w-3 shrink-0 rounded-xs"
-                            style={{ backgroundColor: `var(--color-${s.colorKey})` }}
-                          />
-                          {s.label}
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <ChartContainer id={pieId} config={pieConfig} className="mx-auto aspect-square w-full max-w-[260px]">
-                <PieChart>
-                  <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                  <Pie
-                    data={slices}
-                    dataKey="amount"
-                    nameKey="label"
-                    innerRadius={60}
-                    strokeWidth={5}
-                    activeIndex={activeIndex}
-                    activeShape={activeShape}
-                  >
-                    <Label
-                      content={({ viewBox }) => {
-                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                          return (
-                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                              <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-lg font-bold">
-                                {activeSlice ? formatCurrency(activeSlice.amount, currency, locale) : ""}
-                              </tspan>
-                              <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 20} className="fill-muted-foreground text-xs">
-                                {activeSlice?.label ?? ""}
-                              </tspan>
-                            </text>
-                          )
-                        }
-                      }}
-                    />
-                  </Pie>
-                </PieChart>
-              </ChartContainer>
-            </>
+            <ChartContainer id={pieId} config={pieConfig} className="mx-auto aspect-square w-full max-w-[260px]">
+              <PieChart>
+                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                <Pie
+                  data={slices}
+                  dataKey="amount"
+                  nameKey="label"
+                  innerRadius={60}
+                  strokeWidth={5}
+                  activeIndex={activeIndex}
+                  activeShape={activeShape}
+                >
+                  <Label
+                    content={({ viewBox }) => {
+                      if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                        return (
+                          <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                            <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-lg font-bold">
+                              {activeSlice ? formatCurrency(activeSlice.amount, currency, locale) : ""}
+                            </tspan>
+                            <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 20} className="fill-muted-foreground text-xs">
+                              {activeSlice?.label ?? ""}
+                            </tspan>
+                          </text>
+                        )
+                      }
+                    }}
+                  />
+                </Pie>
+              </PieChart>
+            </ChartContainer>
           )}
         </div>
 
-        {/* Bar — 2/3 on desktop */}
+        {/* Bar — 2/3 on desktop, stacked by category */}
         <div className="flex-1 px-2 py-4 sm:px-4">
           <ChartContainer config={barConfig} className="aspect-auto h-[280px] w-full">
             <BarChart accessibilityLayer data={barData} margin={{ left: 8, right: 8 }}>
@@ -250,15 +243,40 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
               <ChartTooltip
                 content={
                   <ChartTooltipContent
-                    className="w-[150px]"
-                    nameKey="views"
+                    className="w-[200px]"
                     labelFormatter={(value) =>
                       new Date(value).toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric" })
                     }
+                    formatter={(value, name, item) => {
+                      const color = (item?.payload && item.color) || item?.color
+                      const label =
+                        (barConfig[name as keyof typeof barConfig] as any)?.label ?? name
+                      return (
+                        <>
+                          <div
+                            className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
+                            style={{ backgroundColor: color as string }}
+                          />
+                          <div className="flex flex-1 items-center justify-between gap-2">
+                            <span className="text-muted-foreground">{label}</span>
+                            <span className="font-mono font-medium tabular-nums text-foreground">
+                              {formatCurrency(Number(value) || 0, currency, locale)}
+                            </span>
+                          </div>
+                        </>
+                      )
+                    }}
                   />
                 }
               />
-              <Bar dataKey={currency} fill={`var(--color-${currency})`} />
+              {slices.map((s) => (
+                <Bar
+                  key={s.colorKey}
+                  dataKey={s.colorKey}
+                  stackId="a"
+                  fill={`var(--color-${s.colorKey})`}
+                />
+              ))}
             </BarChart>
           </ChartContainer>
         </div>

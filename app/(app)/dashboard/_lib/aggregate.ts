@@ -106,10 +106,15 @@ export function sumItemsByCurrency(items: TransactionItem[]): Record<string, num
 
 export function buildChartItems(transactions: Transaction[]): ChartItem[] {
   return transactions.filter(isConfirmed).flatMap((tx) =>
-    tx.transaction_items.map<ChartItem>((item) => ({
-      executed_at: item.executed_at,
-      currency_code: item.currency_code,
-      amount: item.amount,
-    })),
+    tx.transaction_items.map<ChartItem>((item) => {
+      const group = item.transaction_item_categories?.category_group ?? null
+      return {
+        executed_at: item.executed_at,
+        currency_code: item.currency_code,
+        amount: item.amount,
+        category_group_id: group?.id ?? "__uncategorized__",
+        category_group_name: group?.name ?? null,
+      }
+    }),
   )
 }

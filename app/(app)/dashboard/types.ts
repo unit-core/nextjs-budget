@@ -55,6 +55,8 @@ export interface ChartItem {
   executed_at: string
   currency_code: string
   amount: number
+  category_group_id: string
+  category_group_name: string | null
 }
 
 /** Row shape selected from `public.transaction_item_templates`. */
