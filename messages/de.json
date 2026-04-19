@@ -428,6 +428,7 @@
     "delete": "Löschen",
     "templateDeleted": "Vorlage gelöscht",
     "templateDeletedDesc": "Vorlage wurde entfernt",
+    "templateDeleteFailed": "Vorlage konnte nicht gelöscht werden",
     "transactionCreated": "Transaktion erstellt",
     "transactionCreatedDesc": "Transaktion aus Vorlage erstellt",
     "executeFailed": "Vorlage konnte nicht ausgeführt werden",

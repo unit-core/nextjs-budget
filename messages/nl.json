@@ -428,6 +428,7 @@
     "delete": "Verwijderen",
     "templateDeleted": "Sjabloon verwijderd",
     "templateDeletedDesc": "Sjabloon is verwijderd",
+    "templateDeleteFailed": "Kan sjabloon niet verwijderen",
     "transactionCreated": "Transactie aangemaakt",
     "transactionCreatedDesc": "Transactie aangemaakt vanuit sjabloon",
     "executeFailed": "Kon sjabloon niet uitvoeren",

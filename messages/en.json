@@ -428,6 +428,7 @@
     "delete": "Delete",
     "templateDeleted": "Template deleted",
     "templateDeletedDesc": "Template has been removed",
+    "templateDeleteFailed": "Could not delete template",
     "transactionCreated": "Transaction created",
     "transactionCreatedDesc": "Transaction created from template",
     "executeFailed": "Could not execute template",

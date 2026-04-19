@@ -428,6 +428,7 @@
     "delete": "Видалити",
     "templateDeleted": "Шаблон видалено",
     "templateDeletedDesc": "Шаблон було видалено",
+    "templateDeleteFailed": "Не вдалося видалити шаблон",
     "transactionCreated": "Транзакцію створено",
     "transactionCreatedDesc": "Транзакцію створено з шаблону",
     "executeFailed": "Не вдалося виконати шаблон",

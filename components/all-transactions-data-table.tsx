@@ -262,20 +262,26 @@ function createColumns(t: { header: string; executedAt: string; amount: string; 
           return
         }
 
-        const items = (tx.transaction_items ?? []).map((it: any) => ({
-          transaction_template_id: template.id,
-          transaction_folder_id: tx.folder_id,
-          name: it.name,
-          amount: it.amount,
-          currency_code: it.currency_code,
-          transaction_item_category_id: it.transaction_item_category_id ?? null,
-        }))
+        const items = (tx.transaction_items ?? []).map((it: any) => {
+          const row: Record<string, unknown> = {
+            transaction_template_id: template.id,
+            transaction_folder_id: tx.folder_id,
+            name: it.name,
+            amount: it.amount,
+            currency_code: it.currency_code,
+          }
+          if (it.transaction_item_category_id) {
+            row.transaction_item_category_id = it.transaction_item_category_id
+          }
+          return row
+        })
 
         if (items.length > 0) {
           const { error: itemsError } = await supabase
             .from('transaction_item_templates')
             .insert(items)
           if (itemsError) {
+            await supabase.from('transaction_templates').delete().eq('id', template.id)
             toast(t.templateCreateFailed, { position: 'top-center' })
             return
           }

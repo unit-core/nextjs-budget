@@ -428,6 +428,7 @@
     "delete": "Eliminar",
     "templateDeleted": "Plantilla eliminada",
     "templateDeletedDesc": "La plantilla ha sido eliminada",
+    "templateDeleteFailed": "No se pudo eliminar la plantilla",
     "transactionCreated": "Transacción creada",
     "transactionCreatedDesc": "Transacción creada desde plantilla",
     "executeFailed": "No se pudo ejecutar la plantilla",

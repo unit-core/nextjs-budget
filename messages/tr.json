@@ -428,6 +428,7 @@
     "delete": "Sil",
     "templateDeleted": "Şablon silindi",
     "templateDeletedDesc": "Şablon kaldırıldı",
+    "templateDeleteFailed": "Şablon silinemedi",
     "transactionCreated": "İşlem oluşturuldu",
     "transactionCreatedDesc": "Şablondan işlem oluşturuldu",
     "executeFailed": "Şablon uygulanamadı",

@@ -428,6 +428,7 @@
     "delete": "삭제",
     "templateDeleted": "템플릿이 삭제되었습니다",
     "templateDeletedDesc": "템플릿이 제거되었습니다",
+    "templateDeleteFailed": "템플릿을 삭제할 수 없습니다",
     "transactionCreated": "거래가 생성되었습니다",
     "transactionCreatedDesc": "템플릿으로 거래가 생성되었습니다",
     "executeFailed": "템플릿을 실행할 수 없습니다",

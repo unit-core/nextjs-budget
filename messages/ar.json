@@ -428,6 +428,7 @@
     "delete": "حذف",
     "templateDeleted": "تم حذف النموذج",
     "templateDeletedDesc": "تم إزالة النموذج",
+    "templateDeleteFailed": "تعذر حذف القالب",
     "transactionCreated": "تم إنشاء المعاملة",
     "transactionCreatedDesc": "تم إنشاء المعاملة من النموذج",
     "executeFailed": "تعذّر تنفيذ النموذج",

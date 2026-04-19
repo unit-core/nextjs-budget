@@ -428,6 +428,7 @@
     "delete": "Excluir",
     "templateDeleted": "Modelo excluído",
     "templateDeletedDesc": "O modelo foi removido",
+    "templateDeleteFailed": "Não foi possível excluir o modelo",
     "transactionCreated": "Transação criada",
     "transactionCreatedDesc": "Transação criada a partir do modelo",
     "executeFailed": "Não foi possível executar o modelo",

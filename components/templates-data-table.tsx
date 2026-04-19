@@ -87,13 +87,15 @@ function TemplateActionsCell({
       .from("transaction_templates")
       .delete()
       .eq("id", row.original.id)
-    if (!error) {
-      ;(table.options.meta as any)?.removeRow(row.original.id)
-      toast(t("templateDeleted"), {
-        position: "top-center",
-        description: t("templateDeletedDesc"),
-      })
+    if (error) {
+      toast(t("templateDeleteFailed"), { position: "top-center" })
+      return
     }
+    ;(table.options.meta as any)?.removeRow(row.original.id)
+    toast(t("templateDeleted"), {
+      position: "top-center",
+      description: t("templateDeletedDesc"),
+    })
   }
 
   const executeTemplate = async () => {
@@ -102,7 +104,7 @@ function TemplateActionsCell({
 
     const { data: items, error: itemsError } = await supabase
       .from("transaction_item_templates")
-      .select("name, amount, currency_code, category, transaction_folder_id")
+      .select("name, amount, currency_code, transaction_item_category_id, transaction_folder_id")
       .eq("transaction_template_id", row.original.id)
 
     if (itemsError) {
@@ -139,12 +141,13 @@ function TemplateActionsCell({
             name: item.name,
             amount: item.amount,
             currency_code: item.currency_code,
-            category: item.category,
+            transaction_item_category_id: item.transaction_item_category_id,
             executed_at: new Date().toISOString(),
           })),
         )
 
       if (insertError) {
+        await supabase.from("transactions").delete().eq("id", tx.id)
         toast(t("executeFailed"), { position: "top-center" })
         setIsExecuting(false)
         return

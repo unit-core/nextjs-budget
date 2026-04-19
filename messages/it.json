@@ -428,6 +428,7 @@
     "delete": "Elimina",
     "templateDeleted": "Modello eliminato",
     "templateDeletedDesc": "Il modello è stato rimosso",
+    "templateDeleteFailed": "Impossibile eliminare il modello",
     "transactionCreated": "Transazione creata",
     "transactionCreatedDesc": "Transazione creata dal modello",
     "executeFailed": "Impossibile eseguire il modello",
