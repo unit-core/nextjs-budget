@@ -4,10 +4,12 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { PlusIcon, TrashIcon } from 'lucide-react'
+import { PlusIcon, TrashIcon, CalendarIcon } from 'lucide-react'
+import { format } from 'date-fns'
 
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
@@ -20,8 +22,65 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
+import { Calendar } from '@/components/ui/calendar'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
 
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'PLN', 'UAH', 'RUB', 'TRY', 'AED', 'SAR'] as const
+const WEEKDAYS = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'] as const
+
+type Freq = 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'YEARLY'
+type EndType = 'never' | 'count' | 'until'
+
+interface RecurrenceState {
+  freq: Freq
+  interval: number
+  byDay: string[]
+  byMonthDay: number
+  endType: EndType
+  count: number
+  until: Date | null
+}
+
+function buildRrule(r: RecurrenceState): string {
+  const parts = [`FREQ=${r.freq}`]
+  if (r.interval > 1) parts.push(`INTERVAL=${r.interval}`)
+  if (r.freq === 'WEEKLY' && r.byDay.length > 0) parts.push(`BYDAY=${r.byDay.join(',')}`)
+  if (r.freq === 'MONTHLY') parts.push(`BYMONTHDAY=${r.byMonthDay}`)
+  if (r.endType === 'count') parts.push(`COUNT=${r.count}`)
+  else if (r.endType === 'until' && r.until) {
+    const d = r.until
+    const p = (n: number) => n.toString().padStart(2, '0')
+    parts.push(`UNTIL=${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}`)
+  }
+  return parts.join(';')
+}
+
+function parseRrule(rrule: string): RecurrenceState {
+  const map: Record<string, string> = {}
+  for (const part of rrule.replace(/^RRULE:/i, '').split(';')) {
+    const [k, v] = part.split('=')
+    if (k && v !== undefined) map[k.toUpperCase()] = v
+  }
+  const freq = (map.FREQ || 'MONTHLY') as Freq
+  const interval = parseInt(map.INTERVAL || '1') || 1
+  const byDay = map.BYDAY ? map.BYDAY.split(',') : []
+  const byMonthDay = parseInt(map.BYMONTHDAY || '1') || 1
+  let endType: EndType = 'never'
+  let count = 10
+  let until: Date | null = null
+  if (map.COUNT) { endType = 'count'; count = parseInt(map.COUNT) || 10 }
+  else if (map.UNTIL) {
+    endType = 'until'
+    const s = map.UNTIL
+    until = new Date(`${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`)
+  }
+  return { freq, interval, byDay, byMonthDay, endType, count, until }
+}
 
 interface CategoryOption {
   id: string
@@ -50,11 +109,16 @@ interface TemplateData {
   name: string
   transaction_type: string
   folder_id?: string
+  rrule?: string | null
   items: TemplateItem[]
 }
 
 function defaultItem(): TemplateItem {
   return { name: '', amount: '', currency_code: 'EUR', transaction_item_category_id: null }
+}
+
+function defaultRecurrence(): RecurrenceState {
+  return { freq: 'MONTHLY', interval: 1, byDay: [], byMonthDay: 1, endType: 'never', count: 10, until: null }
 }
 
 export default function TemplateForm({
@@ -78,6 +142,11 @@ export default function TemplateForm({
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [categoryGroups, setCategoryGroups] = useState<CategoryGroupOption[]>([])
+
+  const [isRecurring, setIsRecurring] = useState(!!initialData?.rrule)
+  const [recurrence, setRecurrence] = useState<RecurrenceState>(
+    initialData?.rrule ? parseRrule(initialData.rrule) : defaultRecurrence()
+  )
 
   useEffect(() => {
     const supabase = createClient()
@@ -122,18 +191,30 @@ export default function TemplateForm({
     setItems(prev => prev.filter((_, i) => i !== index))
   }
 
+  const updateRecurrence = (patch: Partial<RecurrenceState>) => {
+    setRecurrence(prev => ({ ...prev, ...patch }))
+  }
+
+  const toggleByDay = (day: string) => {
+    setRecurrence(prev => ({
+      ...prev,
+      byDay: prev.byDay.includes(day) ? prev.byDay.filter(d => d !== day) : [...prev.byDay, day],
+    }))
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
 
+    const rruleValue = isRecurring ? buildRrule(recurrence) : null
     const supabase = createClient()
 
     try {
       if (isEdit) {
         const { error: tmplError } = await supabase
           .from('transaction_templates')
-          .update({ name, transaction_type: transactionType })
+          .update({ name, transaction_type: transactionType, rrule: rruleValue })
           .eq('id', initialData!.id!)
 
         if (tmplError) throw tmplError
@@ -167,7 +248,7 @@ export default function TemplateForm({
       } else {
         const { data: tmpl, error: tmplError } = await supabase
           .from('transaction_templates')
-          .insert({ name, transaction_type: transactionType })
+          .insert({ name, transaction_type: transactionType, rrule: rruleValue })
           .select('id, folder_id')
           .single()
 
@@ -198,6 +279,8 @@ export default function TemplateForm({
         setName('')
         setTransactionType('EXPENSE')
         setItems([defaultItem()])
+        setIsRecurring(false)
+        setRecurrence(defaultRecurrence())
       }
 
       onSuccess?.()
@@ -233,6 +316,135 @@ export default function TemplateForm({
             <SelectItem value="INCOME">{t('income')}</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      {/* Recurrence */}
+      <div className="grid gap-2">
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="tmpl-recurring"
+            checked={isRecurring}
+            onCheckedChange={(checked) => setIsRecurring(!!checked)}
+          />
+          <Label htmlFor="tmpl-recurring" className="cursor-pointer">{t('recurring')}</Label>
+        </div>
+
+        {isRecurring && (
+          <div className="grid gap-3 rounded-lg border p-3">
+            <div className="grid grid-cols-2 gap-2">
+              <div className="grid gap-1.5">
+                <Label className="text-xs text-muted-foreground">{t('frequency')}</Label>
+                <Select value={recurrence.freq} onValueChange={(v) => updateRecurrence({ freq: v as Freq })}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="DAILY">{t('daily')}</SelectItem>
+                    <SelectItem value="WEEKLY">{t('weekly')}</SelectItem>
+                    <SelectItem value="MONTHLY">{t('monthly')}</SelectItem>
+                    <SelectItem value="YEARLY">{t('yearly')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-1.5">
+                <Label className="text-xs text-muted-foreground">{t('interval')}</Label>
+                <Input
+                  type="number"
+                  min="1"
+                  value={recurrence.interval}
+                  onChange={(e) => updateRecurrence({ interval: Math.max(1, parseInt(e.target.value) || 1) })}
+                />
+              </div>
+            </div>
+
+            {recurrence.freq === 'WEEKLY' && (
+              <div className="grid gap-1.5">
+                <Label className="text-xs text-muted-foreground">{t('onDays')}</Label>
+                <div className="flex gap-1">
+                  {WEEKDAYS.map((day) => (
+                    <button
+                      key={day}
+                      type="button"
+                      onClick={() => toggleByDay(day)}
+                      className={cn(
+                        'flex h-8 w-8 items-center justify-center rounded text-xs font-medium transition-colors',
+                        recurrence.byDay.includes(day)
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                      )}
+                    >
+                      {t(`day${day}` as any)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {recurrence.freq === 'MONTHLY' && (
+              <div className="grid gap-1.5">
+                <Label className="text-xs text-muted-foreground">{t('onDayOfMonth')}</Label>
+                <Input
+                  type="number"
+                  min="1"
+                  max="31"
+                  value={recurrence.byMonthDay}
+                  onChange={(e) => updateRecurrence({ byMonthDay: Math.min(31, Math.max(1, parseInt(e.target.value) || 1)) })}
+                />
+              </div>
+            )}
+
+            <div className="grid gap-1.5">
+              <Label className="text-xs text-muted-foreground">{t('ends')}</Label>
+              <Select value={recurrence.endType} onValueChange={(v) => updateRecurrence({ endType: v as EndType })}>
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="never">{t('endNever')}</SelectItem>
+                  <SelectItem value="count">{t('endAfterCount')}</SelectItem>
+                  <SelectItem value="until">{t('endOnDate')}</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {recurrence.endType === 'count' && (
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="number"
+                    min="1"
+                    value={recurrence.count}
+                    onChange={(e) => updateRecurrence({ count: Math.max(1, parseInt(e.target.value) || 1) })}
+                    className="w-24"
+                  />
+                  <span className="text-sm text-muted-foreground">{t('occurrences')}</span>
+                </div>
+              )}
+
+              {recurrence.endType === 'until' && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        'w-full justify-start text-start font-normal',
+                        !recurrence.until && 'text-muted-foreground'
+                      )}
+                    >
+                      <CalendarIcon className="size-4" />
+                      {recurrence.until ? format(recurrence.until, 'PPP') : t('pickDate')}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={recurrence.until ?? undefined}
+                      onSelect={(day) => updateRecurrence({ until: day ?? null })}
+                    />
+                  </PopoverContent>
+                </Popover>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="grid gap-2">

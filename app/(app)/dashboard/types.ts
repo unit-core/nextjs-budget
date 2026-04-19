@@ -80,5 +80,6 @@ export interface TransactionTemplate {
   folder_id: string
   name: string
   transaction_type: TransactionType
+  rrule: string | null
   transaction_item_templates: TransactionItemTemplate[]
 }

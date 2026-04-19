@@ -14,6 +14,7 @@ const TEMPLATES_SELECT = `
   transaction_type,
   created_at,
   folder_id,
+  rrule,
   transaction_item_templates (
     amount,
     currency_code
@@ -71,6 +72,7 @@ async function AsyncTemplatesContent() {
     created_at: formatLongDate(new Date(tmpl.created_at), locale),
     amount: formatTemplateTotals(tmpl.transaction_item_templates, locale),
     folder_id: tmpl.folder_id,
+    rrule: tmpl.rrule ?? null,
   }))
 
   return <TemplatesDataTable data={rows} />

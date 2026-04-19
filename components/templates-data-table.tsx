@@ -62,6 +62,7 @@ import {
   ChevronsRightIcon,
   PlayIcon,
   PlusIcon,
+  Repeat2Icon,
   TrashIcon,
 } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
@@ -109,6 +110,7 @@ function EditTemplateDrawer({ row }: { row: Row<TemplateRow> }) {
     name: string
     transaction_type: string
     folder_id: string
+    rrule: string | null
     items: { name: string; amount: string; currency_code: string; transaction_item_category_id: string | null }[]
   } | null>(null)
 
@@ -125,6 +127,7 @@ function EditTemplateDrawer({ row }: { row: Row<TemplateRow> }) {
       name: row.original.name,
       transaction_type: row.original.transaction_type,
       folder_id: row.original.folder_id,
+      rrule: row.original.rrule ?? null,
       items: (data ?? []).map((i) => ({
         name: i.name,
         amount: String(i.amount),
@@ -174,6 +177,7 @@ export const templateSchema = z.object({
   created_at: z.string(),
   amount: z.string(),
   folder_id: z.string(),
+  rrule: z.string().nullable().optional(),
 })
 
 type TemplateRow = z.infer<typeof templateSchema>
@@ -309,7 +313,12 @@ function createColumns(t: {
       accessorKey: "name",
       header: t.header,
       cell: ({ row }) => (
-        <EditTemplateDrawer row={row} />
+        <div className="flex items-center gap-2">
+          <EditTemplateDrawer row={row} />
+          {row.original.rrule && (
+            <Repeat2Icon className="size-3.5 shrink-0 text-muted-foreground" />
+          )}
+        </div>
       ),
       enableHiding: false,
     },
