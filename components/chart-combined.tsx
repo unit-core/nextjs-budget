@@ -18,8 +18,16 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import type { CategoryAggregate } from "@/app/(app)/dashboard/_lib/aggregate"
 import { formatCurrency } from "@/app/(app)/dashboard/_lib/format"
+
+const MAX_VISIBLE_CURRENCIES = 3
 
 const CHART_COLORS = [
   "var(--chart-1)",
@@ -62,7 +70,34 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
   }, [categories])
 
   const [activeCurrency, setActiveCurrency] = React.useState<string>("")
-  const currency = currencies.includes(activeCurrency) ? activeCurrency : (currencies[0] ?? "")
+
+  // Currencies sorted by total desc; keeps top N visible, rest go behind a dropdown.
+  const sortedCurrencies = React.useMemo(
+    () => [...currencies].sort((a, b) => (currencyTotals[b] ?? 0) - (currencyTotals[a] ?? 0)),
+    [currencies, currencyTotals],
+  )
+  const currency = sortedCurrencies.includes(activeCurrency)
+    ? activeCurrency
+    : (sortedCurrencies[0] ?? "")
+
+  const { visibleCurrencies, overflowCurrencies } = React.useMemo(() => {
+    if (sortedCurrencies.length <= MAX_VISIBLE_CURRENCIES) {
+      return { visibleCurrencies: sortedCurrencies, overflowCurrencies: [] as string[] }
+    }
+    const top = sortedCurrencies.slice(0, MAX_VISIBLE_CURRENCIES)
+    const rest = sortedCurrencies.slice(MAX_VISIBLE_CURRENCIES)
+    // If the active currency is hidden, surface it by swapping it into the last visible slot.
+    if (!top.includes(currency) && rest.includes(currency)) {
+      const swapped = [...top]
+      const replaced = swapped[swapped.length - 1]
+      swapped[swapped.length - 1] = currency
+      return {
+        visibleCurrencies: swapped,
+        overflowCurrencies: rest.filter((c) => c !== currency).concat(replaced),
+      }
+    }
+    return { visibleCurrencies: top, overflowCurrencies: rest }
+  }, [sortedCurrencies, currency])
 
   // --- pie slices (also the canonical category order used for bar stacking + colors) ---
   const slices = React.useMemo(() => {
@@ -168,11 +203,11 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
           </CardDescription>
         </div>
         <div className="flex">
-          {currencies.map((c) => (
+          {visibleCurrencies.map((c) => (
             <button
               key={c}
               data-active={currency === c}
-              className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
+              className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left [&:not(:first-child)]:border-l data-[active=true]:bg-muted/50 sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
               onClick={() => setActiveCurrency(c)}
             >
               <span className="text-xs text-muted-foreground">{c}</span>
@@ -181,6 +216,30 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
               </span>
             </button>
           ))}
+          {overflowCurrencies.length > 0 && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="relative z-30 flex flex-col justify-center gap-1 border-t border-l px-4 py-4 text-left hover:bg-muted/50 sm:border-t-0 sm:px-6 sm:py-6"
+                  aria-label={t("activityByCurrency")}
+                >
+                  <span className="text-xs text-muted-foreground">{`+${overflowCurrencies.length}`}</span>
+                  <span className="text-lg leading-none font-bold sm:text-3xl">…</span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {overflowCurrencies.map((c) => (
+                  <DropdownMenuItem key={c} onSelect={() => setActiveCurrency(c)}>
+                    <span className="text-muted-foreground">{c}</span>
+                    <span className="ml-auto font-mono tabular-nums">
+                      {new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 }).format(currencyTotals[c] ?? 0)}
+                    </span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </CardHeader>
 
@@ -243,10 +302,28 @@ export function ChartCombined({ categories, items, selectedDate }: Props) {
               <ChartTooltip
                 content={
                   <ChartTooltipContent
-                    className="w-[200px]"
-                    labelFormatter={(value) =>
-                      new Date(value).toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric" })
-                    }
+                    className="w-[220px]"
+                    labelFormatter={(value, payload) => {
+                      const total = (payload ?? []).reduce(
+                        (sum, p) => sum + (Number(p?.value) || 0),
+                        0,
+                      )
+                      const date = new Date(value).toLocaleDateString(locale, {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })
+                      return (
+                        <div className="flex flex-col gap-1.5 border-b border-border/50 pb-1.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <span>{date}</span>
+                            <span className="font-mono font-medium tabular-nums text-foreground">
+                              {formatCurrency(total, currency, locale)}
+                            </span>
+                          </div>
+                        </div>
+                      )
+                    }}
                     formatter={(value, name, item) => {
                       const color = (item?.payload && item.color) || item?.color
                       const label =
