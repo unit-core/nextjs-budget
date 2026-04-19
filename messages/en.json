@@ -424,6 +424,9 @@
     "rowsPerPage": "Rows per page",
     "pageOf": "Page {current} of {total}",
     "noResults": "No templates yet.",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template",
     "execute": "Execute",
     "delete": "Delete",
     "templateDeleted": "Template deleted",
@@ -433,6 +436,22 @@
     "transactionCreatedDesc": "Transaction created from template",
     "executeFailed": "Could not execute template",
     "somethingWentWrong": "Something went wrong loading templates."
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   },
   "NavMain": {
     "quickCreate": "Quick Create",

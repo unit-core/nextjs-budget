@@ -432,7 +432,10 @@
     "transactionCreated": "تم إنشاء المعاملة",
     "transactionCreatedDesc": "تم إنشاء المعاملة من النموذج",
     "executeFailed": "تعذّر تنفيذ النموذج",
-    "somethingWentWrong": "حدث خطأ أثناء تحميل النماذج."
+    "somethingWentWrong": "حدث خطأ أثناء تحميل النماذج.",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template"
   },
   "NavMain": {
     "quickCreate": "إنشاء سريع",
@@ -457,5 +460,21 @@
     "update": "تحديث المعاملة",
     "transactionCreated": "تم إنشاء المعاملة",
     "transactionUpdated": "تم تحديث المعاملة"
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   }
 }

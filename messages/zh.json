@@ -432,7 +432,10 @@
     "transactionCreated": "交易已创建",
     "transactionCreatedDesc": "从模板创建的交易",
     "executeFailed": "无法执行模板",
-    "somethingWentWrong": "加载模板时出现问题。"
+    "somethingWentWrong": "加载模板时出现问题。",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template"
   },
   "NavMain": {
     "quickCreate": "快速创建",
@@ -457,5 +460,21 @@
     "update": "更新交易",
     "transactionCreated": "交易已创建",
     "transactionUpdated": "交易已更新"
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   }
 }

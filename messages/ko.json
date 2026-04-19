@@ -432,7 +432,10 @@
     "transactionCreated": "거래가 생성되었습니다",
     "transactionCreatedDesc": "템플릿으로 거래가 생성되었습니다",
     "executeFailed": "템플릿을 실행할 수 없습니다",
-    "somethingWentWrong": "템플릿을 불러오는 중 문제가 발생했습니다."
+    "somethingWentWrong": "템플릿을 불러오는 중 문제가 발생했습니다.",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template"
   },
   "NavMain": {
     "quickCreate": "빠른 생성",
@@ -457,5 +460,21 @@
     "update": "거래 수정",
     "transactionCreated": "거래가 생성되었습니다",
     "transactionUpdated": "거래가 수정되었습니다"
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   }
 }

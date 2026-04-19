@@ -432,7 +432,10 @@
     "transactionCreated": "Транзакция создана",
     "transactionCreatedDesc": "Транзакция создана из шаблона",
     "executeFailed": "Не удалось выполнить шаблон",
-    "somethingWentWrong": "Произошла ошибка при загрузке шаблонов."
+    "somethingWentWrong": "Произошла ошибка при загрузке шаблонов.",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template"
   },
   "NavMain": {
     "quickCreate": "Быстрое создание",
@@ -457,5 +460,21 @@
     "update": "Обновить транзакцию",
     "transactionCreated": "Транзакция создана",
     "transactionUpdated": "Транзакция обновлена"
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   }
 }

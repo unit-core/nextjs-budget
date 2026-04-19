@@ -432,7 +432,10 @@
     "transactionCreated": "Transactie aangemaakt",
     "transactionCreatedDesc": "Transactie aangemaakt vanuit sjabloon",
     "executeFailed": "Kon sjabloon niet uitvoeren",
-    "somethingWentWrong": "Er is iets misgegaan bij het laden van sjablonen."
+    "somethingWentWrong": "Er is iets misgegaan bij het laden van sjablonen.",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template"
   },
   "NavMain": {
     "quickCreate": "Snel aanmaken",
@@ -457,5 +460,21 @@
     "update": "Transactie bijwerken",
     "transactionCreated": "Transactie aangemaakt",
     "transactionUpdated": "Transactie bijgewerkt"
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   }
 }

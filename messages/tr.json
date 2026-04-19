@@ -432,7 +432,10 @@
     "transactionCreated": "İşlem oluşturuldu",
     "transactionCreatedDesc": "Şablondan işlem oluşturuldu",
     "executeFailed": "Şablon uygulanamadı",
-    "somethingWentWrong": "Şablonlar yüklenirken bir hata oluştu."
+    "somethingWentWrong": "Şablonlar yüklenirken bir hata oluştu.",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template"
   },
   "NavMain": {
     "quickCreate": "Hızlı Oluştur",
@@ -457,5 +460,21 @@
     "update": "İşlemi Güncelle",
     "transactionCreated": "İşlem oluşturuldu",
     "transactionUpdated": "İşlem güncellendi"
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   }
 }

@@ -20,6 +20,14 @@ import { useTranslations } from "next-intl"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -53,11 +61,111 @@ import {
   ChevronRightIcon,
   ChevronsRightIcon,
   PlayIcon,
+  PlusIcon,
   TrashIcon,
 } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { useDirection } from "@/hooks/use-direction"
+import TemplateForm from "@/components/template-form"
+
+function AddTemplateButton() {
+  const isMobile = useIsMobile()
+  const direction = useDirection()
+  const t = useTranslations("Templates")
+  const [open, setOpen] = React.useState(false)
+
+  return (
+    <Drawer direction={isMobile ? "bottom" : direction === "rtl" ? "left" : "right"} open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button variant="outline" size="sm">
+          <PlusIcon />
+          <span className="hidden lg:inline">{t("newTemplate")}</span>
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>{t("newTemplate")}</DrawerTitle>
+          <DrawerDescription>{t("newTemplateDesc")}</DrawerDescription>
+        </DrawerHeader>
+        <div className="overflow-y-auto px-4 pb-4">
+          <TemplateForm onSuccess={() => setOpen(false)} />
+        </div>
+      </DrawerContent>
+    </Drawer>
+  )
+}
+
+function EditTemplateDrawer({ row }: { row: Row<TemplateRow> }) {
+  const isMobile = useIsMobile()
+  const direction = useDirection()
+  const t = useTranslations("Templates")
+  const [open, setOpen] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
+  const [templateData, setTemplateData] = React.useState<{
+    id: string
+    name: string
+    transaction_type: string
+    folder_id: string
+    items: { name: string; amount: string; currency_code: string; transaction_item_category_id: string | null }[]
+  } | null>(null)
+
+  const fetchTemplate = async () => {
+    setLoading(true)
+    const supabase = createClient()
+    const { data } = await supabase
+      .from("transaction_item_templates")
+      .select("name, amount, currency_code, transaction_item_category_id")
+      .eq("transaction_template_id", row.original.id)
+
+    setTemplateData({
+      id: row.original.id,
+      name: row.original.name,
+      transaction_type: row.original.transaction_type,
+      folder_id: row.original.folder_id,
+      items: (data ?? []).map((i) => ({
+        name: i.name,
+        amount: String(i.amount),
+        currency_code: i.currency_code,
+        transaction_item_category_id: i.transaction_item_category_id ?? null,
+      })),
+    })
+    setLoading(false)
+  }
+
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen)
+    if (isOpen) fetchTemplate()
+    else setTemplateData(null)
+  }
+
+  return (
+    <Drawer direction={isMobile ? "bottom" : direction === "rtl" ? "left" : "right"} open={open} onOpenChange={handleOpenChange}>
+      <DrawerTrigger asChild>
+        <Button variant="link" className="w-fit px-0 text-start text-foreground">
+          {row.original.name}
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="gap-1">
+          <DrawerTitle>{row.original.name}</DrawerTitle>
+          <DrawerDescription>{t("editTemplateDesc")}</DrawerDescription>
+        </DrawerHeader>
+        <div className="overflow-y-auto px-4 pb-4">
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <Spinner />
+            </div>
+          ) : templateData ? (
+            <TemplateForm initialData={templateData} onSuccess={() => setOpen(false)} />
+          ) : null}
+        </div>
+      </DrawerContent>
+    </Drawer>
+  )
+}
 
 export const templateSchema = z.object({
   id: z.string(),
@@ -201,7 +309,7 @@ function createColumns(t: {
       accessorKey: "name",
       header: t.header,
       cell: ({ row }) => (
-        <span className="font-medium">{row.original.name}</span>
+        <EditTemplateDrawer row={row} />
       ),
       enableHiding: false,
     },
@@ -298,7 +406,9 @@ export function TemplatesDataTable({
     <div className="flex flex-col gap-4 py-4 md:py-6">
       <div className="flex items-center justify-between px-4 lg:px-6">
         <h2 className="text-base font-semibold">{t("title")}</h2>
-        <DropdownMenu>
+        <div className="flex items-center gap-2">
+          <AddTemplateButton />
+          <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">
               <Columns3Icon data-icon="inline-start" />
@@ -326,6 +436,7 @@ export function TemplatesDataTable({
               ))}
           </DropdownMenuContent>
         </DropdownMenu>
+        </div>
       </div>
       <div className="px-4 lg:px-6">
         <div className="overflow-hidden rounded-lg border">

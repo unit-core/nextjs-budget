@@ -432,7 +432,10 @@
     "transactionCreated": "Transação criada",
     "transactionCreatedDesc": "Transação criada a partir do modelo",
     "executeFailed": "Não foi possível executar o modelo",
-    "somethingWentWrong": "Algo deu errado ao carregar os modelos."
+    "somethingWentWrong": "Algo deu errado ao carregar os modelos.",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template"
   },
   "NavMain": {
     "quickCreate": "Criação Rápida",
@@ -457,5 +460,21 @@
     "update": "Atualizar Transação",
     "transactionCreated": "Transação criada",
     "transactionUpdated": "Transação atualizada"
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   }
 }

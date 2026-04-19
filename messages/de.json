@@ -432,7 +432,10 @@
     "transactionCreated": "Transaktion erstellt",
     "transactionCreatedDesc": "Transaktion aus Vorlage erstellt",
     "executeFailed": "Vorlage konnte nicht ausgeführt werden",
-    "somethingWentWrong": "Beim Laden der Vorlagen ist ein Fehler aufgetreten."
+    "somethingWentWrong": "Beim Laden der Vorlagen ist ein Fehler aufgetreten.",
+    "newTemplate": "New Template",
+    "newTemplateDesc": "Create a new transaction template",
+    "editTemplateDesc": "Update this template"
   },
   "NavMain": {
     "quickCreate": "Schnell erstellen",
@@ -457,5 +460,21 @@
     "update": "Transaktion aktualisieren",
     "transactionCreated": "Transaktion erstellt",
     "transactionUpdated": "Transaktion aktualisiert"
+  },
+  "TemplateForm": {
+    "name": "Template Name",
+    "namePlaceholder": "e.g. Weekly groceries",
+    "type": "Type",
+    "expense": "Expense",
+    "income": "Income",
+    "items": "Items",
+    "addItem": "Add item",
+    "removeItem": "Remove",
+    "itemNamePlaceholder": "Item name",
+    "saving": "Saving...",
+    "create": "Create Template",
+    "update": "Update Template",
+    "templateCreated": "Template created",
+    "templateUpdated": "Template updated"
   }
 }
