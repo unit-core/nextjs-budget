@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import { PlusIcon, TrashIcon, CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
+import { RRule, rrulestr } from 'rrule'
 
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -46,7 +47,9 @@ interface RecurrenceState {
   until: Date | null
 }
 
-function buildRrule(r: RecurrenceState): string {
+function buildRrule(r: RecurrenceState, dtstart: Date): string {
+  const p = (n: number) => n.toString().padStart(2, '0')
+  const dt = `${dtstart.getUTCFullYear()}${p(dtstart.getUTCMonth() + 1)}${p(dtstart.getUTCDate())}T${p(dtstart.getUTCHours())}${p(dtstart.getUTCMinutes())}${p(dtstart.getUTCSeconds())}Z`
   const parts = [`FREQ=${r.freq}`]
   if (r.interval > 1) parts.push(`INTERVAL=${r.interval}`)
   if (r.freq === 'WEEKLY' && r.byDay.length > 0) parts.push(`BYDAY=${r.byDay.join(',')}`)
@@ -54,15 +57,16 @@ function buildRrule(r: RecurrenceState): string {
   if (r.endType === 'count') parts.push(`COUNT=${r.count}`)
   else if (r.endType === 'until' && r.until) {
     const d = r.until
-    const p = (n: number) => n.toString().padStart(2, '0')
     parts.push(`UNTIL=${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}`)
   }
-  return parts.join(';')
+  return `DTSTART:${dt}\nRRULE:${parts.join(';')}`
 }
 
 function parseRrule(rrule: string): RecurrenceState {
   const map: Record<string, string> = {}
-  for (const part of rrule.replace(/^RRULE:/i, '').split(';')) {
+  // берём только строку RRULE, игнорируем DTSTART
+  const rruleLine = rrule.split('\n').find(l => l.startsWith('RRULE:')) ?? rrule
+  for (const part of rruleLine.replace(/^RRULE:/i, '').split(';')) {
     const [k, v] = part.split('=')
     if (k && v !== undefined) map[k.toUpperCase()] = v
   }
@@ -207,14 +211,22 @@ export default function TemplateForm({
     setIsLoading(true)
     setError(null)
 
-    const rruleValue = isRecurring ? buildRrule(recurrence) : null
+    const now = new Date()
+    // при редактировании сохраняем оригинальный DTSTART чтобы не сбросить отсчёт
+    const dtstart = initialData?.rrule
+      ? (rrulestr(initialData.rrule) as RRule).options.dtstart ?? now
+      : now
+    const rruleValue = isRecurring ? buildRrule(recurrence, dtstart) : null
+    const nextExecutionAt = rruleValue
+      ? (rrulestr(rruleValue) as RRule).after(now)?.toISOString() ?? null
+      : null
     const supabase = createClient()
 
     try {
       if (isEdit) {
         const { error: tmplError } = await supabase
           .from('transaction_templates')
-          .update({ name, transaction_type: transactionType, rrule: rruleValue })
+          .update({ name, transaction_type: transactionType, rrule: rruleValue, next_execution_at: nextExecutionAt })
           .eq('id', initialData!.id!)
 
         if (tmplError) throw tmplError
@@ -248,7 +260,7 @@ export default function TemplateForm({
       } else {
         const { data: tmpl, error: tmplError } = await supabase
           .from('transaction_templates')
-          .insert({ name, transaction_type: transactionType, rrule: rruleValue })
+          .insert({ name, transaction_type: transactionType, rrule: rruleValue, next_execution_at: nextExecutionAt })
           .select('id, folder_id')
           .single()
 
