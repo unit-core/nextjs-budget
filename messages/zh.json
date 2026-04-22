@@ -497,6 +497,17 @@
     "create": "Create Template",
     "update": "Update Template",
     "templateCreated": "Template created",
-    "templateUpdated": "Template updated"
+    "templateUpdated": "Template updated",
+    "each": "每",
+    "onThe": "第...",
+    "daysOfWeek": "星期",
+    "unitDay": "天",
+    "unitWeek": "周",
+    "unitMonth": "月",
+    "unitYear": "年",
+    "ordinal1": "第一",
+    "ordinal2": "第二",
+    "ordinal3": "第三",
+    "ordinal4": "第四"
   }
 }

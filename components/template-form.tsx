@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { PlusIcon, TrashIcon, CalendarIcon } from 'lucide-react'
+import { PlusIcon, TrashIcon, CalendarIcon, CheckIcon, MinusIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import { RRule, rrulestr } from 'rrule'
 
@@ -34,14 +34,32 @@ import { cn } from '@/lib/utils'
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'PLN', 'UAH', 'RUB', 'TRY', 'AED', 'SAR'] as const
 const WEEKDAYS = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'] as const
 
+// Jan 1 2024 is Monday — use as Intl anchor for locale-aware day/month names
+const WEEKDAY_FULL = WEEKDAYS.map((_, i) =>
+  new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date(2024, 0, 1 + i))
+)
+const MONTH_SHORT = Array.from({ length: 12 }, (_, i) =>
+  new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date(2024, i, 1))
+)
+
 type Freq = 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'YEARLY'
 type EndType = 'never' | 'count' | 'until'
 
 interface RecurrenceState {
   freq: Freq
   interval: number
+  // WEEKLY: multi-select days; MONTHLY/YEARLY "onthe": single-element weekday
   byDay: string[]
+  // MONTHLY "each": day of month 1–31
   byMonthDay: number
+  // MONTHLY/YEARLY "onthe": ordinal position 1–4
+  bySetPos: number
+  // YEARLY: selected month 1–12
+  byMonth: number
+  // MONTHLY sub-mode toggle
+  monthlyMode: 'each' | 'onthe'
+  // YEARLY: whether the "Days of Week" ordinal picker is active
+  yearlyByDay: boolean
   endType: EndType
   count: number
   until: Date | null
@@ -49,31 +67,81 @@ interface RecurrenceState {
 
 function buildRrule(r: RecurrenceState, dtstart: Date): string {
   const p = (n: number) => n.toString().padStart(2, '0')
-  const dt = `${dtstart.getUTCFullYear()}${p(dtstart.getUTCMonth() + 1)}${p(dtstart.getUTCDate())}T${p(dtstart.getUTCHours())}${p(dtstart.getUTCMinutes())}${p(dtstart.getUTCSeconds())}Z`
+  // Floating time at local noon — no Z suffix, local date components.
+  // Using getUTC* methods caused DTSTART to land on the previous calendar day
+  // when local midnight is earlier than UTC midnight (e.g. UTC+3 at 00:00 = 21:00 UTC prev day).
+  const dt = `${dtstart.getFullYear()}${p(dtstart.getMonth() + 1)}${p(dtstart.getDate())}T120000`
+
   const parts = [`FREQ=${r.freq}`]
   if (r.interval > 1) parts.push(`INTERVAL=${r.interval}`)
-  if (r.freq === 'WEEKLY' && r.byDay.length > 0) parts.push(`BYDAY=${r.byDay.join(',')}`)
-  if (r.freq === 'MONTHLY') parts.push(`BYMONTHDAY=${r.byMonthDay}`)
+
+  if (r.freq === 'WEEKLY' && r.byDay.length > 0) {
+    parts.push(`BYDAY=${r.byDay.join(',')}`)
+  }
+
+  if (r.freq === 'MONTHLY') {
+    if (r.monthlyMode === 'each') {
+      parts.push(`BYMONTHDAY=${r.byMonthDay}`)
+    } else {
+      parts.push(`BYSETPOS=${r.bySetPos}`)
+      parts.push(`BYDAY=${r.byDay[0] ?? 'MO'}`)
+    }
+  }
+
+  if (r.freq === 'YEARLY') {
+    parts.push(`BYMONTH=${r.byMonth}`)
+    if (r.yearlyByDay) {
+      parts.push(`BYSETPOS=${r.bySetPos}`)
+      parts.push(`BYDAY=${r.byDay[0] ?? 'MO'}`)
+    }
+  }
+
   if (r.endType === 'count') parts.push(`COUNT=${r.count}`)
   else if (r.endType === 'until' && r.until) {
     const d = r.until
     parts.push(`UNTIL=${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}`)
   }
+
   return `DTSTART:${dt}\nRRULE:${parts.join(';')}`
 }
 
 function parseRrule(rrule: string): RecurrenceState {
   const map: Record<string, string> = {}
-  // берём только строку RRULE, игнорируем DTSTART
   const rruleLine = rrule.split('\n').find(l => l.startsWith('RRULE:')) ?? rrule
   for (const part of rruleLine.replace(/^RRULE:/i, '').split(';')) {
     const [k, v] = part.split('=')
     if (k && v !== undefined) map[k.toUpperCase()] = v
   }
+
   const freq = (map.FREQ || 'MONTHLY') as Freq
   const interval = parseInt(map.INTERVAL || '1') || 1
-  const byDay = map.BYDAY ? map.BYDAY.split(',') : []
-  const byMonthDay = parseInt(map.BYMONTHDAY || '1') || 1
+  const rawByDay = map.BYDAY ? map.BYDAY.split(',') : []
+  const bySetPos = parseInt(map.BYSETPOS || '1') || 1
+  const byMonth = parseInt(map.BYMONTH || '1') || 1
+
+  let byDay: string[]
+  let byMonthDay = 1
+  let monthlyMode: 'each' | 'onthe' = 'each'
+  let yearlyByDay = false
+
+  if (freq === 'MONTHLY') {
+    if (map.BYSETPOS || (rawByDay.length === 1 && !map.BYMONTHDAY)) {
+      monthlyMode = 'onthe'
+      byDay = rawByDay.length > 0 ? rawByDay : ['MO']
+    } else {
+      monthlyMode = 'each'
+      byDay = []
+      byMonthDay = parseInt(map.BYMONTHDAY || '1') || 1
+    }
+  } else if (freq === 'YEARLY') {
+    yearlyByDay = !!(map.BYDAY || map.BYSETPOS)
+    byDay = rawByDay.length > 0 ? rawByDay : ['MO']
+    byMonthDay = parseInt(map.BYMONTHDAY || '1') || 1
+  } else {
+    byDay = rawByDay
+    byMonthDay = parseInt(map.BYMONTHDAY || '1') || 1
+  }
+
   let endType: EndType = 'never'
   let count = 10
   let until: Date | null = null
@@ -83,7 +151,8 @@ function parseRrule(rrule: string): RecurrenceState {
     const s = map.UNTIL
     until = new Date(`${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`)
   }
-  return { freq, interval, byDay, byMonthDay, endType, count, until }
+
+  return { freq, interval, byDay, byMonthDay, bySetPos, byMonth, monthlyMode, yearlyByDay, endType, count, until }
 }
 
 interface CategoryOption {
@@ -122,7 +191,19 @@ function defaultItem(): TemplateItem {
 }
 
 function defaultRecurrence(): RecurrenceState {
-  return { freq: 'MONTHLY', interval: 1, byDay: [], byMonthDay: 1, endType: 'never', count: 10, until: null }
+  return {
+    freq: 'MONTHLY',
+    interval: 1,
+    byDay: ['MO'],
+    byMonthDay: 1,
+    bySetPos: 1,
+    byMonth: new Date().getMonth() + 1,
+    monthlyMode: 'each',
+    yearlyByDay: false,
+    endType: 'never',
+    count: 10,
+    until: null,
+  }
 }
 
 export default function TemplateForm({
@@ -202,9 +283,18 @@ export default function TemplateForm({
   const toggleByDay = (day: string) => {
     setRecurrence(prev => ({
       ...prev,
-      byDay: prev.byDay.includes(day) ? prev.byDay.filter(d => d !== day) : [...prev.byDay, day],
+      byDay: prev.byDay.includes(day)
+        ? prev.byDay.filter(d => d !== day)
+        : [...prev.byDay, day],
     }))
   }
+
+  const unitLabel = {
+    DAILY: t('unitDay'),
+    WEEKLY: t('unitWeek'),
+    MONTHLY: t('unitMonth'),
+    YEARLY: t('unitYear'),
+  }[recurrence.freq]
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -212,7 +302,7 @@ export default function TemplateForm({
     setError(null)
 
     const now = new Date()
-    // при редактировании сохраняем оригинальный DTSTART чтобы не сбросить отсчёт
+    // When editing, preserve the original DTSTART to avoid resetting the recurrence series
     const dtstart = initialData?.rrule
       ? (rrulestr(initialData.rrule) as RRule).options.dtstart ?? now
       : now
@@ -342,12 +432,17 @@ export default function TemplateForm({
         </div>
 
         {isRecurring && (
-          <div className="grid gap-3 rounded-lg border p-3">
-            <div className="grid grid-cols-2 gap-2">
-              <div className="grid gap-1.5">
-                <Label className="text-xs text-muted-foreground">{t('frequency')}</Label>
-                <Select value={recurrence.freq} onValueChange={(v) => updateRecurrence({ freq: v as Freq })}>
-                  <SelectTrigger className="w-full">
+          <div className="grid gap-3">
+
+            {/* Frequency + Interval card */}
+            <div className="rounded-lg border divide-y overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3">
+                <span className="text-sm">{t('frequency')}</span>
+                <Select
+                  value={recurrence.freq}
+                  onValueChange={(v) => updateRecurrence({ freq: v as Freq })}
+                >
+                  <SelectTrigger className="w-auto border-0 shadow-none p-0 h-auto gap-1 focus:ring-0 focus:ring-offset-0">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -358,103 +453,277 @@ export default function TemplateForm({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid gap-1.5">
-                <Label className="text-xs text-muted-foreground">{t('interval')}</Label>
-                <Input
-                  type="number"
-                  min="1"
-                  value={recurrence.interval}
-                  onChange={(e) => updateRecurrence({ interval: Math.max(1, parseInt(e.target.value) || 1) })}
-                />
+
+              <div className="flex items-center justify-between px-4 py-3">
+                <span className="text-sm">{t('interval')}</span>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => updateRecurrence({ interval: Math.max(1, recurrence.interval - 1) })}
+                    className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-muted-foreground hover:bg-muted/80 transition-colors"
+                  >
+                    <MinusIcon className="size-3" />
+                  </button>
+                  <span className="min-w-4 text-center text-sm tabular-nums">{recurrence.interval}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateRecurrence({ interval: recurrence.interval + 1 })}
+                    className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-muted-foreground hover:bg-muted/80 transition-colors"
+                  >
+                    <PlusIcon className="size-3" />
+                  </button>
+                  <span className="text-sm text-destructive w-12">{unitLabel}</span>
+                </div>
               </div>
             </div>
 
+            {/* WEEKLY: vertical day list */}
             {recurrence.freq === 'WEEKLY' && (
-              <div className="grid gap-1.5">
-                <Label className="text-xs text-muted-foreground">{t('onDays')}</Label>
-                <div className="flex gap-1">
-                  {WEEKDAYS.map((day) => (
-                    <button
-                      key={day}
-                      type="button"
-                      onClick={() => toggleByDay(day)}
-                      className={cn(
-                        'flex h-8 w-8 items-center justify-center rounded text-xs font-medium transition-colors',
-                        recurrence.byDay.includes(day)
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                      )}
-                    >
-                      {t(`day${day}` as any)}
-                    </button>
-                  ))}
-                </div>
+              <div className="rounded-lg border divide-y overflow-hidden">
+                {WEEKDAYS.map((day, i) => (
+                  <button
+                    key={day}
+                    type="button"
+                    onClick={() => toggleByDay(day)}
+                    className="flex w-full items-center justify-between px-4 py-3 text-sm transition-colors hover:bg-muted/50"
+                  >
+                    <span>{WEEKDAY_FULL[i]}</span>
+                    {recurrence.byDay.includes(day) && (
+                      <CheckIcon className="size-4 text-destructive" />
+                    )}
+                  </button>
+                ))}
               </div>
             )}
 
+            {/* MONTHLY: Each / On the... toggle + details */}
             {recurrence.freq === 'MONTHLY' && (
-              <div className="grid gap-1.5">
-                <Label className="text-xs text-muted-foreground">{t('onDayOfMonth')}</Label>
-                <Input
-                  type="number"
-                  min="1"
-                  max="31"
-                  value={recurrence.byMonthDay}
-                  onChange={(e) => updateRecurrence({ byMonthDay: Math.min(31, Math.max(1, parseInt(e.target.value) || 1)) })}
-                />
-              </div>
+              <>
+                <div className="rounded-lg border divide-y overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => updateRecurrence({ monthlyMode: 'each' })}
+                    className="flex w-full items-center justify-between px-4 py-3 text-sm transition-colors hover:bg-muted/50"
+                  >
+                    <span>{t('each')}</span>
+                    {recurrence.monthlyMode === 'each' && (
+                      <CheckIcon className="size-4 text-destructive" />
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updateRecurrence({ monthlyMode: 'onthe' })}
+                    className="flex w-full items-center justify-between px-4 py-3 text-sm transition-colors hover:bg-muted/50"
+                  >
+                    <span>{t('onThe')}</span>
+                    {recurrence.monthlyMode === 'onthe' && (
+                      <CheckIcon className="size-4 text-destructive" />
+                    )}
+                  </button>
+                </div>
+
+                {recurrence.monthlyMode === 'each' && (
+                  <div className="rounded-lg border p-3">
+                    <div className="grid grid-cols-7 gap-1">
+                      {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                        <button
+                          key={d}
+                          type="button"
+                          onClick={() => updateRecurrence({ byMonthDay: d })}
+                          className={cn(
+                            'aspect-square rounded text-sm font-medium transition-colors',
+                            recurrence.byMonthDay === d
+                              ? 'bg-destructive text-destructive-foreground'
+                              : 'hover:bg-muted text-foreground'
+                          )}
+                        >
+                          {d}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {recurrence.monthlyMode === 'onthe' && (
+                  <div className="flex gap-2">
+                    <Select
+                      value={String(recurrence.bySetPos)}
+                      onValueChange={(v) => updateRecurrence({ bySetPos: Number(v) })}
+                    >
+                      <SelectTrigger className="flex-1">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">{t('ordinal1')}</SelectItem>
+                        <SelectItem value="2">{t('ordinal2')}</SelectItem>
+                        <SelectItem value="3">{t('ordinal3')}</SelectItem>
+                        <SelectItem value="4">{t('ordinal4')}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={recurrence.byDay[0] ?? 'MO'}
+                      onValueChange={(v) => updateRecurrence({ byDay: [v] })}
+                    >
+                      <SelectTrigger className="flex-1">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {WEEKDAYS.map((day, i) => (
+                          <SelectItem key={day} value={day}>{WEEKDAY_FULL[i]}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </>
             )}
 
-            <div className="grid gap-1.5">
-              <Label className="text-xs text-muted-foreground">{t('ends')}</Label>
-              <Select value={recurrence.endType} onValueChange={(v) => updateRecurrence({ endType: v as EndType })}>
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="never">{t('endNever')}</SelectItem>
-                  <SelectItem value="count">{t('endAfterCount')}</SelectItem>
-                  <SelectItem value="until">{t('endOnDate')}</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* YEARLY: month grid + Days of Week toggle */}
+            {recurrence.freq === 'YEARLY' && (
+              <>
+                <div className="rounded-lg border p-3">
+                  <div className="grid grid-cols-4 gap-1">
+                    {MONTH_SHORT.map((month, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => updateRecurrence({ byMonth: i + 1 })}
+                        className={cn(
+                          'rounded py-2 text-sm font-medium transition-colors',
+                          recurrence.byMonth === i + 1
+                            ? 'bg-destructive text-destructive-foreground'
+                            : 'hover:bg-muted text-foreground'
+                        )}
+                      >
+                        {month}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-lg border divide-y overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => updateRecurrence({ yearlyByDay: !recurrence.yearlyByDay })}
+                    className="flex w-full items-center justify-between px-4 py-3 text-sm transition-colors hover:bg-muted/50"
+                  >
+                    <span>{t('daysOfWeek')}</span>
+                    {/* Minimal toggle pill */}
+                    <div className={cn(
+                      'relative h-5 w-9 rounded-full transition-colors',
+                      recurrence.yearlyByDay ? 'bg-green-500' : 'bg-muted'
+                    )}>
+                      <div className={cn(
+                        'absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform',
+                        recurrence.yearlyByDay ? 'translate-x-4' : 'translate-x-0.5'
+                      )} />
+                    </div>
+                  </button>
+
+                  {recurrence.yearlyByDay && (
+                    <div className="flex gap-2 px-4 py-3">
+                      <Select
+                        value={String(recurrence.bySetPos)}
+                        onValueChange={(v) => updateRecurrence({ bySetPos: Number(v) })}
+                      >
+                        <SelectTrigger className="flex-1">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">{t('ordinal1')}</SelectItem>
+                          <SelectItem value="2">{t('ordinal2')}</SelectItem>
+                          <SelectItem value="3">{t('ordinal3')}</SelectItem>
+                          <SelectItem value="4">{t('ordinal4')}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Select
+                        value={recurrence.byDay[0] ?? 'MO'}
+                        onValueChange={(v) => updateRecurrence({ byDay: [v] })}
+                      >
+                        <SelectTrigger className="flex-1">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {WEEKDAYS.map((day, i) => (
+                            <SelectItem key={day} value={day}>{WEEKDAY_FULL[i]}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+
+            {/* Ends card */}
+            <div className="rounded-lg border divide-y overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3">
+                <span className="text-sm">{t('ends')}</span>
+                <Select
+                  value={recurrence.endType}
+                  onValueChange={(v) => updateRecurrence({ endType: v as EndType })}
+                >
+                  <SelectTrigger className="w-auto border-0 shadow-none p-0 h-auto gap-1 focus:ring-0 focus:ring-offset-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="never">{t('endNever')}</SelectItem>
+                    <SelectItem value="count">{t('endAfterCount')}</SelectItem>
+                    <SelectItem value="until">{t('endOnDate')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
               {recurrence.endType === 'count' && (
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="number"
-                    min="1"
-                    value={recurrence.count}
-                    onChange={(e) => updateRecurrence({ count: Math.max(1, parseInt(e.target.value) || 1) })}
-                    className="w-24"
-                  />
+                <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-sm text-muted-foreground">{t('occurrences')}</span>
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => updateRecurrence({ count: Math.max(1, recurrence.count - 1) })}
+                      className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-muted-foreground hover:bg-muted/80 transition-colors"
+                    >
+                      <MinusIcon className="size-3" />
+                    </button>
+                    <span className="min-w-6 text-center text-sm tabular-nums">{recurrence.count}</span>
+                    <button
+                      type="button"
+                      onClick={() => updateRecurrence({ count: recurrence.count + 1 })}
+                      className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-muted-foreground hover:bg-muted/80 transition-colors"
+                    >
+                      <PlusIcon className="size-3" />
+                    </button>
+                  </div>
                 </div>
               )}
 
               {recurrence.endType === 'until' && (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        'w-full justify-start text-start font-normal',
-                        !recurrence.until && 'text-muted-foreground'
-                      )}
-                    >
-                      <CalendarIcon className="size-4" />
-                      {recurrence.until ? format(recurrence.until, 'PPP') : t('pickDate')}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={recurrence.until ?? undefined}
-                      onSelect={(day) => updateRecurrence({ until: day ?? null })}
-                    />
-                  </PopoverContent>
-                </Popover>
+                <div className="px-4 py-3">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          'w-full justify-start text-start font-normal',
+                          !recurrence.until && 'text-muted-foreground'
+                        )}
+                      >
+                        <CalendarIcon className="size-4" />
+                        {recurrence.until ? format(recurrence.until, 'PPP') : t('pickDate')}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={recurrence.until ?? undefined}
+                        onSelect={(day) => updateRecurrence({ until: day ?? null })}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
               )}
             </div>
+
           </div>
         )}
       </div>

@@ -497,6 +497,17 @@
     "create": "Create Template",
     "update": "Update Template",
     "templateCreated": "Template created",
-    "templateUpdated": "Template updated"
+    "templateUpdated": "Template updated",
+    "each": "كل",
+    "onThe": "في...",
+    "daysOfWeek": "يوم الأسبوع",
+    "unitDay": "يوم",
+    "unitWeek": "أسبوع",
+    "unitMonth": "شهر",
+    "unitYear": "سنة",
+    "ordinal1": "أول",
+    "ordinal2": "ثاني",
+    "ordinal3": "ثالث",
+    "ordinal4": "رابع"
   }
 }

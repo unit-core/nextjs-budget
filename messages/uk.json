@@ -497,6 +497,17 @@
     "create": "Create Template",
     "update": "Update Template",
     "templateCreated": "Template created",
-    "templateUpdated": "Template updated"
+    "templateUpdated": "Template updated",
+    "each": "Кожний",
+    "onThe": "В...",
+    "daysOfWeek": "День тижня",
+    "unitDay": "День",
+    "unitWeek": "Тиждень",
+    "unitMonth": "Місяць",
+    "unitYear": "Рік",
+    "ordinal1": "перший",
+    "ordinal2": "другий",
+    "ordinal3": "третій",
+    "ordinal4": "четвертий"
   }
 }

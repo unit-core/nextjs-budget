@@ -497,6 +497,17 @@
     "create": "Create Template",
     "update": "Update Template",
     "templateCreated": "Template created",
-    "templateUpdated": "Template updated"
+    "templateUpdated": "Template updated",
+    "each": "Jeden",
+    "onThe": "Am...",
+    "daysOfWeek": "Wochentag",
+    "unitDay": "Tag",
+    "unitWeek": "Woche",
+    "unitMonth": "Monat",
+    "unitYear": "Jahr",
+    "ordinal1": "ersten",
+    "ordinal2": "zweiten",
+    "ordinal3": "dritten",
+    "ordinal4": "vierten"
   }
 }

@@ -497,6 +497,17 @@
     "create": "Create Template",
     "update": "Update Template",
     "templateCreated": "Template created",
-    "templateUpdated": "Template updated"
+    "templateUpdated": "Template updated",
+    "each": "Her",
+    "onThe": "Tarihinde...",
+    "daysOfWeek": "Haftanın günü",
+    "unitDay": "Gün",
+    "unitWeek": "Hafta",
+    "unitMonth": "Ay",
+    "unitYear": "Yıl",
+    "ordinal1": "birinci",
+    "ordinal2": "ikinci",
+    "ordinal3": "üçüncü",
+    "ordinal4": "dördüncü"
   }
 }

@@ -473,7 +473,18 @@
     "create": "Create Template",
     "update": "Update Template",
     "templateCreated": "Template created",
-    "templateUpdated": "Template updated"
+    "templateUpdated": "Template updated",
+    "each": "Each",
+    "onThe": "On the...",
+    "daysOfWeek": "Days of Week",
+    "unitDay": "Day",
+    "unitWeek": "Week",
+    "unitMonth": "Month",
+    "unitYear": "Year",
+    "ordinal1": "first",
+    "ordinal2": "second",
+    "ordinal3": "third",
+    "ordinal4": "fourth"
   },
   "NavMain": {
     "quickCreate": "Quick Create",

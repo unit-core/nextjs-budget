@@ -497,6 +497,17 @@
     "create": "Create Template",
     "update": "Update Template",
     "templateCreated": "Template created",
-    "templateUpdated": "Template updated"
+    "templateUpdated": "Template updated",
+    "each": "매",
+    "onThe": "~번째...",
+    "daysOfWeek": "요일",
+    "unitDay": "일",
+    "unitWeek": "주",
+    "unitMonth": "월",
+    "unitYear": "년",
+    "ordinal1": "첫 번째",
+    "ordinal2": "두 번째",
+    "ordinal3": "세 번째",
+    "ordinal4": "네 번째"
   }
 }

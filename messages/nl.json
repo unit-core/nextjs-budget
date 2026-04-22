@@ -497,6 +497,17 @@
     "create": "Create Template",
     "update": "Update Template",
     "templateCreated": "Template created",
-    "templateUpdated": "Template updated"
+    "templateUpdated": "Template updated",
+    "each": "Elke",
+    "onThe": "Op de...",
+    "daysOfWeek": "Dag van de week",
+    "unitDay": "Dag",
+    "unitWeek": "Week",
+    "unitMonth": "Maand",
+    "unitYear": "Jaar",
+    "ordinal1": "eerste",
+    "ordinal2": "tweede",
+    "ordinal3": "derde",
+    "ordinal4": "vierde"
   }
 }
