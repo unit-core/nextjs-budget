@@ -84,7 +84,9 @@
     "name": "Nombre",
     "somethingWentWrong": "Algo salió mal al cargar las transacciones.",
     "spendingByCategory": "Gastos por categoría",
-    "monthlyBreakdown": "Desglose del mes actual por divisa"
+    "monthlyBreakdown": "Desglose del mes actual por divisa",
+    "selectView": "Seleccionar vista",
+    "viewLabel": "Vista"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "Crear transacción",
     "update": "Actualizar transacción",
     "transactionCreated": "Transacción creada",
-    "transactionUpdated": "Transacción actualizada"
+    "transactionUpdated": "Transacción actualizada",
+    "selectCategory": "Seleccionar categoría",
+    "systemLabel": "(sistema)"
   },
   "TemplateForm": {
     "name": "Nombre de la plantilla",
@@ -508,6 +512,26 @@
     "ordinal1": "primero",
     "ordinal2": "segundo",
     "ordinal3": "tercero",
-    "ordinal4": "cuarto"
+    "ordinal4": "cuarto",
+    "selectCategory": "Seleccionar categoría",
+    "systemLabel": "(sistema)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Subiendo archivo...",
+    "uploadedFile": "Archivo subido con éxito",
+    "uploadedFiles": "{count} archivos subidos con éxito",
+    "exceedMax": "Solo puede subir hasta {max} archivos, por favor elimine {excess} archivo.",
+    "exceedMaxPlural": "Solo puede subir hasta {max} archivos, por favor elimine {excess} archivos.",
+    "uploading": "Subiendo...",
+    "uploadSingle": "Subir archivo",
+    "uploadMultiple": "Subir {count} archivos",
+    "uploadGeneral": "Subir archivos",
+    "dragDrop": "Arrastra y suelta o",
+    "selectFile": "selecciona un archivo",
+    "selectFiles": "selecciona archivos",
+    "toUpload": "para subir",
+    "maxFileSize": "Tamaño máximo de archivo: {size}",
+    "fileTooLarge": "El archivo es mayor que {max} (Tamaño: {size})",
+    "failedUpload": "Error al subir: {message}"
   }
 }

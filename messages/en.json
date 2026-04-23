@@ -84,7 +84,9 @@
     "name": "Name",
     "somethingWentWrong": "Something went wrong loading transactions.",
     "spendingByCategory": "Spending by Category",
-    "monthlyBreakdown": "Current month breakdown per currency"
+    "monthlyBreakdown": "Current month breakdown per currency",
+    "selectView": "Select a view",
+    "viewLabel": "View"
   },
   "Categories": {
     "RENT": {
@@ -484,7 +486,9 @@
     "ordinal1": "first",
     "ordinal2": "second",
     "ordinal3": "third",
-    "ordinal4": "fourth"
+    "ordinal4": "fourth",
+    "selectCategory": "Select category",
+    "systemLabel": "(system)"
   },
   "NavMain": {
     "quickCreate": "Quick Create",
@@ -508,6 +512,26 @@
     "create": "Create Transaction",
     "update": "Update Transaction",
     "transactionCreated": "Transaction created",
-    "transactionUpdated": "Transaction updated"
+    "transactionUpdated": "Transaction updated",
+    "selectCategory": "Select category",
+    "systemLabel": "(system)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Uploading file...",
+    "uploadedFile": "Successfully uploaded file",
+    "uploadedFiles": "Successfully uploaded {count} files",
+    "exceedMax": "You may upload only up to {max} files, please remove {excess} file.",
+    "exceedMaxPlural": "You may upload only up to {max} files, please remove {excess} files.",
+    "uploading": "Uploading...",
+    "uploadSingle": "Upload file",
+    "uploadMultiple": "Upload {count} files",
+    "uploadGeneral": "Upload files",
+    "dragDrop": "Drag and drop or",
+    "selectFile": "select file",
+    "selectFiles": "select files",
+    "toUpload": "to upload",
+    "maxFileSize": "Maximum file size: {size}",
+    "fileTooLarge": "File is larger than {max} (Size: {size})",
+    "failedUpload": "Failed to upload: {message}"
   }
 }

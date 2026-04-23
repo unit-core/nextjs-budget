@@ -7,9 +7,10 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { SidebarUser } from "@/components/app-sidebar"
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
  
 const FileUploadDemo = ({ user }: { user: SidebarUser }) => {
-
+  const t = useTranslations('EmptyState')
   const router = useRouter()
 
   const props = useSupabaseUpload({
@@ -23,9 +24,9 @@ const FileUploadDemo = ({ user }: { user: SidebarUser }) => {
   // Эффект для обработки завершения
   useEffect(() => {
     if (props.isSuccess) {
-      toast("Transaction has been created", {
+      toast(t('transactionCreated'), {
         position: 'top-center',
-        description: "The system is already processing"
+        description: t('processingDescription')
       })
       // console.log("Загрузка завершена", props.successes);
       

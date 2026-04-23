@@ -84,7 +84,9 @@
     "name": "이름",
     "somethingWentWrong": "거래를 불러오는 중 문제가 발생했습니다.",
     "spendingByCategory": "카테고리별 지출",
-    "monthlyBreakdown": "통화별 현재 월 내역"
+    "monthlyBreakdown": "통화별 현재 월 내역",
+    "selectView": "보기 선택",
+    "viewLabel": "보기"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "거래 생성",
     "update": "거래 수정",
     "transactionCreated": "거래가 생성되었습니다",
-    "transactionUpdated": "거래가 수정되었습니다"
+    "transactionUpdated": "거래가 수정되었습니다",
+    "selectCategory": "카테고리 선택",
+    "systemLabel": "(시스템)"
   },
   "TemplateForm": {
     "name": "템플릿 이름",
@@ -508,6 +512,26 @@
     "ordinal1": "첫 번째",
     "ordinal2": "두 번째",
     "ordinal3": "세 번째",
-    "ordinal4": "네 번째"
+    "ordinal4": "네 번째",
+    "selectCategory": "카테고리 선택",
+    "systemLabel": "(시스템)"
+  },
+  "Dropzone": {
+    "uploadingFile": "파일 업로드 중...",
+    "uploadedFile": "파일 업로드 완료",
+    "uploadedFiles": "{count}개 파일 업로드 완료",
+    "exceedMax": "최대 {max}개의 파일만 업로드할 수 있습니다. {excess}개 파일을 삭제하세요.",
+    "exceedMaxPlural": "최대 {max}개의 파일만 업로드할 수 있습니다. {excess}개 파일을 삭제하세요.",
+    "uploading": "업로드 중...",
+    "uploadSingle": "파일 업로드",
+    "uploadMultiple": "{count}개 파일 업로드",
+    "uploadGeneral": "파일 업로드",
+    "dragDrop": "드래그 앤 드롭 또는",
+    "selectFile": "파일 선택",
+    "selectFiles": "파일 선택",
+    "toUpload": "업로드",
+    "maxFileSize": "최대 파일 크기: {size}",
+    "fileTooLarge": "파일이 {max}보다 큽니다 (크기: {size})",
+    "failedUpload": "업로드 실패: {message}"
   }
 }

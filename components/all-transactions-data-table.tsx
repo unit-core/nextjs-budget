@@ -641,7 +641,7 @@ export function AllTransactionsDataTableSkeleton() {
     >
       <div className="flex items-center justify-between px-4 lg:px-6">
         <Label htmlFor="view-selector" className="sr-only">
-          View
+          {t("viewLabel")}
         </Label>
         <Select defaultValue="outline">
           <SelectTrigger
@@ -649,7 +649,7 @@ export function AllTransactionsDataTableSkeleton() {
             size="sm"
             id="view-selector"
           >
-            <SelectValue placeholder="Select a view" />
+            <SelectValue placeholder={t("selectView")} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -981,7 +981,7 @@ export function AllTransactionsDataTable({
     >
       <div className="flex items-center justify-between px-4 lg:px-6">
         <Label htmlFor="view-selector" className="sr-only">
-          View
+          {t("viewLabel")}
         </Label>
         <Select defaultValue="outline">
           <SelectTrigger
@@ -989,7 +989,7 @@ export function AllTransactionsDataTable({
             size="sm"
             id="view-selector"
           >
-            <SelectValue placeholder="Select a view" />
+            <SelectValue placeholder={t("selectView")} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>

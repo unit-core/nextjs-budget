@@ -84,7 +84,9 @@
     "name": "الاسم",
     "somethingWentWrong": "حدث خطأ أثناء تحميل المعاملات.",
     "spendingByCategory": "الإنفاق حسب الفئة",
-    "monthlyBreakdown": "تفصيل الشهر الحالي حسب العملة"
+    "monthlyBreakdown": "تفصيل الشهر الحالي حسب العملة",
+    "selectView": "اختر عرضًا",
+    "viewLabel": "عرض"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "إنشاء معاملة",
     "update": "تحديث المعاملة",
     "transactionCreated": "تم إنشاء المعاملة",
-    "transactionUpdated": "تم تحديث المعاملة"
+    "transactionUpdated": "تم تحديث المعاملة",
+    "selectCategory": "اختر فئة",
+    "systemLabel": "(النظام)"
   },
   "TemplateForm": {
     "name": "اسم النموذج",
@@ -508,6 +512,26 @@
     "ordinal1": "أول",
     "ordinal2": "ثاني",
     "ordinal3": "ثالث",
-    "ordinal4": "رابع"
+    "ordinal4": "رابع",
+    "selectCategory": "اختر فئة",
+    "systemLabel": "(النظام)"
+  },
+  "Dropzone": {
+    "uploadingFile": "جارٍ رفع الملف...",
+    "uploadedFile": "تم رفع الملف بنجاح",
+    "uploadedFiles": "تم رفع {count} ملفات بنجاح",
+    "exceedMax": "يمكنك رفع {max} ملفات كحد أقصى، يرجى إزالة {excess} ملف.",
+    "exceedMaxPlural": "يمكنك رفع {max} ملفات كحد أقصى، يرجى إزالة {excess} ملفات.",
+    "uploading": "جارٍ الرفع...",
+    "uploadSingle": "رفع ملف",
+    "uploadMultiple": "رفع {count} ملفات",
+    "uploadGeneral": "رفع الملفات",
+    "dragDrop": "اسحب وأفلت أو",
+    "selectFile": "اختر ملفًا",
+    "selectFiles": "اختر ملفات",
+    "toUpload": "للرفع",
+    "maxFileSize": "الحجم الأقصى للملف: {size}",
+    "fileTooLarge": "الملف أكبر من {max} (الحجم: {size})",
+    "failedUpload": "فشل الرفع: {message}"
   }
 }

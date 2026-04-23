@@ -84,7 +84,9 @@
     "name": "Naam",
     "somethingWentWrong": "Er is iets misgegaan bij het laden van transacties.",
     "spendingByCategory": "Uitgaven per categorie",
-    "monthlyBreakdown": "Maandoverzicht per valuta"
+    "monthlyBreakdown": "Maandoverzicht per valuta",
+    "selectView": "Selecteer een weergave",
+    "viewLabel": "Weergave"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "Transactie aanmaken",
     "update": "Transactie bijwerken",
     "transactionCreated": "Transactie aangemaakt",
-    "transactionUpdated": "Transactie bijgewerkt"
+    "transactionUpdated": "Transactie bijgewerkt",
+    "selectCategory": "Selecteer categorie",
+    "systemLabel": "(systeem)"
   },
   "TemplateForm": {
     "name": "Sjabloonnaam",
@@ -508,6 +512,26 @@
     "ordinal1": "eerste",
     "ordinal2": "tweede",
     "ordinal3": "derde",
-    "ordinal4": "vierde"
+    "ordinal4": "vierde",
+    "selectCategory": "Selecteer categorie",
+    "systemLabel": "(systeem)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Bestand uploaden...",
+    "uploadedFile": "Bestand succesvol geüpload",
+    "uploadedFiles": "{count} bestanden succesvol geüpload",
+    "exceedMax": "U kunt maximaal {max} bestanden uploaden, verwijder {excess} bestand.",
+    "exceedMaxPlural": "U kunt maximaal {max} bestanden uploaden, verwijder {excess} bestanden.",
+    "uploading": "Uploaden...",
+    "uploadSingle": "Bestand uploaden",
+    "uploadMultiple": "{count} bestanden uploaden",
+    "uploadGeneral": "Bestanden uploaden",
+    "dragDrop": "Slepen en neerzetten of",
+    "selectFile": "selecteer bestand",
+    "selectFiles": "selecteer bestanden",
+    "toUpload": "om te uploaden",
+    "maxFileSize": "Maximale bestandsgrootte: {size}",
+    "fileTooLarge": "Bestand is groter dan {max} (Grootte: {size})",
+    "failedUpload": "Upload mislukt: {message}"
   }
 }

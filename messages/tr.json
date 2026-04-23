@@ -84,7 +84,9 @@
     "name": "Ad",
     "somethingWentWrong": "İşlemler yüklenirken bir hata oluştu.",
     "spendingByCategory": "Kategoriye göre harcamalar",
-    "monthlyBreakdown": "Geçerli ay dövize göre dökümü"
+    "monthlyBreakdown": "Geçerli ay dövize göre dökümü",
+    "selectView": "Görünüm seçin",
+    "viewLabel": "Görünüm"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "İşlem Oluştur",
     "update": "İşlemi Güncelle",
     "transactionCreated": "İşlem oluşturuldu",
-    "transactionUpdated": "İşlem güncellendi"
+    "transactionUpdated": "İşlem güncellendi",
+    "selectCategory": "Kategori seçin",
+    "systemLabel": "(sistem)"
   },
   "TemplateForm": {
     "name": "Şablon Adı",
@@ -508,6 +512,26 @@
     "ordinal1": "birinci",
     "ordinal2": "ikinci",
     "ordinal3": "üçüncü",
-    "ordinal4": "dördüncü"
+    "ordinal4": "dördüncü",
+    "selectCategory": "Kategori seçin",
+    "systemLabel": "(sistem)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Dosya yükleniyor...",
+    "uploadedFile": "Dosya başarıyla yüklendi",
+    "uploadedFiles": "{count} dosya başarıyla yüklendi",
+    "exceedMax": "En fazla {max} dosya yükleyebilirsiniz, lütfen {excess} dosyayı kaldırın.",
+    "exceedMaxPlural": "En fazla {max} dosya yükleyebilirsiniz, lütfen {excess} dosyayı kaldırın.",
+    "uploading": "Yükleniyor...",
+    "uploadSingle": "Dosya yükle",
+    "uploadMultiple": "{count} dosya yükle",
+    "uploadGeneral": "Dosyaları yükle",
+    "dragDrop": "Sürükle bırak veya",
+    "selectFile": "dosya seçin",
+    "selectFiles": "dosyaları seçin",
+    "toUpload": "yüklemek için",
+    "maxFileSize": "Maksimum dosya boyutu: {size}",
+    "fileTooLarge": "Dosya {max}'dan büyük (Boyut: {size})",
+    "failedUpload": "Yükleme başarısız: {message}"
   }
 }

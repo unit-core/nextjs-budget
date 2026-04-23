@@ -84,7 +84,9 @@
     "name": "名称",
     "somethingWentWrong": "加载交易时出现问题。",
     "spendingByCategory": "按类别支出",
-    "monthlyBreakdown": "当月货币明细"
+    "monthlyBreakdown": "当月货币明细",
+    "selectView": "选择视图",
+    "viewLabel": "视图"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "创建交易",
     "update": "更新交易",
     "transactionCreated": "交易已创建",
-    "transactionUpdated": "交易已更新"
+    "transactionUpdated": "交易已更新",
+    "selectCategory": "选择类别",
+    "systemLabel": "（系统）"
   },
   "TemplateForm": {
     "name": "模板名称",
@@ -508,6 +512,26 @@
     "ordinal1": "第一",
     "ordinal2": "第二",
     "ordinal3": "第三",
-    "ordinal4": "第四"
+    "ordinal4": "第四",
+    "selectCategory": "选择类别",
+    "systemLabel": "（系统）"
+  },
+  "Dropzone": {
+    "uploadingFile": "正在上传文件...",
+    "uploadedFile": "文件上传成功",
+    "uploadedFiles": "成功上传 {count} 个文件",
+    "exceedMax": "最多可上传 {max} 个文件，请删除 {excess} 个文件。",
+    "exceedMaxPlural": "最多可上传 {max} 个文件，请删除 {excess} 个文件。",
+    "uploading": "上传中...",
+    "uploadSingle": "上传文件",
+    "uploadMultiple": "上传 {count} 个文件",
+    "uploadGeneral": "上传文件",
+    "dragDrop": "拖放或",
+    "selectFile": "选择文件",
+    "selectFiles": "选择文件",
+    "toUpload": "进行上传",
+    "maxFileSize": "最大文件大小：{size}",
+    "fileTooLarge": "文件大于 {max}（大小：{size}）",
+    "failedUpload": "上传失败：{message}"
   }
 }

@@ -2,6 +2,7 @@
 
 import { CheckCircle, File, Loader2, Upload, X } from 'lucide-react'
 import { createContext, useCallback, useContext, type PropsWithChildren } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { cn } from '@/lib/utils'
 import { type UseSupabaseUploadReturn } from '@/hooks/use-supabase-upload'
@@ -63,6 +64,7 @@ const Dropzone = ({
   )
 }
 const DropzoneContent = ({ className }: { className?: string }) => {
+  const t = useTranslations('Dropzone')
   const {
     files,
     setFiles,
@@ -89,7 +91,9 @@ const DropzoneContent = ({ className }: { className?: string }) => {
       <div className={cn("flex flex-row items-center gap-x-2 justify-center", className)}>
         <CheckCircle size={16} className="text-primary" />
         <p className="text-primary text-sm">
-          Successfully uploaded {files.length} file{files.length > 1 ? 's' : ''}
+          {files.length > 1
+            ? t('uploadedFiles', { count: files.length })
+            : t('uploadedFile')}
         </p>
       </div>
     )
@@ -125,17 +129,17 @@ const DropzoneContent = ({ className }: { className?: string }) => {
                   {file.errors
                     .map((e) =>
                       e.message.startsWith('File is larger than')
-                        ? `File is larger than ${formatBytes(maxFileSize, 2)} (Size: ${formatBytes(file.size, 2)})`
+                        ? t('fileTooLarge', { max: formatBytes(maxFileSize, 2), size: formatBytes(file.size, 2) })
                         : e.message
                     )
                     .join(', ')}
                 </p>
               ) : loading && !isSuccessfullyUploaded ? (
-                <p className="text-xs text-muted-foreground">Uploading file...</p>
+                <p className="text-xs text-muted-foreground">{t('uploadingFile')}</p>
               ) : !!fileError ? (
-                <p className="text-xs text-destructive">Failed to upload: {fileError.message}</p>
+                <p className="text-xs text-destructive">{t('failedUpload', { message: fileError.message })}</p>
               ) : isSuccessfullyUploaded ? (
-                <p className="text-xs text-primary">Successfully uploaded file</p>
+                <p className="text-xs text-primary">{t('uploadedFile')}</p>
               ) : (
                 <p className="text-xs text-muted-foreground">{formatBytes(file.size, 2)}</p>
               )}
@@ -156,8 +160,9 @@ const DropzoneContent = ({ className }: { className?: string }) => {
       })}
       {exceedMaxFiles && (
         <p className="text-sm text-start mt-2 text-destructive">
-          You may upload only up to {maxFiles} files, please remove {files.length - maxFiles} file
-          {files.length - maxFiles > 1 ? 's' : ''}.
+          {files.length - maxFiles > 1
+            ? t('exceedMaxPlural', { max: maxFiles, excess: files.length - maxFiles })
+            : t('exceedMax', { max: maxFiles, excess: files.length - maxFiles })}
         </p>
       )}
       {files.length > 0 && !exceedMaxFiles && (
@@ -170,10 +175,10 @@ const DropzoneContent = ({ className }: { className?: string }) => {
             {loading ? (
               <>
                 <Loader2 className="me-2 h-4 w-4 animate-spin" />
-                Uploading...
+                {t('uploading')}
               </>
             ) : (
-              <>Upload files</>
+              <>{t('uploadGeneral')}</>
             )}
           </Button>
         </div>
@@ -183,33 +188,37 @@ const DropzoneContent = ({ className }: { className?: string }) => {
 }
 
 const DropzoneEmptyState = ({ className }: { className?: string }) => {
+  const t = useTranslations('Dropzone')
   const { maxFiles, maxFileSize, inputRef, isSuccess } = useDropzoneContext()
 
   if (isSuccess) {
     return null
   }
 
+  const uploadLabel = maxFiles === 1
+    ? t('uploadSingle')
+    : maxFiles > 1
+      ? t('uploadMultiple', { count: maxFiles })
+      : t('uploadGeneral')
+
   return (
     <div className={cn("flex flex-col items-center gap-y-2", className)}>
       <Upload size={20} className="text-muted-foreground" />
-      <p className="text-sm">
-        Upload{!!maxFiles && maxFiles > 1 ? ` ${maxFiles}` : ''} file
-        {!maxFiles || maxFiles > 1 ? 's' : ''}
-      </p>
+      <p className="text-sm">{uploadLabel}</p>
       <div className="flex flex-col items-center gap-y-1">
         <p className="text-xs text-muted-foreground">
-          Drag and drop or{' '}
+          {t('dragDrop')}{' '}
           <a
             onClick={() => inputRef.current?.click()}
             className="underline cursor-pointer transition hover:text-foreground"
           >
-            select {maxFiles === 1 ? `file` : 'files'}
+            {t(maxFiles === 1 ? 'selectFile' : 'selectFiles')}
           </a>{' '}
-          to upload
+          {t('toUpload')}
         </p>
         {maxFileSize !== Number.POSITIVE_INFINITY && (
           <p className="text-xs text-muted-foreground">
-            Maximum file size: {formatBytes(maxFileSize, 2)}
+            {t('maxFileSize', { size: formatBytes(maxFileSize, 2) })}
           </p>
         )}
       </div>

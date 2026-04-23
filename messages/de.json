@@ -84,7 +84,9 @@
     "name": "Name",
     "somethingWentWrong": "Beim Laden der Transaktionen ist ein Fehler aufgetreten.",
     "spendingByCategory": "Ausgaben nach Kategorie",
-    "monthlyBreakdown": "Aufschlüsselung des aktuellen Monats nach Währung"
+    "monthlyBreakdown": "Aufschlüsselung des aktuellen Monats nach Währung",
+    "selectView": "Ansicht auswählen",
+    "viewLabel": "Ansicht"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "Transaktion erstellen",
     "update": "Transaktion aktualisieren",
     "transactionCreated": "Transaktion erstellt",
-    "transactionUpdated": "Transaktion aktualisiert"
+    "transactionUpdated": "Transaktion aktualisiert",
+    "selectCategory": "Kategorie auswählen",
+    "systemLabel": "(System)"
   },
   "TemplateForm": {
     "name": "Vorlagenname",
@@ -508,6 +512,26 @@
     "ordinal1": "ersten",
     "ordinal2": "zweiten",
     "ordinal3": "dritten",
-    "ordinal4": "vierten"
+    "ordinal4": "vierten",
+    "selectCategory": "Kategorie auswählen",
+    "systemLabel": "(System)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Datei wird hochgeladen...",
+    "uploadedFile": "Datei erfolgreich hochgeladen",
+    "uploadedFiles": "{count} Dateien erfolgreich hochgeladen",
+    "exceedMax": "Sie können maximal {max} Dateien hochladen, bitte entfernen Sie {excess} Datei.",
+    "exceedMaxPlural": "Sie können maximal {max} Dateien hochladen, bitte entfernen Sie {excess} Dateien.",
+    "uploading": "Wird hochgeladen...",
+    "uploadSingle": "Datei hochladen",
+    "uploadMultiple": "{count} Dateien hochladen",
+    "uploadGeneral": "Dateien hochladen",
+    "dragDrop": "Drag & Drop oder",
+    "selectFile": "Datei auswählen",
+    "selectFiles": "Dateien auswählen",
+    "toUpload": "zum Hochladen",
+    "maxFileSize": "Maximale Dateigröße: {size}",
+    "fileTooLarge": "Datei ist größer als {max} (Größe: {size})",
+    "failedUpload": "Upload fehlgeschlagen: {message}"
   }
 }

@@ -84,7 +84,9 @@
     "name": "Nom",
     "somethingWentWrong": "Une erreur est survenue lors du chargement des transactions.",
     "spendingByCategory": "Dépenses par catégorie",
-    "monthlyBreakdown": "Ventilation du mois en cours par devise"
+    "monthlyBreakdown": "Ventilation du mois en cours par devise",
+    "selectView": "Sélectionner une vue",
+    "viewLabel": "Vue"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "Créer la transaction",
     "update": "Mettre à jour la transaction",
     "transactionCreated": "Transaction créée",
-    "transactionUpdated": "Transaction mise à jour"
+    "transactionUpdated": "Transaction mise à jour",
+    "selectCategory": "Sélectionner une catégorie",
+    "systemLabel": "(système)"
   },
   "TemplateForm": {
     "name": "Nom du modèle",
@@ -508,6 +512,26 @@
     "ordinal1": "premier",
     "ordinal2": "deuxième",
     "ordinal3": "troisième",
-    "ordinal4": "quatrième"
+    "ordinal4": "quatrième",
+    "selectCategory": "Sélectionner une catégorie",
+    "systemLabel": "(système)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Téléversement du fichier...",
+    "uploadedFile": "Fichier téléversé avec succès",
+    "uploadedFiles": "{count} fichiers téléversés avec succès",
+    "exceedMax": "Vous ne pouvez téléverser que {max} fichiers au maximum, veuillez supprimer {excess} fichier.",
+    "exceedMaxPlural": "Vous ne pouvez téléverser que {max} fichiers au maximum, veuillez supprimer {excess} fichiers.",
+    "uploading": "Téléversement...",
+    "uploadSingle": "Téléverser un fichier",
+    "uploadMultiple": "Téléverser {count} fichiers",
+    "uploadGeneral": "Téléverser des fichiers",
+    "dragDrop": "Glisser-déposer ou",
+    "selectFile": "sélectionner un fichier",
+    "selectFiles": "sélectionner des fichiers",
+    "toUpload": "à téléverser",
+    "maxFileSize": "Taille maximale du fichier : {size}",
+    "fileTooLarge": "Le fichier est plus grand que {max} (Taille : {size})",
+    "failedUpload": "Échec du téléversement : {message}"
   }
 }

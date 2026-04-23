@@ -84,7 +84,9 @@
     "name": "Название",
     "somethingWentWrong": "Произошла ошибка при загрузке транзакций.",
     "spendingByCategory": "Расходы по категориям",
-    "monthlyBreakdown": "Разбивка за текущий месяц по валюте"
+    "monthlyBreakdown": "Разбивка за текущий месяц по валюте",
+    "selectView": "Выбрать вид",
+    "viewLabel": "Вид"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "Создать транзакцию",
     "update": "Обновить транзакцию",
     "transactionCreated": "Транзакция создана",
-    "transactionUpdated": "Транзакция обновлена"
+    "transactionUpdated": "Транзакция обновлена",
+    "selectCategory": "Выбрать категорию",
+    "systemLabel": "(система)"
   },
   "TemplateForm": {
     "name": "Название шаблона",
@@ -508,6 +512,26 @@
     "ordinal1": "первый",
     "ordinal2": "второй",
     "ordinal3": "третий",
-    "ordinal4": "четвёртый"
+    "ordinal4": "четвёртый",
+    "selectCategory": "Выбрать категорию",
+    "systemLabel": "(система)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Загрузка файла...",
+    "uploadedFile": "Файл успешно загружен",
+    "uploadedFiles": "{count} файла(-ов) успешно загружено",
+    "exceedMax": "Можно загрузить не более {max} файлов, удалите {excess} файл.",
+    "exceedMaxPlural": "Можно загрузить не более {max} файлов, удалите {excess} файла(-ов).",
+    "uploading": "Загрузка...",
+    "uploadSingle": "Загрузить файл",
+    "uploadMultiple": "Загрузить {count} файла(-ов)",
+    "uploadGeneral": "Загрузить файлы",
+    "dragDrop": "Перетащите или",
+    "selectFile": "выберите файл",
+    "selectFiles": "выберите файлы",
+    "toUpload": "для загрузки",
+    "maxFileSize": "Максимальный размер файла: {size}",
+    "fileTooLarge": "Файл больше {max} (Размер: {size})",
+    "failedUpload": "Ошибка загрузки: {message}"
   }
 }

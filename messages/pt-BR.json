@@ -84,7 +84,9 @@
     "name": "Nome",
     "somethingWentWrong": "Algo deu errado ao carregar as transações.",
     "spendingByCategory": "Gastos por categoria",
-    "monthlyBreakdown": "Resumo do mês atual por moeda"
+    "monthlyBreakdown": "Resumo do mês atual por moeda",
+    "selectView": "Selecionar visualização",
+    "viewLabel": "Visualização"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "Criar Transação",
     "update": "Atualizar Transação",
     "transactionCreated": "Transação criada",
-    "transactionUpdated": "Transação atualizada"
+    "transactionUpdated": "Transação atualizada",
+    "selectCategory": "Selecionar categoria",
+    "systemLabel": "(sistema)"
   },
   "TemplateForm": {
     "name": "Nome do modelo",
@@ -508,6 +512,26 @@
     "ordinal1": "primeiro",
     "ordinal2": "segundo",
     "ordinal3": "terceiro",
-    "ordinal4": "quarto"
+    "ordinal4": "quarto",
+    "selectCategory": "Selecionar categoria",
+    "systemLabel": "(sistema)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Enviando arquivo...",
+    "uploadedFile": "Arquivo enviado com sucesso",
+    "uploadedFiles": "{count} arquivos enviados com sucesso",
+    "exceedMax": "Você pode enviar no máximo {max} arquivos, por favor remova {excess} arquivo.",
+    "exceedMaxPlural": "Você pode enviar no máximo {max} arquivos, por favor remova {excess} arquivos.",
+    "uploading": "Enviando...",
+    "uploadSingle": "Enviar arquivo",
+    "uploadMultiple": "Enviar {count} arquivos",
+    "uploadGeneral": "Enviar arquivos",
+    "dragDrop": "Arraste e solte ou",
+    "selectFile": "selecione um arquivo",
+    "selectFiles": "selecione arquivos",
+    "toUpload": "para enviar",
+    "maxFileSize": "Tamanho máximo do arquivo: {size}",
+    "fileTooLarge": "O arquivo é maior que {max} (Tamanho: {size})",
+    "failedUpload": "Falha no envio: {message}"
   }
 }

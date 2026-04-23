@@ -84,7 +84,9 @@
     "name": "Nome",
     "somethingWentWrong": "Si è verificato un errore durante il caricamento delle transazioni.",
     "spendingByCategory": "Spese per categoria",
-    "monthlyBreakdown": "Suddivisione del mese corrente per valuta"
+    "monthlyBreakdown": "Suddivisione del mese corrente per valuta",
+    "selectView": "Seleziona una vista",
+    "viewLabel": "Vista"
   },
   "Categories": {
     "RENT": {
@@ -459,7 +461,9 @@
     "create": "Crea transazione",
     "update": "Aggiorna transazione",
     "transactionCreated": "Transazione creata",
-    "transactionUpdated": "Transazione aggiornata"
+    "transactionUpdated": "Transazione aggiornata",
+    "selectCategory": "Seleziona categoria",
+    "systemLabel": "(sistema)"
   },
   "TemplateForm": {
     "name": "Nome modello",
@@ -508,6 +512,26 @@
     "ordinal1": "primo",
     "ordinal2": "secondo",
     "ordinal3": "terzo",
-    "ordinal4": "quarto"
+    "ordinal4": "quarto",
+    "selectCategory": "Seleziona categoria",
+    "systemLabel": "(sistema)"
+  },
+  "Dropzone": {
+    "uploadingFile": "Caricamento file...",
+    "uploadedFile": "File caricato con successo",
+    "uploadedFiles": "{count} file caricati con successo",
+    "exceedMax": "Puoi caricare fino a {max} file, rimuovi {excess} file.",
+    "exceedMaxPlural": "Puoi caricare fino a {max} file, rimuovi {excess} file.",
+    "uploading": "Caricamento...",
+    "uploadSingle": "Carica file",
+    "uploadMultiple": "Carica {count} file",
+    "uploadGeneral": "Carica file",
+    "dragDrop": "Trascina e rilascia o",
+    "selectFile": "seleziona file",
+    "selectFiles": "seleziona file",
+    "toUpload": "per caricare",
+    "maxFileSize": "Dimensione massima del file: {size}",
+    "fileTooLarge": "Il file è più grande di {max} (Dimensione: {size})",
+    "failedUpload": "Caricamento fallito: {message}"
   }
 }

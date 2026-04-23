@@ -751,12 +751,12 @@ export default function TemplateForm({
                 onValueChange={(v) => updateItem(index, 'transaction_item_category_id', v || null as any)}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select category">
+                  <SelectValue placeholder={t('selectCategory')}>
                     {(() => {
                       const cat = item.transaction_item_category_id
                         ? categoryGroups.flatMap((g) => g.categories).find((c) => c.id === item.transaction_item_category_id)
                         : null
-                      if (!cat) return 'Select category'
+                      if (!cat) return t('selectCategory')
                       const nameKey = `${cat.name}.name` as Parameters<typeof tc>[0]
                       return tc.has(nameKey) ? tc(nameKey) : cat.name
                     })()}
@@ -771,7 +771,7 @@ export default function TemplateForm({
                           return tg.has(gNameKey) ? tg(gNameKey) : group.name
                         })()}
                         {group.owner_id === null && (
-                          <span className="text-[10px] font-normal text-muted-foreground">(system)</span>
+                          <span className="text-[10px] font-normal text-muted-foreground">{t('systemLabel')}</span>
                         )}
                       </SelectLabel>
                       {group.categories.map((cat) => {
