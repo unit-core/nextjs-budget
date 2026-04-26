@@ -1,5 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
-import { createClient as createAdminClient } from "@supabase/supabase-js";
+import { type SupabaseClient } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { hasEnvVars } from "@/lib/utils";
 
@@ -40,7 +40,7 @@ export async function proxy(request: NextRequest) {
 
   // Signed in + has subscription → always go to /protected
   if (user && isPublic) {
-    const hasSubscription = await checkActiveSubscription(user.sub);
+    const hasSubscription = await checkActiveSubscription(supabase, user.sub);
     if (hasSubscription) {
       const url = request.nextUrl.clone();
       url.pathname = "/protected";
@@ -63,7 +63,7 @@ export async function proxy(request: NextRequest) {
 
   // Signed in + accessing /protected → check subscription
   if (pathname.startsWith("/protected")) {
-    const hasSubscription = await checkActiveSubscription(user.sub);
+    const hasSubscription = await checkActiveSubscription(supabase, user.sub);
     if (!hasSubscription) {
       const url = request.nextUrl.clone();
       url.pathname = "/pricing";
@@ -74,16 +74,13 @@ export async function proxy(request: NextRequest) {
   return supabaseResponse;
 }
 
-async function checkActiveSubscription(userId: string): Promise<boolean> {
+async function checkActiveSubscription(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<boolean> {
   console.log(`[subscription] checking for user ${userId}`);
 
-  const admin = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { persistSession: false } },
-  );
-
-  const { data: profile, error: profileError } = await admin
+  const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("stripe_customer_id")
     .eq("id", userId)
@@ -101,7 +98,7 @@ async function checkActiveSubscription(userId: string): Promise<boolean> {
 
   console.log(`[subscription] found customer ${profile.stripe_customer_id}, checking stripe.subscriptions...`);
 
-  const { data: hasSubscription, error: subError } = await admin
+  const { data: hasSubscription, error: subError } = await supabase
     .rpc("has_active_subscription", { customer_id: profile.stripe_customer_id });
 
   if (subError) {
