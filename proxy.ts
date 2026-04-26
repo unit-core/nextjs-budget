@@ -34,12 +34,27 @@ export async function proxy(request: NextRequest) {
   const user = data?.claims;
   const { pathname } = request.nextUrl;
 
-  // Always allow auth routes, root landing page, and public pricing page
-  if (pathname.startsWith("/auth") || pathname === "/" || pathname.startsWith("/pricing")) {
+  const isAuthRoute = pathname.startsWith("/auth");
+  const isPricing = pathname.startsWith("/pricing");
+  const isPublic = pathname === "/" || isAuthRoute || isPricing;
+
+  // Signed in + has subscription → always go to /protected
+  if (user && isPublic) {
+    const hasSubscription = await checkActiveSubscription(user.sub);
+    if (hasSubscription) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/protected";
+      return NextResponse.redirect(url);
+    }
     return supabaseResponse;
   }
 
-  // Not signed in → redirect to login
+  // Not signed in on a public route → allow through
+  if (!user && isPublic) {
+    return supabaseResponse;
+  }
+
+  // Not signed in on a protected route → login
   if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
