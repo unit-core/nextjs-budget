@@ -60,28 +60,47 @@ export async function proxy(request: NextRequest) {
 }
 
 async function checkActiveSubscription(userId: string): Promise<boolean> {
+  console.log(`[subscription] checking for user ${userId}`);
+
   const admin = createAdminClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { persistSession: false } },
   );
 
-  const { data: profile } = await admin
+  const { data: profile, error: profileError } = await admin
     .from("profiles")
     .select("stripe_customer_id")
     .eq("id", userId)
     .maybeSingle();
 
-  if (!profile?.stripe_customer_id) return false;
+  if (profileError) {
+    console.error(`[subscription] failed to fetch profile:`, profileError.message);
+    return false;
+  }
 
-  const { data: subscription } = await (admin.schema("stripe") as any)
-    .from("subscriptions")
-    .select("status")
-    .eq("customer", profile.stripe_customer_id)
-    .in("status", ["active", "trialing"])
-    .maybeSingle();
+  if (!profile?.stripe_customer_id) {
+    console.log(`[subscription] no stripe_customer_id found for user ${userId} → redirect to pricing`);
+    return false;
+  }
 
-  return !!subscription;
+  console.log(`[subscription] found customer ${profile.stripe_customer_id}, checking stripe.subscriptions...`);
+
+  const { data: hasSubscription, error: subError } = await admin
+    .rpc("has_active_subscription", { customer_id: profile.stripe_customer_id });
+
+  if (subError) {
+    console.error(`[subscription] failed to query stripe.subscriptions:`, subError.message);
+    return false;
+  }
+
+  if (!hasSubscription) {
+    console.log(`[subscription] no active/trialing subscription for customer ${profile.stripe_customer_id} → redirect to pricing`);
+    return false;
+  }
+
+  console.log(`[subscription] active subscription found → allow access`);
+  return true;
 }
 
 export const config = {
