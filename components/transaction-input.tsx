@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { ArrowUp, FileIcon, Plus, Trash2, Upload, X } from "lucide-react"
+import { ArrowUp, FileIcon, Paperclip, Plus, Trash2, Upload, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { type UseSupabaseUploadReturn } from "@/hooks/use-supabase-upload"
@@ -32,6 +32,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group"
+import { Spinner } from "@/components/ui/spinner"
 
 type ButtonState = "idle" | "text" | "files"
 
@@ -39,6 +40,7 @@ type UploadProps = Pick<UseSupabaseUploadReturn, "files" | "setFiles" | "inputRe
 
 interface TransactionInputProps {
   uploadProps: UploadProps
+  loading?: boolean
   onSubmitText?: (text: string) => void
   onSubmitFiles?: (files: File[]) => void
 }
@@ -116,6 +118,7 @@ function FilePreview({ file, url }: { file: File; url: string | undefined }) {
 
 export function TransactionInput({
   uploadProps,
+  loading = false,
   onSubmitText,
   onSubmitFiles,
 }: TransactionInputProps) {
@@ -267,6 +270,7 @@ export function TransactionInput({
                 className="px-2 w-full"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                disabled={loading}
               />
               {!inputValue && (
                 <span className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-sm text-muted-foreground overflow-hidden whitespace-nowrap select-none">
@@ -321,6 +325,7 @@ export function TransactionInput({
                 aria-label="More"
                 size="icon-xs"
                 className="rounded-full size-8"
+                disabled={loading}
               >
                 <Plus />
               </InputGroupButton>
@@ -328,6 +333,7 @@ export function TransactionInput({
             <DropdownMenuContent align="end">
               <DropdownMenuGroup>
                 <DropdownMenuItem onSelect={() => inputRef.current?.click()}>
+                  <Paperclip />
                   Add files
                 </DropdownMenuItem>
               </DropdownMenuGroup>
@@ -341,6 +347,7 @@ export function TransactionInput({
             aria-label="Submit"
             size="icon-sm"
             onClick={handleAction}
+            disabled={loading}
             className={cn(
               "rounded-full h-8 overflow-hidden",
               "transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
@@ -350,10 +357,18 @@ export function TransactionInput({
             )}
           >
             <span className="relative size-4">
+              <span
+                className={cn(
+                  "absolute inset-0 flex items-center justify-center transition-all duration-200 ease-out",
+                  loading ? "opacity-100 scale-100" : "opacity-0 scale-50",
+                )}
+              >
+                <Spinner className="size-4" />
+              </span>
               <ArrowUp
                 className={cn(
                   "size-4 absolute inset-0 transition-all duration-200 ease-out",
-                  buttonState === "text"
+                  !loading && buttonState === "text"
                     ? "opacity-100 scale-100 rotate-0"
                     : "opacity-0 scale-50 rotate-45",
                 )}
@@ -361,7 +376,7 @@ export function TransactionInput({
               <Upload
                 className={cn(
                   "size-4 absolute inset-0 transition-all duration-200 ease-out",
-                  buttonState === "files"
+                  !loading && buttonState === "files"
                     ? "opacity-100 scale-100 rotate-0"
                     : "opacity-0 scale-50 -rotate-45",
                 )}
