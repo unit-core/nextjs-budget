@@ -1,9 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { ArrowUp, FileIcon, Plus, Trash2, Upload, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useSupabaseUpload, type UseSupabaseUploadOptions } from "@/hooks/use-supabase-upload"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -34,7 +35,7 @@ import {
 
 type ButtonState = "idle" | "text" | "files"
 
-interface TransactionInputProps {
+interface TransactionInputProps extends Partial<UseSupabaseUploadOptions> {
   onSubmitText?: (text: string) => void
   onSubmitFiles?: (files: File[]) => void
 }
@@ -51,8 +52,8 @@ function useIsDesktop() {
   return isDesktop
 }
 
-function FilePreview({ file, url }: { file: File; url: string }) {
-  if (file.type.startsWith("image/")) {
+function FilePreview({ file, url }: { file: File; url: string | undefined }) {
+  if (file.type.startsWith("image/") && url) {
     return (
       <div className="flex items-center justify-center overflow-auto p-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -65,7 +66,7 @@ function FilePreview({ file, url }: { file: File; url: string }) {
     )
   }
 
-  if (file.type === "application/pdf") {
+  if (file.type === "application/pdf" && url) {
     return (
       <iframe
         src={url}
@@ -84,23 +85,31 @@ function FilePreview({ file, url }: { file: File; url: string }) {
   )
 }
 
-export function TransactionInput({ onSubmitText, onSubmitFiles }: TransactionInputProps) {
+export function TransactionInput({
+  onSubmitText,
+  onSubmitFiles,
+  bucketName = "transactions",
+  ...uploadOptions
+}: TransactionInputProps) {
   const [inputValue, setInputValue] = useState("")
-  const [files, setFiles] = useState<File[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selected, setSelected] = useState<Set<number>>(new Set())
-  const [preview, setPreview] = useState<{ file: File; url: string } | null>(null)
+  const [preview, setPreview] = useState<{ file: File; url: string | undefined } | null>(null)
 
-  const openPreview = (file: File) => {
-    const url = URL.createObjectURL(file)
-    setPreview({ file, url })
+  const { files, setFiles, inputRef, getInputProps, getRootProps } = useSupabaseUpload({
+    bucketName,
+    maxFiles: 100,
+    ...uploadOptions,
+  })
+
+  const openPreview = (file: File & { preview?: string }) => {
+    setPreview({ file, url: file.preview })
   }
 
   const closePreview = () => {
-    if (preview) URL.revokeObjectURL(preview.url)
     setPreview(null)
   }
-  const fileInputRef = useRef<HTMLInputElement>(null)
+
   const isDesktop = useIsDesktop()
 
   const buttonState: ButtonState =
@@ -113,12 +122,6 @@ export function TransactionInput({ onSubmitText, onSubmitFiles }: TransactionInp
   const handleAction = () => {
     if (buttonState === "text") onSubmitText?.(inputValue)
     else if (buttonState === "files") onSubmitFiles?.(files)
-  }
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const added = Array.from(e.target.files ?? [])
-    if (added.length > 0) setFiles((prev) => [...prev, ...added])
-    e.target.value = ""
   }
 
   const toggleSelect = (i: number) => {
@@ -140,14 +143,8 @@ export function TransactionInput({ onSubmitText, onSubmitFiles }: TransactionInp
     `${files.length} файлов`
 
   return (
-    <div className="grid w-full max-w-xl">
-      <input
-        ref={fileInputRef}
-        type="file"
-        multiple
-        className="hidden"
-        onChange={handleFileChange}
-      />
+    <div className="grid w-full max-w-xl" {...getRootProps()}>
+      <input {...getInputProps()} className="hidden" />
 
       {/* File preview dialog */}
       <Dialog open={!!preview} onOpenChange={(open) => !open && closePreview()}>
@@ -260,7 +257,7 @@ export function TransactionInput({ onSubmitText, onSubmitFiles }: TransactionInp
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuGroup>
-                <DropdownMenuItem onSelect={() => fileInputRef.current?.click()}>
+                <DropdownMenuItem onSelect={() => inputRef.current?.click()}>
                   Add files
                 </DropdownMenuItem>
               </DropdownMenuGroup>
