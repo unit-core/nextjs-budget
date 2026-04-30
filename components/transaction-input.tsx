@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ArrowUp, FileIcon, Plus, Trash2, Upload, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -55,6 +55,32 @@ function useIsDesktop() {
   return isDesktop
 }
 
+function useTypewriter(text: string, key: number, charDelay = 48) {
+  const [displayed, setDisplayed] = useState("")
+  const [typing, setTyping] = useState(true)
+
+  useEffect(() => {
+    setDisplayed("")
+    setTyping(true)
+    let i = 0
+    const id = setInterval(() => {
+      i++
+      setDisplayed(text.slice(0, i))
+      if (i >= text.length) {
+        clearInterval(id)
+        setTyping(false)
+      }
+    }, charDelay)
+    return () => {
+      clearInterval(id)
+      setTyping(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key])
+
+  return { displayed, typing }
+}
+
 function FilePreview({ file, url }: { file: File; url: string | undefined }) {
   if (file.type.startsWith("image/") && url) {
     return (
@@ -97,6 +123,7 @@ export function TransactionInput({
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selected, setSelected] = useState<Set<number>>(new Set())
   const [preview, setPreview] = useState<{ file: File; url: string | undefined } | null>(null)
+  const [twKey, setTwKey] = useState(0)
 
   const { files, setFiles, inputRef, getInputProps } = uploadProps
 
@@ -104,9 +131,7 @@ export function TransactionInput({
     setPreview({ file, url: file.preview })
   }
 
-  const closePreview = () => {
-    setPreview(null)
-  }
+  const closePreview = () => setPreview(null)
 
   const isDesktop = useIsDesktop()
 
@@ -116,6 +141,19 @@ export function TransactionInput({
     "idle"
 
   const isVisible = buttonState !== "idle"
+
+  const prevButtonState = useRef<ButtonState>(buttonState)
+  useEffect(() => {
+    if (prevButtonState.current === "files" && buttonState !== "files") {
+      setTwKey((k) => k + 1)
+    }
+    prevButtonState.current = buttonState
+  })
+
+  const { displayed: placeholderText, typing: isTyping } = useTypewriter(
+    "Coffee €4.50, groceries €32, rent €1200...",
+    twKey,
+  )
 
   const handleAction = () => {
     if (buttonState === "text") onSubmitText?.(inputValue)
@@ -144,7 +182,6 @@ export function TransactionInput({
     <div className="grid w-full max-w-xl">
       <input {...getInputProps()} className="hidden" />
 
-      {/* File preview dialog */}
       <Dialog open={!!preview} onOpenChange={(open) => !open && closePreview()}>
         <DialogContent>
           <DialogHeader>
@@ -154,7 +191,6 @@ export function TransactionInput({
         </DialogContent>
       </Dialog>
 
-      {/* File list drawer */}
       <Drawer
         open={drawerOpen}
         onOpenChange={(open) => {
@@ -213,8 +249,50 @@ export function TransactionInput({
       </Drawer>
 
       <InputGroup className="rounded-full h-12">
-        {buttonState === "files" ? (
-          <div className="flex flex-1 items-center pl-2 min-w-0">
+        {/* Crossfading content area */}
+        <div className="relative flex-1 min-w-0 self-stretch flex items-center overflow-hidden">
+
+          {/* Text input view */}
+          <div
+            className={cn(
+              "absolute inset-0 flex items-center transition-all duration-300 ease-out",
+              buttonState === "files"
+                ? "opacity-0 -translate-x-2 pointer-events-none"
+                : "opacity-100 translate-x-0",
+            )}
+          >
+            <div className="relative flex-1 flex items-center h-full">
+              <InputGroupInput
+                placeholder=""
+                className="px-2 w-full"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              {!inputValue && (
+                <span className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-sm text-muted-foreground overflow-hidden whitespace-nowrap select-none">
+                  {placeholderText}
+                  {isTyping && (
+                    <span
+                      className="ml-px"
+                      style={{ animation: "blink 0.7s step-end infinite" }}
+                    >
+                      |
+                    </span>
+                  )}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Files pill view */}
+          <div
+            className={cn(
+              "absolute inset-0 flex items-center pl-2 transition-all duration-300 ease-out",
+              buttonState !== "files"
+                ? "opacity-0 translate-x-2 pointer-events-none"
+                : "opacity-100 translate-x-0",
+            )}
+          >
             <div className="flex items-center gap-1.5 rounded-full bg-muted pl-4 pr-3 py-1.5">
               <button
                 type="button"
@@ -233,14 +311,8 @@ export function TransactionInput({
               </button>
             </div>
           </div>
-        ) : (
-          <InputGroupInput
-            placeholder="Enter transaction..."
-            className="px-2"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-        )}
+        </div>
+
         <InputGroupAddon align="inline-start">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -262,6 +334,7 @@ export function TransactionInput({
             </DropdownMenuContent>
           </DropdownMenu>
         </InputGroupAddon>
+
         <InputGroupAddon align="inline-end">
           <InputGroupButton
             variant="default"
@@ -269,21 +342,28 @@ export function TransactionInput({
             size="icon-sm"
             onClick={handleAction}
             className={cn(
-              "rounded-full h-8 transition-all duration-200 ease-in-out overflow-hidden",
-              isVisible ? "w-8 opacity-100" : "w-0 opacity-0 pointer-events-none",
+              "rounded-full h-8 overflow-hidden",
+              "transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+              isVisible
+                ? "w-8 opacity-100 scale-100"
+                : "w-0 opacity-0 scale-75 pointer-events-none",
             )}
           >
             <span className="relative size-4">
               <ArrowUp
                 className={cn(
-                  "size-4 absolute inset-0 transition-all duration-150",
-                  buttonState === "text" ? "opacity-100 scale-100" : "opacity-0 scale-50",
+                  "size-4 absolute inset-0 transition-all duration-200 ease-out",
+                  buttonState === "text"
+                    ? "opacity-100 scale-100 rotate-0"
+                    : "opacity-0 scale-50 rotate-45",
                 )}
               />
               <Upload
                 className={cn(
-                  "size-4 absolute inset-0 transition-all duration-150",
-                  buttonState === "files" ? "opacity-100 scale-100" : "opacity-0 scale-50",
+                  "size-4 absolute inset-0 transition-all duration-200 ease-out",
+                  buttonState === "files"
+                    ? "opacity-100 scale-100 rotate-0"
+                    : "opacity-0 scale-50 -rotate-45",
                 )}
               />
             </span>
