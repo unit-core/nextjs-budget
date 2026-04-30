@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { ArrowUp, FileIcon, Plus, Trash2, Upload, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { useSupabaseUpload, type UseSupabaseUploadOptions } from "@/hooks/use-supabase-upload"
+import { type UseSupabaseUploadReturn } from "@/hooks/use-supabase-upload"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -35,7 +35,10 @@ import {
 
 type ButtonState = "idle" | "text" | "files"
 
-interface TransactionInputProps extends Partial<UseSupabaseUploadOptions> {
+type UploadProps = Pick<UseSupabaseUploadReturn, "files" | "setFiles" | "inputRef" | "getInputProps">
+
+interface TransactionInputProps {
+  uploadProps: UploadProps
   onSubmitText?: (text: string) => void
   onSubmitFiles?: (files: File[]) => void
 }
@@ -86,21 +89,16 @@ function FilePreview({ file, url }: { file: File; url: string | undefined }) {
 }
 
 export function TransactionInput({
+  uploadProps,
   onSubmitText,
   onSubmitFiles,
-  bucketName = "transactions",
-  ...uploadOptions
 }: TransactionInputProps) {
   const [inputValue, setInputValue] = useState("")
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selected, setSelected] = useState<Set<number>>(new Set())
   const [preview, setPreview] = useState<{ file: File; url: string | undefined } | null>(null)
 
-  const { files, setFiles, inputRef, getInputProps, getRootProps } = useSupabaseUpload({
-    bucketName,
-    maxFiles: 100,
-    ...uploadOptions,
-  })
+  const { files, setFiles, inputRef, getInputProps } = uploadProps
 
   const openPreview = (file: File & { preview?: string }) => {
     setPreview({ file, url: file.preview })
@@ -143,7 +141,7 @@ export function TransactionInput({
     `${files.length} файлов`
 
   return (
-    <div className="grid w-full max-w-xl" {...getRootProps()}>
+    <div className="grid w-full max-w-xl">
       <input {...getInputProps()} className="hidden" />
 
       {/* File preview dialog */}
