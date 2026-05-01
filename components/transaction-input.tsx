@@ -4,15 +4,8 @@ import { useEffect, useRef, useState } from "react"
 import { ArrowUp, FileIcon, Paperclip, Plus, Trash2, Upload, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { type UseSupabaseUploadReturn } from "@/hooks/use-supabase-upload"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 import {
   Drawer,
   DrawerContent,
@@ -36,11 +29,12 @@ import { Spinner } from "@/components/ui/spinner"
 
 type ButtonState = "idle" | "text" | "files"
 
-type UploadProps = Pick<UseSupabaseUploadReturn, "files" | "setFiles" | "inputRef" | "getInputProps">
-
 interface TransactionInputProps {
-  uploadProps: UploadProps
+  files: File[]
+  onFilesChange: (files: File[]) => void
   loading?: boolean
+  allowedMimeTypes?: string[]
+  maxFiles?: number
   onSubmitText?: (text: string) => void
   onSubmitFiles?: (files: File[]) => void
 }
@@ -83,58 +77,20 @@ function useTypewriter(text: string, key: number, charDelay = 48) {
   return { displayed, typing }
 }
 
-function FilePreview({ file, url }: { file: File; url: string | undefined }) {
-  if (file.type.startsWith("image/") && url) {
-    return (
-      <div className="flex items-center justify-center overflow-auto p-4">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={url}
-          alt={file.name}
-          className="max-h-[60vh] max-w-full rounded-md object-contain"
-        />
-      </div>
-    )
-  }
-
-  if (file.type === "application/pdf" && url) {
-    return (
-      <iframe
-        src={url}
-        title={file.name}
-        className="h-[65vh] w-full rounded-b-xl"
-      />
-    )
-  }
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-3 p-10 text-muted-foreground">
-      <FileIcon className="size-12 opacity-40" />
-      <p className="text-sm">{file.name}</p>
-      <p className="text-xs opacity-60">{(file.size / 1024).toFixed(0)} KB</p>
-    </div>
-  )
-}
-
 export function TransactionInput({
-  uploadProps,
+  files,
+  onFilesChange,
   loading = false,
+  allowedMimeTypes,
+  maxFiles = 1,
   onSubmitText,
   onSubmitFiles,
 }: TransactionInputProps) {
   const [inputValue, setInputValue] = useState("")
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selected, setSelected] = useState<Set<number>>(new Set())
-  const [preview, setPreview] = useState<{ file: File; url: string | undefined } | null>(null)
   const [twKey, setTwKey] = useState(0)
-
-  const { files, setFiles, inputRef, getInputProps } = uploadProps
-
-  const openPreview = (file: File & { preview?: string }) => {
-    setPreview({ file, url: file.preview })
-  }
-
-  const closePreview = () => setPreview(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const isDesktop = useIsDesktop()
 
@@ -163,6 +119,14 @@ export function TransactionInput({
     else if (buttonState === "files") onSubmitFiles?.(files)
   }
 
+  const handlePickFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const picked = Array.from(e.target.files ?? [])
+    if (picked.length === 0) return
+    const deduped = picked.filter((f) => !files.some((p) => p.name === f.name))
+    onFilesChange([...files, ...deduped])
+    e.target.value = ""
+  }
+
   const toggleSelect = (i: number) => {
     setSelected((prev) => {
       const next = new Set(prev)
@@ -172,7 +136,7 @@ export function TransactionInput({
   }
 
   const deleteSelected = () => {
-    setFiles((prev) => prev.filter((_, i) => !selected.has(i)))
+    onFilesChange(files.filter((_, i) => !selected.has(i)))
     setSelected(new Set())
   }
 
@@ -183,16 +147,14 @@ export function TransactionInput({
 
   return (
     <div className="grid w-full max-w-xl">
-      <input {...getInputProps()} className="hidden" />
-
-      <Dialog open={!!preview} onOpenChange={(open) => !open && closePreview()}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="truncate pr-6">{preview?.file.name}</DialogTitle>
-          </DialogHeader>
-          {preview && <FilePreview file={preview.file} url={preview.url} />}
-        </DialogContent>
-      </Dialog>
+      <input
+        ref={fileInputRef}
+        type="file"
+        className="hidden"
+        accept={allowedMimeTypes?.join(",")}
+        multiple={maxFiles !== 1}
+        onChange={handlePickFiles}
+      />
 
       <Drawer
         open={drawerOpen}
@@ -223,7 +185,7 @@ export function TransactionInput({
             {files.map((file, i) => (
               <div
                 key={i}
-                className="group flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-muted cursor-pointer"
+                className="group flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-muted"
               >
                 <Checkbox
                   checked={selected.has(i)}
@@ -231,20 +193,13 @@ export function TransactionInput({
                   onClick={(e) => e.stopPropagation()}
                   className="shrink-0"
                 />
-                <button
-                  type="button"
-                  className="flex flex-1 items-center gap-2.5 min-w-0 text-left"
-                  onClick={() => {
-                    openPreview(file)
-                    setDrawerOpen(false)
-                  }}
-                >
+                <div className="flex flex-1 items-center gap-2.5 min-w-0">
                   <FileIcon className="size-4 shrink-0 text-muted-foreground" />
                   <span className="flex-1 truncate text-sm">{file.name}</span>
                   <span className="text-xs text-muted-foreground shrink-0">
                     {(file.size / 1024).toFixed(0)} KB
                   </span>
-                </button>
+                </div>
               </div>
             ))}
           </div>
@@ -308,7 +263,7 @@ export function TransactionInput({
               <button
                 type="button"
                 className="flex items-center justify-center leading-none text-muted-foreground hover:text-foreground transition-colors pl-1"
-                onClick={() => setFiles([])}
+                onClick={() => onFilesChange([])}
                 aria-label="Сбросить файлы"
               >
                 <X className="size-3" />
@@ -332,7 +287,7 @@ export function TransactionInput({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuGroup>
-                <DropdownMenuItem onSelect={() => inputRef.current?.click()}>
+                <DropdownMenuItem onSelect={() => fileInputRef.current?.click()}>
                   <Paperclip />
                   Add files
                 </DropdownMenuItem>

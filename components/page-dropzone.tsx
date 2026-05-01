@@ -1,19 +1,43 @@
 "use client"
 
-import { type ReactNode } from "react"
+import { useCallback, type ReactNode } from "react"
 import { Upload } from "lucide-react"
+import { useDropzone } from "react-dropzone"
 
 import { cn } from "@/lib/utils"
-import { useSupabaseUpload, type UseSupabaseUploadOptions, type UseSupabaseUploadReturn } from "@/hooks/use-supabase-upload"
 
-interface PageDropzoneProps extends UseSupabaseUploadOptions {
-  children: (uploadProps: UseSupabaseUploadReturn) => ReactNode
+interface PageDropzoneProps {
+  onFilesDrop: (files: File[]) => void
+  allowedMimeTypes?: string[]
+  maxFiles?: number
+  maxFileSize?: number
+  children: ReactNode
   className?: string
 }
 
-export function PageDropzone({ children, className, ...uploadOptions }: PageDropzoneProps) {
-  const uploadProps = useSupabaseUpload(uploadOptions)
-  const { getRootProps, getInputProps, isDragActive } = uploadProps
+export function PageDropzone({
+  onFilesDrop,
+  allowedMimeTypes = [],
+  maxFiles = 1,
+  maxFileSize = Number.POSITIVE_INFINITY,
+  children,
+  className,
+}: PageDropzoneProps) {
+  const onDrop = useCallback(
+    (accepted: File[]) => {
+      if (accepted.length > 0) onFilesDrop(accepted)
+    },
+    [onFilesDrop],
+  )
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    noClick: true,
+    accept: allowedMimeTypes.reduce((acc, type) => ({ ...acc, [type]: [] }), {}),
+    maxSize: maxFileSize,
+    maxFiles,
+    multiple: maxFiles !== 1,
+  })
 
   return (
     <div
@@ -32,7 +56,7 @@ export function PageDropzone({ children, className, ...uploadOptions }: PageDrop
         </div>
       )}
 
-      {children(uploadProps)}
+      {children}
     </div>
   )
 }

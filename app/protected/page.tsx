@@ -1,16 +1,41 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { PageDropzone } from "@/components/page-dropzone"
 import { TransactionInput } from "@/components/transaction-input"
 import { createClient } from "@/lib/supabase/client"
+import { uploadFiles } from "@/lib/uploads/upload-files"
 import type { TransactionInsert } from "@/lib/models/transaction"
 
 export default function ProtectedPage() {
   const [loading, setLoading] = useState(false)
   const [resetKey, setResetKey] = useState(0)
+  const [files, setFiles] = useState<File[]>([])
+  const [userId, setUserId] = useState<string | undefined>()
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => {
+      setUserId(data.user?.id)
+    })
+  }, [])
+
+  const uploadConfig = {
+    bucketName: "transactions",
+    path: userId,
+    allowedMimeTypes: ["image/*", "application/pdf"],
+    maxFiles: 10,
+    maxFileSize: 1000 * 1000 * 5,
+  }
+
+  const handleFilesAdd = (incoming: File[]) => {
+    setFiles((prev) => {
+      const deduped = incoming.filter((f) => !prev.some((p) => p.name === f.name))
+      return [...prev, ...deduped].slice(0, uploadConfig.maxFiles)
+    })
+  }
 
   const handleSubmitText = async (text: string) => {
     setLoading(true)
@@ -42,31 +67,50 @@ export default function ProtectedPage() {
     }
   }
 
-  const handleSubmitFiles = async (files: File[]) => {
+  const handleSubmitFiles = async (toUpload: File[]) => {
     setLoading(true)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      // TODO: upload files and save transactions to database
+      if (!userId) throw new Error("Не удалось получить пользователя")
+
+      const { errors } = await uploadFiles(toUpload, {
+        bucketName: uploadConfig.bucketName,
+        path: uploadConfig.path,
+      })
+      if (errors.length > 0) throw new Error(errors[0].message)
+
+      toast.success("Файлы загружены", { position: "top-center" })
+      setFiles([])
+    } catch (err) {
+      toast.error("Ошибка при загрузке", {
+        description: err instanceof Error ? err.message : "Попробуйте ещё раз",
+        position: "top-center",
+      })
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <PageDropzone bucketName="transactions" maxFiles={10}>
-      {(uploadProps) => (
-        <div className="flex flex-col flex-1 items-center justify-center p-4">
-          <div className="relative w-full max-w-xl">
-            <TransactionInput
-              key={resetKey}
-              uploadProps={uploadProps}
-              loading={loading}
-              onSubmitText={handleSubmitText}
-              onSubmitFiles={handleSubmitFiles}
-            />
-          </div>
+    <PageDropzone
+      onFilesDrop={handleFilesAdd}
+      allowedMimeTypes={uploadConfig.allowedMimeTypes}
+      maxFiles={uploadConfig.maxFiles}
+      maxFileSize={uploadConfig.maxFileSize}
+    >
+      <div className="flex flex-col flex-1 items-center justify-center p-4">
+        <div className="relative w-full max-w-xl">
+          <TransactionInput
+            key={resetKey}
+            files={files}
+            onFilesChange={setFiles}
+            loading={loading}
+            allowedMimeTypes={uploadConfig.allowedMimeTypes}
+            maxFiles={uploadConfig.maxFiles}
+            onSubmitText={handleSubmitText}
+            onSubmitFiles={handleSubmitFiles}
+          />
         </div>
-      )}
+      </div>
     </PageDropzone>
   )
 }
