@@ -225,6 +225,12 @@ export function TransactionInput({
                 className="px-2 w-full"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey && !loading && isVisible) {
+                    e.preventDefault()
+                    handleAction()
+                  }
+                }}
                 disabled={loading}
               />
               {!inputValue && (
