@@ -64,7 +64,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 function CurrencyChart({ breakdown }: { breakdown: CurrencyBreakdown }) {
-  const data = [...breakdown.byCategory].sort((a, b) => b.amount - a.amount)
+  const data = [...breakdown.byCategory].sort((a, b) => a.amount - b.amount)
   const height = Math.max(60, data.length * 36 + 12)
 
   return (
