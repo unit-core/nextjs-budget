@@ -11,5 +11,5 @@ export default async function ProtectedPage() {
     redirect("/auth/login")
   }
 
-  return <TransactionsClient userId={data.user.id} balance={1235} currency="EUR" />
+  return <TransactionsClient userId={data.user.id} />
 }

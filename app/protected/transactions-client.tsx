@@ -3,14 +3,9 @@
 import { useState } from "react"
 import { toast } from "sonner"
 
+import { MonthlyTotal } from "@/components/monthly-total"
 import { PageDropzone } from "@/components/page-dropzone"
 import { TransactionInput } from "@/components/transaction-input"
-import { Button } from "@/components/ui/button"
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card"
 import { UserMenu } from "@/components/user-menu"
 import { createClient } from "@/lib/supabase/client"
 import { uploadFiles } from "@/lib/uploads/upload-files"
@@ -18,11 +13,9 @@ import type { TransactionInsert } from "@/lib/models/transaction"
 
 interface TransactionsClientProps {
   userId: string
-  balance: number
-  currency: string
 }
 
-export function TransactionsClient({ userId, balance, currency }: TransactionsClientProps) {
+export function TransactionsClient({ userId }: TransactionsClientProps) {
   const [loading, setLoading] = useState(false)
   const [resetKey, setResetKey] = useState(0)
   const [files, setFiles] = useState<File[]>([])
@@ -99,20 +92,7 @@ export function TransactionsClient({ userId, balance, currency }: TransactionsCl
     >
       <div className="absolute top-4 right-4 z-10">
         <div className="flex flex-row items-center">
-          <HoverCard openDelay={10} closeDelay={100}>
-            <HoverCardTrigger asChild>
-              <Button variant="link" size="sm" className="text-muted-foreground">
-                {balance} {currency}
-              </Button>
-            </HoverCardTrigger>
-            <HoverCardContent className="flex w-full flex-col gap-0.5">
-              <div className="font-semibold">@nextjs</div>
-              <div>The React Framework – created and maintained by @vercel.</div>
-              <div className="mt-1 text-xs text-muted-foreground">
-                Joined December 2021
-              </div>
-            </HoverCardContent>
-          </HoverCard>
+          <MonthlyTotal />
           <UserMenu />
         </div>
       </div>

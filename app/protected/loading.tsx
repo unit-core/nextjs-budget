@@ -12,8 +12,10 @@ export default function Loading() {
   return (
     <div className="relative flex flex-col flex-1">
       <div className="absolute top-4 right-4 z-10">
-        <div className="flex flex-row items-center gap-2">
-          <Skeleton className="h-4 w-20 rounded-md" />
+        <div className="flex flex-row items-center">
+          <div className="flex h-8 items-center px-3">
+            <Skeleton className="h-4 w-20 rounded-md" />
+          </div>
           <Skeleton className="h-8 w-8 rounded-full" />
         </div>
       </div>
