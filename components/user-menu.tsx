@@ -20,15 +20,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useCurrentUserEmail } from '@/hooks/use-current-user-email'
-import { useCurrentUserImage } from '@/hooks/use-current-user-image'
 import { useCurrentUserName } from '@/hooks/use-current-user-name'
 import { CurrentUserAvatar } from './current-user-avatar'
-import { Button } from './ui/button'
 
 export function UserMenu() {
   const name = useCurrentUserName()
   const email = useCurrentUserEmail()
-  const avatar = useCurrentUserImage()
 
   const initials = name
     ?.split(' ')
