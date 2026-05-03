@@ -3,6 +3,7 @@
 import * as React from "react"
 import {
   ColumnDef,
+  Row,
   SortingState,
   VisibilityState,
   flexRender,
@@ -36,7 +37,10 @@ import {
 } from "@/components/ui/table"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
 
+import { FiltersDrawer } from "./filters-drawer"
+import { TransactionCard } from "./transaction-card"
 import { useTableUrl } from "./use-table-url"
+import type { AnyTransaction } from "@/lib/models/transaction"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -101,6 +105,8 @@ export function DataTable<TData, TValue>({
   const setPageSize = (size: number) =>
     setParams({ "page[size]": String(size), "page[number]": undefined })
 
+  const rows = table.getRowModel().rows
+
   return (
     <div className="space-y-4" aria-busy={isPending}>
       <div className="flex items-center gap-2">
@@ -108,14 +114,34 @@ export function DataTable<TData, TValue>({
           placeholder="Filter by name..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="max-w-sm"
+          className="hidden max-w-sm md:block"
         />
-        <DataTableViewOptions table={table} />
+        <div className="hidden md:block">
+          <DataTableViewOptions table={table} />
+        </div>
+        <div className="ml-auto md:hidden">
+          <FiltersDrawer searchValue={searchInput} onSearchChange={setSearchInput} />
+        </div>
       </div>
 
       <div
         className={
-          "overflow-hidden rounded-md border transition-opacity " +
+          "md:hidden space-y-2 transition-opacity " +
+          (isPending ? "pointer-events-none opacity-50" : "")
+        }
+      >
+        {rows.length ? (
+          rows.map((row) => (
+            <TransactionCard key={row.id} row={row as unknown as Row<AnyTransaction>} />
+          ))
+        ) : (
+          <div className="rounded-md border p-8 text-center text-muted-foreground">No results.</div>
+        )}
+      </div>
+
+      <div
+        className={
+          "hidden md:block overflow-hidden rounded-md border transition-opacity " +
           (isPending ? "pointer-events-none opacity-50" : "")
         }
       >
