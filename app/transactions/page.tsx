@@ -17,7 +17,6 @@ export default async function TransactionsPage({ searchParams }: PageProps) {
         columns={columns}
         data={page.data}
         pageNumber={page.pageNumber}
-        pageSize={page.pageSize}
         pageCount={page.pageCount}
         rowCount={page.count}
         searchName={query.searchName ?? ""}

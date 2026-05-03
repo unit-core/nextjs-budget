@@ -21,13 +21,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
   Table,
   TableBody,
   TableCell,
@@ -46,7 +39,6 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   pageNumber: number
-  pageSize: number
   pageCount: number
   rowCount: number
   searchName: string
@@ -56,7 +48,6 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   pageNumber,
-  pageSize,
   pageCount,
   rowCount,
   searchName,
@@ -73,7 +64,7 @@ export function DataTable<TData, TValue>({
 
   React.useEffect(() => {
     setRowSelection({})
-  }, [pageNumber, pageSize])
+  }, [pageNumber])
 
   React.useEffect(() => {
     if (searchInput === searchName) return
@@ -101,9 +92,6 @@ export function DataTable<TData, TValue>({
 
   const goToPage = (n: number) =>
     setParams({ "page[number]": String(Math.max(1, Math.min(pageCount, n))) })
-
-  const setPageSize = (size: number) =>
-    setParams({ "page[size]": String(size), "page[number]": undefined })
 
   const rows = table.getRowModel().rows
 
@@ -181,24 +169,11 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
 
-      <div className="flex items-center justify-between px-2">
+      <div className="sticky bottom-4 z-10 mx-2 flex items-center justify-between gap-2 rounded-md border bg-background/95 px-4 py-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/80">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} selected · {rowCount} total
         </div>
         <div className="flex items-center space-x-6 lg:space-x-8">
-          <div className="flex items-center space-x-2">
-            <p className="text-sm font-medium">Rows per page</p>
-            <Select value={`${pageSize}`} onValueChange={(v) => setPageSize(Number(v))}>
-              <SelectTrigger className="h-8 w-[70px]">
-                <SelectValue placeholder={pageSize} />
-              </SelectTrigger>
-              <SelectContent side="top">
-                {[10, 20, 50, 100].map((s) => (
-                  <SelectItem key={s} value={`${s}`}>{s}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
           <div className="flex w-[110px] items-center justify-center text-sm font-medium">
             Page {pageNumber} of {pageCount}
           </div>

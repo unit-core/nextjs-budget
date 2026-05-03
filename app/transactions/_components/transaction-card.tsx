@@ -44,7 +44,7 @@ export function TransactionCard({ row }: TransactionCardProps) {
   return (
     <div
       data-state={row.getIsSelected() && "selected"}
-      className="flex gap-3 rounded-md border bg-card p-4 data-[state=selected]:bg-muted"
+      className="flex gap-3 mx-2 rounded-md border bg-card p-4 data-[state=selected]:bg-muted"
     >
       <Checkbox
         checked={row.getIsSelected()}
