@@ -69,17 +69,7 @@ export function TransactionCard({ row }: TransactionCardProps) {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-1">
-          {t.status !== "CONFIRMED" && (
-            <Badge
-              variant={
-                t.status === "PARSE_ERROR" || t.status === "UNSUPPORTED_DOCUMENT"
-                  ? "destructive"
-                  : "secondary"
-              }
-            >
-              {t.status}
-            </Badge>
-          )}
+          <Badge variant={t.status === "CONFIRMED" ? "default" : "secondary"}>{t.status}</Badge>
           {categories.map((c) => (
             <Badge key={c} variant="secondary">{c}</Badge>
           ))}

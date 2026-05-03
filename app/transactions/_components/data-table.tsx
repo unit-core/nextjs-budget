@@ -5,7 +5,6 @@ import {
   ColumnDef,
   Row,
   SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -28,8 +27,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-
 import { FiltersDrawer } from "./filters-drawer"
 import { TransactionCard } from "./transaction-card"
 import { useTableUrl } from "./use-table-url"
@@ -53,7 +50,6 @@ export function DataTable<TData, TValue>({
   searchName,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
   const [searchInput, setSearchInput] = React.useState(searchName)
   const { setParams, isPending } = useTableUrl()
@@ -80,9 +76,8 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, columnVisibility, rowSelection },
+    state: { sorting, rowSelection },
     onSortingChange: setSorting,
-    onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -104,9 +99,6 @@ export function DataTable<TData, TValue>({
           onChange={(e) => setSearchInput(e.target.value)}
           className="hidden max-w-sm md:block"
         />
-        <div className="hidden md:block">
-          <DataTableViewOptions table={table} />
-        </div>
         <div className="ml-auto md:hidden">
           <FiltersDrawer searchValue={searchInput} onSearchChange={setSearchInput} />
         </div>

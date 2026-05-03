@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import { Bar, BarChart, Cell, LabelList, XAxis, YAxis } from "recharts"
 
@@ -36,6 +37,17 @@ function startOfCurrentMonthUTC(): string {
 function startOfNextMonthUTC(): string {
   const now = new Date()
   return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)).toISOString()
+}
+
+function endOfCurrentMonthUTC(): string {
+  const now = new Date()
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1) - 1).toISOString()
+}
+
+function currentMonthTransactionsHref(): string {
+  const params = new URLSearchParams()
+  params.set("filter[executed_at]", `${startOfCurrentMonthUTC()},${endOfCurrentMonthUTC()}`)
+  return `/transactions?${params.toString()}`
 }
 
 function formatAmount(amount: number, currency: string) {
@@ -206,13 +218,15 @@ export function MonthlyTotal() {
   return (
     <HoverCard openDelay={50} closeDelay={100}>
       <HoverCardTrigger asChild>
-          <Button size="sm" variant="link">
+        <Button size="sm" variant="link" asChild>
+          <Link href={currentMonthTransactionsHref()}>
             <span>
               <span className="text-muted-foreground">{monthName}</span>
               {" "}
               {summary}
             </span>
-          </Button>
+          </Link>
+        </Button>
       </HoverCardTrigger>
       <HoverCardContent align="end" className="flex w-80 flex-col gap-4">
         {breakdowns.length === 0 ? (

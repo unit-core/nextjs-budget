@@ -99,11 +99,10 @@ export const columns: ColumnDef<AnyTransaction>[] = [
     ),
     cell: ({ row }) => {
       const status = row.getValue<string>("status")
-      if (status === "CONFIRMED") return null
       const variant =
-        status === "PARSE_ERROR" || status === "UNSUPPORTED_DOCUMENT"
-          ? "destructive"
-          : "secondary"
+        status === "CONFIRMED" ? "default"
+        : status === "PARSE_ERROR" || status === "UNSUPPORTED_DOCUMENT" ? "destructive"
+        : "secondary"
       return <Badge variant={variant}>{status}</Badge>
     },
   },
