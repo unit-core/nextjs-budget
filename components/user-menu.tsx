@@ -96,14 +96,14 @@ export function UserMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <BadgeCheck />
             Account
           </DropdownMenuItem>
           <DropdownMenuItem>
             <CreditCard />
             Billing
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           {mounted && (
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
