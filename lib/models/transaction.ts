@@ -42,3 +42,9 @@ export type TransactionInsert = Omit<BaseTransaction, 'id' | 'created_at' | 'exe
 }
 
 export type TransactionUpdate = Partial<TransactionInsert>
+
+import type { TransactionItemWithCategory } from './transaction_item'
+
+export type AnyTransaction = BaseTransaction & {
+  transaction_items: TransactionItemWithCategory[]
+}
