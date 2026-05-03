@@ -31,6 +31,6 @@ import type { BaseTransactionItemCategoryGroup } from './transaction_item_catego
 
 export type TransactionItemWithCategory = BaseTransactionItem & {
   transaction_item_category: BaseTransactionItemCategory & {
-    transaction_item_category_group: BaseTransactionItemCategoryGroup | null
+    transaction_item_category_group: BaseTransactionItemCategoryGroup
   }
 }
