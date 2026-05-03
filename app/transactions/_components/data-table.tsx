@@ -3,18 +3,29 @@
 import * as React from "react"
 import {
   ColumnDef,
-  ColumnFiltersState,
   SortingState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react"
 
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -23,56 +34,91 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { DataTablePagination } from "@/components/data-table/data-table-pagination"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
+
+import { useTableUrl } from "./use-table-url"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  pageNumber: number
+  pageSize: number
+  pageCount: number
+  rowCount: number
+  searchName: string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  pageNumber,
+  pageSize,
+  pageCount,
+  rowCount,
+  searchName,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const [searchInput, setSearchInput] = React.useState(searchName)
+  const { setParams, isPending } = useTableUrl()
+
+  React.useEffect(() => {
+    setSearchInput(searchName)
+  }, [searchName])
+
+  React.useEffect(() => {
+    setRowSelection({})
+  }, [pageNumber, pageSize])
+
+  React.useEffect(() => {
+    if (searchInput === searchName) return
+    const t = setTimeout(() => {
+      setParams({
+        "search[name]": searchInput || undefined,
+        "page[number]": undefined,
+      })
+    }, 300)
+    return () => clearTimeout(t)
+  }, [searchInput, searchName, setParams])
 
   const table = useReactTable({
     data,
     columns,
+    state: { sorting, columnVisibility, rowSelection },
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
+    manualPagination: true,
+    pageCount,
   })
 
+  const goToPage = (n: number) =>
+    setParams({ "page[number]": String(Math.max(1, Math.min(pageCount, n))) })
+
+  const setPageSize = (size: number) =>
+    setParams({ "page[size]": String(size), "page[number]": undefined })
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" aria-busy={isPending}>
       <div className="flex items-center gap-2">
         <Input
           placeholder="Filter by name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           className="max-w-sm"
         />
         <DataTableViewOptions table={table} />
       </div>
-      <div className="overflow-hidden rounded-md border">
+
+      <div
+        className={
+          "overflow-hidden rounded-md border transition-opacity " +
+          (isPending ? "pointer-events-none opacity-50" : "")
+        }
+      >
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -90,10 +136,7 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -111,7 +154,68 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+
+      <div className="flex items-center justify-between px-2">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} selected · {rowCount} total
+        </div>
+        <div className="flex items-center space-x-6 lg:space-x-8">
+          <div className="flex items-center space-x-2">
+            <p className="text-sm font-medium">Rows per page</p>
+            <Select value={`${pageSize}`} onValueChange={(v) => setPageSize(Number(v))}>
+              <SelectTrigger className="h-8 w-[70px]">
+                <SelectValue placeholder={pageSize} />
+              </SelectTrigger>
+              <SelectContent side="top">
+                {[10, 20, 50, 100].map((s) => (
+                  <SelectItem key={s} value={`${s}`}>{s}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex w-[110px] items-center justify-center text-sm font-medium">
+            Page {pageNumber} of {pageCount}
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              className="hidden h-8 w-8 p-0 lg:flex"
+              onClick={() => goToPage(1)}
+              disabled={pageNumber <= 1 || isPending}
+            >
+              <span className="sr-only">First page</span>
+              <ChevronsLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              onClick={() => goToPage(pageNumber - 1)}
+              disabled={pageNumber <= 1 || isPending}
+            >
+              <span className="sr-only">Previous page</span>
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              onClick={() => goToPage(pageNumber + 1)}
+              disabled={pageNumber >= pageCount || isPending}
+            >
+              <span className="sr-only">Next page</span>
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="hidden h-8 w-8 p-0 lg:flex"
+              onClick={() => goToPage(pageCount)}
+              disabled={pageNumber >= pageCount || isPending}
+            >
+              <span className="sr-only">Last page</span>
+              <ChevronsRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

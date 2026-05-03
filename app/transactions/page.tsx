@@ -1,22 +1,27 @@
-import { createClient } from "@/lib/supabase/server"
-import type { AnyTransaction } from "@/lib/models/transaction"
-
 import { columns } from "./_components/columns"
 import { DataTable } from "./_components/data-table"
-import { TRANSACTIONS_SELECT } from "./query"
+import { parseTransactionsSearchParams } from "./parse-search-params"
+import { fetchTransactionsPage } from "./query"
 
-export default async function TransactionsPage() {
-  const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("transactions")
-    .select(TRANSACTIONS_SELECT)
-    .order("executed_at", { ascending: false })
+interface PageProps {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}
 
-  if (error) throw error
+export default async function TransactionsPage({ searchParams }: PageProps) {
+  const query = parseTransactionsSearchParams(await searchParams)
+  const page = await fetchTransactionsPage(query)
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={(data ?? []) as AnyTransaction[]} />
+      <DataTable
+        columns={columns}
+        data={page.data}
+        pageNumber={page.pageNumber}
+        pageSize={page.pageSize}
+        pageCount={page.pageCount}
+        rowCount={page.count}
+        searchName={query.searchName ?? ""}
+      />
     </div>
   )
 }

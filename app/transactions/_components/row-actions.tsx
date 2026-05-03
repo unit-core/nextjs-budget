@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -27,14 +27,15 @@ export function RowActions({ transaction }: RowActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem
-          onClick={() => navigator.clipboard.writeText(transaction.id)}
-        >
-          Copy ID
-        </DropdownMenuItem>
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            onClick={() => navigator.clipboard.writeText(transaction.id)}
+          >
+            Copy ID
+          </DropdownMenuItem>
+          <DropdownMenuItem>View details</DropdownMenuItem>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>View details</DropdownMenuItem>
         <DropdownMenuItem className="text-destructive focus:text-destructive">
           Delete
         </DropdownMenuItem>
