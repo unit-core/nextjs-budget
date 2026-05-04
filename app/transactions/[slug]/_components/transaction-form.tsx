@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState, useTransition } from "react"
-import { ArrowDownLeft, ArrowUpRight, Calendar, Check, Copy, Loader2, Trash2 } from "lucide-react"
+import { Calendar, Check, Copy, Loader2, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -16,9 +16,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { cn } from "@/lib/utils"
-import type { AnyTransaction, TransactionType } from "@/lib/models/transaction"
+import type { AnyTransaction } from "@/lib/models/transaction"
 
 import {
   deleteTransactionAndRedirect,
@@ -140,40 +138,6 @@ export function TransactionForm({ transaction }: { transaction: AnyTransaction }
         </div>
 
         <div className="space-y-2">
-          <Label>Type</Label>
-          <ToggleGroup
-            type="single"
-            value={values.transaction_type}
-            onValueChange={(value) => {
-              if (!value) return
-              setValues((v) => ({ ...v, transaction_type: value as TransactionType }))
-            }}
-            className="grid w-full grid-cols-2 gap-2"
-          >
-            <ToggleGroupItem
-              value="EXPENSE"
-              aria-label="Expense"
-              className={cn(
-                "h-12 rounded-md border data-[state=on]:border-rose-500/40 data-[state=on]:bg-rose-500/10 data-[state=on]:text-rose-600 dark:data-[state=on]:text-rose-400",
-              )}
-            >
-              <ArrowUpRight className="size-4" />
-              Expense
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="INCOME"
-              aria-label="Income"
-              className={cn(
-                "h-12 rounded-md border data-[state=on]:border-emerald-500/40 data-[state=on]:bg-emerald-500/10 data-[state=on]:text-emerald-600 dark:data-[state=on]:text-emerald-400",
-              )}
-            >
-              <ArrowDownLeft className="size-4" />
-              Income
-            </ToggleGroupItem>
-          </ToggleGroup>
-        </div>
-
-        <div className="space-y-2">
           <Label htmlFor="executed_at">Executed at</Label>
           <div className="focus-within:border-ring focus-within:ring-ring/50 flex h-10 items-center gap-2 rounded-md border bg-transparent px-3 transition focus-within:ring-[3px]">
             <Calendar className="text-muted-foreground size-4 shrink-0" />
@@ -264,14 +228,19 @@ export function TransactionForm({ transaction }: { transaction: AnyTransaction }
         )}
       </div>
 
-      <div className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky bottom-0 -mx-4 flex items-center justify-between gap-2 border-t px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
+      <div className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky bottom-4 z-10 mx-2 flex items-center justify-between gap-2 rounded-md border px-4 py-3 shadow-sm backdrop-blur">
         <Dialog>
           <DialogTrigger asChild>
-            <Button type="button" variant="destructive" disabled={isDeleting}>
+            <Button
+              type="button"
+              size="sm"
+              variant="destructive"
+              disabled={isDeleting}
+            >
               {isDeleting ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
-                <Trash2 className="h-4 w-4" />
+                <Trash2 className="mr-2 h-4 w-4" />
               )}
               Delete
             </Button>
@@ -303,8 +272,8 @@ export function TransactionForm({ transaction }: { transaction: AnyTransaction }
           </DialogContent>
         </Dialog>
 
-        <Button type="submit" disabled={isUpdating || !isDirty}>
-          {isUpdating && <Loader2 className="h-4 w-4 animate-spin" />}
+        <Button type="submit" size="sm" disabled={isUpdating || !isDirty}>
+          {isUpdating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Update
         </Button>
       </div>
