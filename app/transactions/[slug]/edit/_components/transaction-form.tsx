@@ -14,8 +14,8 @@ import {
   updateTransaction,
   type TransactionFormValues,
   type TransactionItemFormValues,
-} from "../../actions"
-import { DeleteConfirmDialog } from "../../_components/delete-confirm"
+} from "../../../actions"
+import { DeleteConfirmDialog } from "../../../_components/delete-confirm"
 
 function toLocalInputValue(iso: string) {
   const date = new Date(iso)

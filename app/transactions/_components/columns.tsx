@@ -73,7 +73,7 @@ export const columns: ColumnDef<AnyTransaction>[] = [
     header: "Name",
     cell: ({ row }) => (
       <Link
-        href={`/transactions/${row.original.id}`}
+        href={`/transactions/${row.original.id}/edit`}
         className="font-medium hover:underline"
       >
         {row.getValue("name")}

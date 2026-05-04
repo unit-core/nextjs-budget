@@ -59,7 +59,7 @@ export async function updateTransaction(id: string, values: TransactionFormValue
   }
 
   revalidatePath("/transactions")
-  revalidatePath(`/transactions/${id}`)
+  revalidatePath(`/transactions/${id}/edit`)
 }
 
 export async function deleteTransactionAndRedirect(id: string) {
