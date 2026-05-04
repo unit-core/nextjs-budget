@@ -1,6 +1,7 @@
 "use client"
 
 import { MoreHorizontal } from "lucide-react"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -49,7 +50,9 @@ export function RowActions({ transaction }: RowActionsProps) {
               <Button variant="outline" onClick={onCopyId}>Copy ID</Button>
             </DrawerClose>
             <DrawerClose asChild>
-              <Button variant="outline">View details</Button>
+              <Button variant="outline" asChild>
+                <Link href={`/transactions/${transaction.id}`}>View details</Link>
+              </Button>
             </DrawerClose>
             <DrawerClose asChild>
               <Button variant="destructive">Delete</Button>
@@ -71,7 +74,9 @@ export function RowActions({ transaction }: RowActionsProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={onCopyId}>Copy ID</DropdownMenuItem>
-          <DropdownMenuItem>View details</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/transactions/${transaction.id}`}>View details</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-destructive focus:text-destructive">

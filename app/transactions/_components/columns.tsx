@@ -1,10 +1,10 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import Link from "next/link"
 
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import type { AnyTransaction } from "@/lib/models/transaction"
 
 import { RowActions } from "./row-actions"
@@ -63,19 +63,22 @@ export const columns: ColumnDef<AnyTransaction>[] = [
   },
   {
     accessorKey: "executed_at",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Date" />
-    ),
+    header: "Date",
     cell: ({ row }) => (
       <div>{dateFormatter.format(new Date(row.getValue<string>("executed_at")))}</div>
     ),
   },
   {
     accessorKey: "name",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+    header: "Name",
+    cell: ({ row }) => (
+      <Link
+        href={`/transactions/${row.original.id}`}
+        className="font-medium hover:underline"
+      >
+        {row.getValue("name")}
+      </Link>
     ),
-    cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
   },
   {
     id: "categories",
@@ -94,9 +97,7 @@ export const columns: ColumnDef<AnyTransaction>[] = [
   },
   {
     accessorKey: "status",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
-    ),
+    header: "Status",
     cell: ({ row }) => {
       const status = row.getValue<string>("status")
       const variant =

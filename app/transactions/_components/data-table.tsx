@@ -3,11 +3,8 @@
 import * as React from "react"
 import {
   ColumnDef,
-  Row,
-  SortingState,
   flexRender,
   getCoreRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 import {
@@ -15,6 +12,7 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Trash2,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -27,31 +25,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import type { AnyTransaction } from "@/lib/models/transaction"
+
+import { deleteTransactions } from "../actions"
 import { FiltersDrawer } from "./filters-drawer"
 import { TransactionCard } from "./transaction-card"
 import { useTableUrl } from "./use-table-url"
-import type { AnyTransaction } from "@/lib/models/transaction"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+interface DataTableProps {
+  columns: ColumnDef<AnyTransaction>[]
+  data: AnyTransaction[]
   pageNumber: number
   pageCount: number
   rowCount: number
   searchName: string
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable({
   columns,
   data,
   pageNumber,
   pageCount,
   rowCount,
   searchName,
-}: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
+}: DataTableProps) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [searchInput, setSearchInput] = React.useState(searchName)
+  const [isDeleting, startDelete] = React.useTransition()
   const { setParams, isPending } = useTableUrl()
 
   React.useEffect(() => {
@@ -76,11 +76,9 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, rowSelection },
-    onSortingChange: setSorting,
+    state: { rowSelection },
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     manualPagination: true,
     pageCount,
   })
@@ -88,10 +86,22 @@ export function DataTable<TData, TValue>({
   const goToPage = (n: number) =>
     setParams({ "page[number]": String(Math.max(1, Math.min(pageCount, n))) })
 
+  const selectedRows = table.getFilteredSelectedRowModel().rows
+  const selectedCount = selectedRows.length
+
+  const onDelete = () => {
+    const ids = selectedRows.map((r) => r.original.id)
+    startDelete(async () => {
+      await deleteTransactions(ids)
+      setRowSelection({})
+    })
+  }
+
   const rows = table.getRowModel().rows
+  const busy = isPending || isDeleting
 
   return (
-    <div className="space-y-4" aria-busy={isPending}>
+    <div className="space-y-4" aria-busy={busy}>
       <div className="flex items-center gap-2">
         <Input
           placeholder="Filter by name..."
@@ -107,13 +117,11 @@ export function DataTable<TData, TValue>({
       <div
         className={
           "md:hidden space-y-2 transition-opacity " +
-          (isPending ? "pointer-events-none opacity-50" : "")
+          (busy ? "pointer-events-none opacity-50" : "")
         }
       >
         {rows.length ? (
-          rows.map((row) => (
-            <TransactionCard key={row.id} row={row as unknown as Row<AnyTransaction>} />
-          ))
+          rows.map((row) => <TransactionCard key={row.id} row={row} />)
         ) : (
           <div className="rounded-md border p-8 text-center text-muted-foreground">No results.</div>
         )}
@@ -122,7 +130,7 @@ export function DataTable<TData, TValue>({
       <div
         className={
           "hidden md:block overflow-hidden rounded-md border transition-opacity " +
-          (isPending ? "pointer-events-none opacity-50" : "")
+          (busy ? "pointer-events-none opacity-50" : "")
         }
       >
         <Table>
@@ -140,8 +148,8 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+            {rows.length ? (
+              rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -162,8 +170,23 @@ export function DataTable<TData, TValue>({
       </div>
 
       <div className="sticky bottom-4 z-10 mx-2 flex items-center justify-between gap-2 rounded-md border bg-background/95 px-4 py-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} selected · {rowCount} total
+        <div className="flex flex-1 items-center gap-3 text-sm">
+          {selectedCount > 0 ? (
+            <>
+              <span className="font-medium">{selectedCount} selected</span>
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={onDelete}
+                disabled={isDeleting}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete
+              </Button>
+            </>
+          ) : (
+            <span className="text-muted-foreground">{rowCount} total</span>
+          )}
         </div>
         <div className="flex items-center space-x-6 lg:space-x-8">
           <div className="flex w-[110px] items-center justify-center text-sm font-medium">
@@ -174,7 +197,7 @@ export function DataTable<TData, TValue>({
               variant="outline"
               className="hidden h-8 w-8 p-0 lg:flex"
               onClick={() => goToPage(1)}
-              disabled={pageNumber <= 1 || isPending}
+              disabled={pageNumber <= 1 || busy}
             >
               <span className="sr-only">First page</span>
               <ChevronsLeft className="h-4 w-4" />
@@ -183,7 +206,7 @@ export function DataTable<TData, TValue>({
               variant="outline"
               className="h-8 w-8 p-0"
               onClick={() => goToPage(pageNumber - 1)}
-              disabled={pageNumber <= 1 || isPending}
+              disabled={pageNumber <= 1 || busy}
             >
               <span className="sr-only">Previous page</span>
               <ChevronLeft className="h-4 w-4" />
@@ -192,7 +215,7 @@ export function DataTable<TData, TValue>({
               variant="outline"
               className="h-8 w-8 p-0"
               onClick={() => goToPage(pageNumber + 1)}
-              disabled={pageNumber >= pageCount || isPending}
+              disabled={pageNumber >= pageCount || busy}
             >
               <span className="sr-only">Next page</span>
               <ChevronRight className="h-4 w-4" />
@@ -201,7 +224,7 @@ export function DataTable<TData, TValue>({
               variant="outline"
               className="hidden h-8 w-8 p-0 lg:flex"
               onClick={() => goToPage(pageCount)}
-              disabled={pageNumber >= pageCount || isPending}
+              disabled={pageNumber >= pageCount || busy}
             >
               <span className="sr-only">Last page</span>
               <ChevronsRight className="h-4 w-4" />
