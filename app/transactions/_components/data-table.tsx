@@ -28,6 +28,7 @@ import {
 import type { AnyTransaction } from "@/lib/models/transaction"
 
 import { deleteTransactions } from "../actions"
+import { DeleteConfirmDialog } from "./delete-confirm"
 import { FiltersDrawer } from "./filters-drawer"
 import { TransactionCard } from "./transaction-card"
 import { useTableUrl } from "./use-table-url"
@@ -52,6 +53,7 @@ export function DataTable({
   const [rowSelection, setRowSelection] = React.useState({})
   const [searchInput, setSearchInput] = React.useState(searchName)
   const [isDeleting, startDelete] = React.useTransition()
+  const [confirmOpen, setConfirmOpen] = React.useState(false)
   const { setParams, isPending } = useTableUrl()
 
   React.useEffect(() => {
@@ -94,6 +96,7 @@ export function DataTable({
     startDelete(async () => {
       await deleteTransactions(ids)
       setRowSelection({})
+      setConfirmOpen(false)
     })
   }
 
@@ -101,6 +104,15 @@ export function DataTable({
   const busy = isPending || isDeleting
 
   return (
+    <>
+    <DeleteConfirmDialog
+      open={confirmOpen}
+      onOpenChange={setConfirmOpen}
+      title={`Delete ${selectedCount} transaction${selectedCount === 1 ? "" : "s"}?`}
+      description="This action cannot be undone. The selected transactions and their items will be permanently removed."
+      isPending={isDeleting}
+      onConfirm={onDelete}
+    />
     <div className="space-y-4" aria-busy={busy}>
       <div className="flex items-center gap-2">
         <Input
@@ -177,7 +189,7 @@ export function DataTable({
               <Button
                 size="sm"
                 variant="destructive"
-                onClick={onDelete}
+                onClick={() => setConfirmOpen(true)}
                 disabled={isDeleting}
               >
                 <Trash2 className="mr-2 h-4 w-4" />
@@ -233,5 +245,6 @@ export function DataTable({
         </div>
       </div>
     </div>
+    </>
   )
 }

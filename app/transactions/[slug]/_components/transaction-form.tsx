@@ -5,15 +5,6 @@ import { Calendar, Check, Copy, Loader2, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { AnyTransaction } from "@/lib/models/transaction"
@@ -24,6 +15,7 @@ import {
   type TransactionFormValues,
   type TransactionItemFormValues,
 } from "../../actions"
+import { DeleteConfirmDialog } from "../../_components/delete-confirm"
 
 function toLocalInputValue(iso: string) {
   const date = new Date(iso)
@@ -52,6 +44,7 @@ export function TransactionForm({ transaction }: { transaction: AnyTransaction }
   const [isUpdating, startUpdate] = useTransition()
   const [isDeleting, startDelete] = useTransition()
   const [copied, setCopied] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const isDirty = useMemo(
     () => JSON.stringify(values) !== JSON.stringify(initialValues),
@@ -229,54 +222,35 @@ export function TransactionForm({ transaction }: { transaction: AnyTransaction }
       </div>
 
       <div className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky bottom-4 z-10 mx-2 flex items-center justify-between gap-2 rounded-md border px-4 py-3 shadow-sm backdrop-blur">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              type="button"
-              size="sm"
-              variant="destructive"
-              disabled={isDeleting}
-            >
-              {isDeleting ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Trash2 className="mr-2 h-4 w-4" />
-              )}
-              Delete
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Delete transaction?</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone. The transaction and its items will be
-                permanently removed.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="flex justify-end gap-2 pt-4">
-              <DialogClose asChild>
-                <Button type="button" variant="outline">
-                  Cancel
-                </Button>
-              </DialogClose>
-              <Button
-                type="button"
-                variant="destructive"
-                onClick={onDelete}
-                disabled={isDeleting}
-              >
-                {isDeleting && <Loader2 className="h-4 w-4 animate-spin" />}
-                Delete
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <Button
+          type="button"
+          size="sm"
+          variant="destructive"
+          onClick={() => setConfirmOpen(true)}
+          disabled={isDeleting}
+        >
+          {isDeleting ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Trash2 className="mr-2 h-4 w-4" />
+          )}
+          Delete
+        </Button>
 
         <Button type="submit" size="sm" disabled={isUpdating || !isDirty}>
           {isUpdating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Update
         </Button>
       </div>
+
+      <DeleteConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Delete transaction?"
+        description={`"${transaction.name || "Transaction"}" and its items will be permanently removed.`}
+        isPending={isDeleting}
+        onConfirm={onDelete}
+      />
     </form>
   )
 }
