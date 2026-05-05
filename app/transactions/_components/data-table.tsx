@@ -7,6 +7,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import { format, parseISO } from "date-fns"
+import type { DateRange } from "react-day-picker"
 import {
   ChevronLeft,
   ChevronRight,
@@ -16,7 +18,11 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 import {
   Table,
   TableBody,
@@ -29,7 +35,7 @@ import type { AnyTransaction } from "@/lib/models/transaction"
 
 import { deleteTransactions } from "../actions"
 import { DeleteConfirmDialog } from "./delete-confirm"
-import { FiltersDrawer } from "./filters-drawer"
+import { FiltersSidebar } from "./filters-sidebar"
 import { TransactionCard } from "./transaction-card"
 import { useTableUrl } from "./use-table-url"
 
@@ -39,7 +45,8 @@ interface DataTableProps {
   pageNumber: number
   pageCount: number
   rowCount: number
-  searchName: string
+  executedAtFrom?: string
+  executedAtTo?: string
 }
 
 export function DataTable({
@@ -48,32 +55,38 @@ export function DataTable({
   pageNumber,
   pageCount,
   rowCount,
-  searchName,
+  executedAtFrom,
+  executedAtTo,
 }: DataTableProps) {
   const [rowSelection, setRowSelection] = React.useState({})
-  const [searchInput, setSearchInput] = React.useState(searchName)
   const [isDeleting, startDelete] = React.useTransition()
   const [confirmOpen, setConfirmOpen] = React.useState(false)
   const { setParams, isPending } = useTableUrl()
 
   React.useEffect(() => {
-    setSearchInput(searchName)
-  }, [searchName])
-
-  React.useEffect(() => {
     setRowSelection({})
   }, [pageNumber])
 
-  React.useEffect(() => {
-    if (searchInput === searchName) return
-    const t = setTimeout(() => {
+  const dateRange: DateRange | undefined = React.useMemo(() => {
+    if (!executedAtFrom && !executedAtTo) return undefined
+    return {
+      from: executedAtFrom ? parseISO(executedAtFrom) : undefined,
+      to: executedAtTo ? parseISO(executedAtTo) : undefined,
+    }
+  }, [executedAtFrom, executedAtTo])
+
+  const onRangeChange = React.useCallback(
+    (next: DateRange | undefined) => {
+      const from = next?.from ? format(next.from, "yyyy-MM-dd") : ""
+      const to = next?.to ? format(next.to, "yyyy-MM-dd") : ""
+      const value = !from && !to ? undefined : `${from},${to}`
       setParams({
-        "search[name]": searchInput || undefined,
+        "range[executed_at]": value,
         "page[number]": undefined,
       })
-    }, 300)
-    return () => clearTimeout(t)
-  }, [searchInput, searchName, setParams])
+    },
+    [setParams],
+  )
 
   const table = useReactTable({
     data,
@@ -113,17 +126,20 @@ export function DataTable({
       isPending={isDeleting}
       onConfirm={onDelete}
     />
-    <div className="space-y-4" aria-busy={busy}>
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "24rem",
+          "--sidebar-width-mobile": "20rem",
+          "--sidebar": "color-mix(in oklch, var(--background) 80%, transparent)",
+        } as React.CSSProperties
+      }
+    >
+      <FiltersSidebar range={dateRange} onRangeChange={onRangeChange} />
+      <SidebarInset>
+    <div className="space-y-4 px-4 py-6 md:px-6 md:py-10" aria-busy={busy}>
       <div className="flex items-center gap-2">
-        <Input
-          placeholder="Filter by name..."
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          className="hidden max-w-sm md:block"
-        />
-        <div className="ml-auto md:hidden">
-          <FiltersDrawer searchValue={searchInput} onSearchChange={setSearchInput} />
-        </div>
+        <SidebarTrigger />
       </div>
 
       <div
@@ -245,6 +261,8 @@ export function DataTable({
         </div>
       </div>
     </div>
+      </SidebarInset>
+    </SidebarProvider>
     </>
   )
 }

@@ -12,15 +12,14 @@ export default async function TransactionsPage({ searchParams }: PageProps) {
   const page = await fetchTransactionsPage(query)
 
   return (
-    <div className="container mx-auto py-10">
-      <DataTable
-        columns={columns}
-        data={page.data}
-        pageNumber={page.pageNumber}
-        pageCount={page.pageCount}
-        rowCount={page.count}
-        searchName={query.searchName ?? ""}
-      />
-    </div>
+    <DataTable
+      columns={columns}
+      data={page.data}
+      pageNumber={page.pageNumber}
+      pageCount={page.pageCount}
+      rowCount={page.count}
+      executedAtFrom={query.executedAtFrom}
+      executedAtTo={query.executedAtTo}
+    />
   )
 }
