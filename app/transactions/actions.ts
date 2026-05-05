@@ -59,7 +59,16 @@ export async function updateTransaction(id: string, values: TransactionFormValue
   }
 
   revalidatePath("/transactions")
-  revalidatePath(`/transactions/${id}/edit`)
+  revalidatePath(`/transactions/${id}`)
+}
+
+export async function deleteTransactionItems(ids: string[], transactionId: string) {
+  if (ids.length === 0) return
+  const supabase = await createClient()
+  const { error } = await supabase.from("transaction_items").delete().in("id", ids)
+  if (error) throw new Error(error.message)
+  revalidatePath(`/transactions/${transactionId}`)
+  revalidatePath("/transactions")
 }
 
 export async function deleteTransactionAndRedirect(id: string) {

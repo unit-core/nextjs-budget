@@ -80,7 +80,7 @@ export function RowActions({ transaction }: RowActionsProps) {
               </DrawerClose>
               <DrawerClose asChild>
                 <Button variant="outline" asChild>
-                  <Link href={`/transactions/${transaction.id}/edit`}>View details</Link>
+                  <Link href={`/transactions/${transaction.id}`}>View details</Link>
                 </Button>
               </DrawerClose>
               <DrawerClose asChild>
@@ -106,7 +106,7 @@ export function RowActions({ transaction }: RowActionsProps) {
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={onCopyId}>Copy ID</DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/transactions/${transaction.id}/edit`}>View details</Link>
+                <Link href={`/transactions/${transaction.id}`}>View details</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
