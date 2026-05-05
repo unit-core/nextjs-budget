@@ -14,7 +14,6 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  Trash2,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -33,8 +32,6 @@ import {
 } from "@/components/ui/table"
 import type { AnyTransaction } from "@/lib/models/transaction"
 
-import { deleteTransactions } from "../actions"
-import { DeleteConfirmDialog } from "./delete-confirm"
 import { FiltersSidebar } from "./filters-sidebar"
 import { TransactionCard } from "./transaction-card"
 import { useTableUrl } from "./use-table-url"
@@ -58,14 +55,7 @@ export function DataTable({
   executedAtFrom,
   executedAtTo,
 }: DataTableProps) {
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [isDeleting, startDelete] = React.useTransition()
-  const [confirmOpen, setConfirmOpen] = React.useState(false)
   const { setParams, isPending } = useTableUrl()
-
-  React.useEffect(() => {
-    setRowSelection({})
-  }, [pageNumber])
 
   const dateRange: DateRange | undefined = React.useMemo(() => {
     if (!executedAtFrom && !executedAtTo) return undefined
@@ -95,8 +85,6 @@ export function DataTable({
   const table = useReactTable({
     data,
     columns,
-    state: { rowSelection },
-    onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
     pageCount,
@@ -105,31 +93,10 @@ export function DataTable({
   const goToPage = (n: number) =>
     setParams({ "page[number]": String(Math.max(1, Math.min(pageCount, n))) })
 
-  const selectedRows = table.getFilteredSelectedRowModel().rows
-  const selectedCount = selectedRows.length
-
-  const onDelete = () => {
-    const ids = selectedRows.map((r) => r.original.id)
-    startDelete(async () => {
-      await deleteTransactions(ids)
-      setRowSelection({})
-      setConfirmOpen(false)
-    })
-  }
-
   const rows = table.getRowModel().rows
-  const busy = isPending || isDeleting
+  const busy = isPending
 
   return (
-    <>
-    <DeleteConfirmDialog
-      open={confirmOpen}
-      onOpenChange={setConfirmOpen}
-      title={`Delete ${selectedCount} transaction${selectedCount === 1 ? "" : "s"}?`}
-      description="This action cannot be undone. The selected transactions and their items will be permanently removed."
-      isPending={isDeleting}
-      onConfirm={onDelete}
-    />
     <SidebarProvider
       style={
         {
@@ -166,7 +133,7 @@ export function DataTable({
         }
       >
         <Table>
-          <TableHeader>
+          {/* <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -178,11 +145,11 @@ export function DataTable({
                 ))}
               </TableRow>
             ))}
-          </TableHeader>
+          </TableHeader> */}
           <TableBody>
             {rows.length ? (
               rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -203,22 +170,7 @@ export function DataTable({
 
       <div className="sticky bottom-4 z-10 mx-2 flex items-center justify-between gap-2 rounded-md border bg-background/95 px-4 py-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/80">
         <div className="flex flex-1 items-center gap-3 text-sm">
-          {selectedCount > 0 ? (
-            <>
-              <span className="font-medium">{selectedCount} selected</span>
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => setConfirmOpen(true)}
-                disabled={isDeleting}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete
-              </Button>
-            </>
-          ) : (
-            <span className="text-muted-foreground">{rowCount} total</span>
-          )}
+          <span className="text-muted-foreground">{rowCount} total</span>
         </div>
         <div className="flex items-center space-x-6 lg:space-x-8">
           <div className="flex w-[110px] items-center justify-center text-sm font-medium">
@@ -267,6 +219,5 @@ export function DataTable({
     </div>
       </SidebarInset>
     </SidebarProvider>
-    </>
   )
 }

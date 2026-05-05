@@ -1,19 +1,13 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import { format, isThisYear, isToday, isYesterday } from "date-fns"
 import Link from "next/link"
 
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
 import type { AnyTransaction } from "@/lib/models/transaction"
+import { cn } from "@/lib/utils"
 
 import { RowActions } from "./row-actions"
-
-const dateFormatter = new Intl.DateTimeFormat("en-GB", {
-  year: "numeric",
-  month: "short",
-  day: "2-digit",
-})
 
 function formatAmount(amount: number, currency: string) {
   return new Intl.NumberFormat("en-US", {
@@ -30,94 +24,78 @@ function totalsByCurrency(transaction: AnyTransaction) {
   return Array.from(totals.entries())
 }
 
-function uniqueCategories(transaction: AnyTransaction) {
-  const set = new Set<string>()
-  for (const item of transaction.transaction_items) {
-    set.add(item.transaction_item_category.name)
-  }
-  return Array.from(set)
+function primaryCategory(transaction: AnyTransaction): string | null {
+  const first = transaction.transaction_items[0]?.transaction_item_category.transaction_item_category_group.name
+  return first ?? null
+}
+
+function formatExecutedAt(value: string): string {
+  const date = new Date(value)
+  if (isToday(date)) return `Today, ${format(date, "h:mm a")}`
+  if (isYesterday(date)) return "Yesterday"
+  if (isThisYear(date)) return format(date, "MMM d")
+  return format(date, "MMM d, yyyy")
 }
 
 export const columns: ColumnDef<AnyTransaction>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "executed_at",
-    header: "Date",
-    cell: ({ row }) => (
-      <div>{dateFormatter.format(new Date(row.getValue<string>("executed_at")))}</div>
-    ),
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => (
-      <Link
-        href={`/transactions/${row.original.id}`}
-        className="font-medium hover:underline"
-      >
-        {row.getValue("name")}
-      </Link>
-    ),
-  },
-  {
-    id: "categories",
-    header: "Categories",
+    id: "transaction",
+    header: "Transaction",
     cell: ({ row }) => {
-      const categories = uniqueCategories(row.original)
-      if (categories.length === 0) return <span className="text-muted-foreground">—</span>
+      const category = primaryCategory(row.original)
       return (
-        <div className="flex flex-wrap gap-1">
-          {categories.map((c) => (
-            <Badge key={c} variant="secondary">{c}</Badge>
-          ))}
+        <div className="flex items-center gap-3">
+          <div
+            aria-hidden
+            className="h-10 w-10 shrink-0 rounded-md bg-muted"
+          />
+          <div className="min-w-0 flex flex-col">
+            <Link
+              href={`/transactions/${row.original.id}`}
+              className="truncate font-medium hover:underline"
+            >
+              {row.original.name}
+            </Link>
+            <span className="truncate text-sm text-muted-foreground">
+              {category ?? "—"}
+            </span>
+          </div>
         </div>
       )
     },
   },
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.getValue<string>("status")
-      const variant =
-        status === "CONFIRMED" ? "default"
-        : status === "PARSE_ERROR" || status === "UNSUPPORTED_DOCUMENT" ? "destructive"
-        : "secondary"
-      return <Badge variant={variant}>{status}</Badge>
-    },
+    accessorKey: "executed_at",
+    header: "Date",
+    cell: ({ row }) => (
+      <div className="text-muted-foreground">
+        {formatExecutedAt(row.getValue<string>("executed_at"))}
+      </div>
+    ),
   },
   {
     id: "total",
-    header: () => <div className="text-right">Total</div>,
+    header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
       const totals = totalsByCurrency(row.original)
+      const isIncome = row.original.transaction_type === "INCOME"
       if (totals.length === 0) return <div className="text-right text-muted-foreground">—</div>
       return (
-        <div className="flex flex-col items-end font-medium">
-          {totals.map(([currency, amount]) => (
-            <span key={currency}>{formatAmount(amount, currency)}</span>
-          ))}
+        <div
+          className={cn(
+            "flex flex-col items-end font-medium tabular-nums",
+            isIncome && "text-emerald-500",
+          )}
+        >
+          {totals.map(([currency, amount]) => {
+            const sign = isIncome ? "+" : "-"
+            return (
+              <span key={currency}>
+                {sign}
+                {formatAmount(Math.abs(amount), currency)}
+              </span>
+            )
+          })}
         </div>
       )
     },

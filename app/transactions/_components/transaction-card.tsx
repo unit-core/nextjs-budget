@@ -3,7 +3,6 @@
 import type { Row } from "@tanstack/react-table"
 
 import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
 import type { AnyTransaction } from "@/lib/models/transaction"
 
 import { RowActions } from "./row-actions"
@@ -28,7 +27,7 @@ function totalsByCurrency(transaction: AnyTransaction) {
 
 function uniqueCategories(transaction: AnyTransaction) {
   const set = new Set<string>()
-  for (const item of transaction.transaction_items) set.add(item.transaction_item_category.name)
+  for (const item of transaction.transaction_items) set.add(item.transaction_item_category.transaction_item_category_group.name)
   return Array.from(set)
 }
 
@@ -42,16 +41,7 @@ export function TransactionCard({ row }: TransactionCardProps) {
   const categories = uniqueCategories(t)
 
   return (
-    <div
-      data-state={row.getIsSelected() && "selected"}
-      className="flex gap-3 mx-2 rounded-md border bg-card p-4 data-[state=selected]:bg-muted"
-    >
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(v) => row.toggleSelected(!!v)}
-        aria-label="Select row"
-        className="mt-1"
-      />
+    <div className="flex gap-3 mx-2 rounded-md border bg-card p-4">
       <div className="flex-1 min-w-0 space-y-2">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
