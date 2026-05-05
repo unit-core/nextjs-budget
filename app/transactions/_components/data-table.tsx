@@ -7,7 +7,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { format, parseISO } from "date-fns"
+import { endOfDay, format, parseISO, startOfDay } from "date-fns"
 import type { DateRange } from "react-day-picker"
 import {
   ChevronLeft,
@@ -77,8 +77,12 @@ export function DataTable({
 
   const onRangeChange = React.useCallback(
     (next: DateRange | undefined) => {
-      const from = next?.from ? format(next.from, "yyyy-MM-dd") : ""
-      const to = next?.to ? format(next.to, "yyyy-MM-dd") : ""
+      // Encode each boundary as a full ISO timestamp in the user's local TZ
+      // (e.g. "2026-05-22T00:00:00+02:00") so Postgres timestamptz comparison
+      // covers the entire day regardless of the viewer's timezone.
+      const ISO_FMT = "yyyy-MM-dd'T'HH:mm:ssXXX"
+      const from = next?.from ? format(startOfDay(next.from), ISO_FMT) : ""
+      const to = next?.to ? format(endOfDay(next.to), ISO_FMT) : ""
       const value = !from && !to ? undefined : `${from},${to}`
       setParams({
         "range[executed_at]": value,
@@ -137,7 +141,7 @@ export function DataTable({
     >
       <FiltersSidebar range={dateRange} onRangeChange={onRangeChange} />
       <SidebarInset>
-    <div className="space-y-4 px-4 py-6 md:px-6 md:py-10" aria-busy={busy}>
+    <div className="space-y-4 px-4 py-6" aria-busy={busy}>
       <div className="flex items-center gap-2">
         <SidebarTrigger />
       </div>

@@ -6,7 +6,7 @@ export interface TransactionsQuery {
   searchName?: string
 }
 
-const DEFAULT_PAGE_SIZE = 50
+const DEFAULT_PAGE_SIZE = 100
 
 function pickFirst(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value
