@@ -157,6 +157,7 @@ export function MonthlyTotal() {
               name,
               transaction_item_category_group:transaction_item_category_groups (
                 id,
+                name,
                 type
               )
             )
@@ -180,9 +181,9 @@ export function MonthlyTotal() {
   const breakdowns = useMemo<CurrencyBreakdown[]>(() => {
     const byCurrency = new Map<string, Map<string, number>>()
     for (const item of items) {
-      const groupType = item.transaction_item_category?.transaction_item_category_group?.type
-      if (groupType && groupType !== "EXPENSE") continue
-      const category = item.transaction_item_category?.name?.trim() || UNCATEGORIZED
+      const group = item.transaction_item_category?.transaction_item_category_group
+      if (group?.type && group.type !== "EXPENSE") continue
+      const category = group?.name?.trim() || UNCATEGORIZED
       const inner = byCurrency.get(item.currency_code) ?? new Map<string, number>()
       inner.set(category, (inner.get(category) ?? 0) + Number(item.amount))
       byCurrency.set(item.currency_code, inner)

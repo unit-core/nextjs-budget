@@ -62,6 +62,20 @@ export async function updateTransaction(id: string, values: TransactionFormValue
   revalidatePath(`/transactions/${id}`)
 }
 
+export async function updateTransactionItemCategory(
+  itemId: string,
+  categoryId: string,
+  transactionId: string,
+) {
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from("transaction_items")
+    .update({ transaction_item_category_id: categoryId })
+    .eq("id", itemId)
+  if (error) throw new Error(error.message)
+  revalidatePath(`/transactions/${transactionId}`)
+}
+
 export async function deleteTransactionItems(ids: string[], transactionId: string) {
   if (ids.length === 0) return
   const supabase = await createClient()

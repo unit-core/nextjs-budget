@@ -22,3 +22,9 @@ export type TransactionItemCategoryGroupInsert = Omit<
 }
 
 export type TransactionItemCategoryGroupUpdate = Partial<TransactionItemCategoryGroupInsert>
+
+import type { BaseTransactionItemCategory } from './transaction_item_category'
+
+export type AnyTransactionItemCategoryGroup = BaseTransactionItemCategoryGroup & {
+  categories: BaseTransactionItemCategory[]
+}
