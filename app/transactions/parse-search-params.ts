@@ -27,7 +27,7 @@ export function parseTransactionsSearchParams(
       ? Math.floor(pageNumberRaw)
       : 1
 
-  const executedAt = pickFirst(raw["filter[executed_at]"])
+  const executedAt = pickFirst(raw["range[executed_at]"])
   let executedAtFrom: string | undefined
   let executedAtTo: string | undefined
   if (executedAt) {

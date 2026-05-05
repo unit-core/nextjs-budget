@@ -46,7 +46,7 @@ function endOfCurrentMonthUTC(): string {
 
 function currentMonthTransactionsHref(): string {
   const params = new URLSearchParams()
-  params.set("filter[executed_at]", `${startOfCurrentMonthUTC()},${endOfCurrentMonthUTC()}`)
+  params.set("range[executed_at]", `${startOfCurrentMonthUTC()},${endOfCurrentMonthUTC()}`)
   return `/transactions?${params.toString()}`
 }
 
@@ -182,8 +182,8 @@ export function MonthlyTotal() {
     const byCurrency = new Map<string, Map<string, number>>()
     for (const item of items) {
       const group = item.transaction_item_category?.transaction_item_category_group
-      if (group?.type && group.type !== "EXPENSE") continue
-      const category = group?.name?.trim() || UNCATEGORIZED
+      if (group?.type !== "EXPENSE") continue
+      const category = group.name?.trim() || UNCATEGORIZED
       const inner = byCurrency.get(item.currency_code) ?? new Map<string, number>()
       inner.set(category, (inner.get(category) ?? 0) + Number(item.amount))
       byCurrency.set(item.currency_code, inner)
