@@ -57,7 +57,7 @@ export function TransactionSummary({ items }: TransactionSummaryProps) {
   const byCategory = React.useMemo(() => {
     const map = new Map<string, number>()
     for (const i of filtered) {
-      const name = i.transaction_item_category.name
+      const name = i.transaction_item_category.transaction_item_category_group.name
       map.set(name, (map.get(name) ?? 0) + Number(i.amount))
     }
     return Array.from(map, ([name, value]) => ({ name, value })).sort(
