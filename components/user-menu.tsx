@@ -4,12 +4,14 @@ import {
   BadgeCheck,
   ChevronsUpDown,
   CreditCard,
+  KeyRound,
   Laptop,
   LogOut,
   Moon,
   Sparkles,
   Sun,
 } from 'lucide-react'
+import Link from 'next/link'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -92,6 +94,12 @@ export function UserMenu() {
           <DropdownMenuItem onClick={handleManageSubscription} disabled={loading}>
             <Sparkles />
             {loading ? 'Redirecting...' : 'Manage subscription'}
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/tokens">
+              <KeyRound />
+              Tokens
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

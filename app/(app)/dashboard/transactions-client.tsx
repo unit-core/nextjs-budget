@@ -6,7 +6,6 @@ import { toast } from "sonner"
 // import { MonthlyTotal } from "@/components/monthly-total"
 import { PageDropzone } from "@/components/page-dropzone"
 import { TransactionInput } from "@/components/transaction-input"
-import { UserMenu } from "@/components/user-menu"
 import { createClient } from "@/lib/supabase/client"
 import { uploadFiles } from "@/lib/uploads/upload-files"
 import type { TransactionInsert } from "@/lib/models/transaction"
@@ -90,12 +89,6 @@ export function TransactionsClient({ userId }: TransactionsClientProps) {
       maxFiles={uploadConfig.maxFiles}
       maxFileSize={uploadConfig.maxFileSize}
     >
-      <div className="absolute top-4 right-4 z-10">
-        <div className="flex flex-row items-center">
-          {/* <MonthlyTotal /> */}
-          <UserMenu />
-        </div>
-      </div>
       <div className="flex flex-col flex-1 items-center justify-center p-4">
         <div className="relative w-full max-w-xl">
           <TransactionInput

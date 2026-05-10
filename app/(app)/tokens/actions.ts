@@ -21,7 +21,7 @@ export async function createMcpToken(name: string): Promise<{ plaintext: string 
   });
   if (error) throw new Error(error.message);
 
-  revalidatePath("/dashboard/mcp");
+  revalidatePath("/tokens");
   return { plaintext };
 }
 
@@ -29,5 +29,5 @@ export async function revokeMcpToken(id: string): Promise<void> {
   const supabase = await createClient();
   const { error } = await supabase.from("mcp_tokens").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePath("/dashboard/mcp");
+  revalidatePath("/tokens");
 }
