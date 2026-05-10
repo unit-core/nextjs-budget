@@ -6,7 +6,13 @@ import { hasEnvVars } from "@/lib/utils";
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
-  if (request.nextUrl.pathname.startsWith("/api/mcp")) return supabaseResponse;
+  const { pathname: bypassPath } = request.nextUrl;
+  if (
+    bypassPath.startsWith("/api/mcp") ||
+    bypassPath.startsWith("/api/transactions")
+  ) {
+    return supabaseResponse;
+  }
 
   if (!hasEnvVars) return supabaseResponse;
 
