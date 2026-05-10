@@ -6,6 +6,8 @@ import { hasEnvVars } from "@/lib/utils";
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
+  if (request.nextUrl.pathname.startsWith("/api/mcp")) return supabaseResponse;
+
   if (!hasEnvVars) return supabaseResponse;
 
   const supabase = createServerClient(
