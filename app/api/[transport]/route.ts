@@ -10,12 +10,16 @@ export const maxDuration = 60;
 function buildHandler(ownerId: string) {
   return createMcpHandler(
     (server) => {
-      server.tool(
+      server.registerTool(
         "list_transactions",
-        "List the user's transactions, most recent first. Filter by type and limit.",
         {
-          limit: z.number().int().min(1).max(100).default(20),
-          transaction_type: z.enum(["EXPENSE", "INCOME"]).optional(),
+          title: "List transactions",
+          description:
+            "List the user's transactions, most recent first. Filter by type and limit.",
+          inputSchema: {
+            limit: z.number().int().min(1).max(100).default(20),
+            transaction_type: z.enum(["EXPENSE", "INCOME"]).optional(),
+          },
         },
         async ({ limit, transaction_type }) => {
           const supabase = createMcpSupabaseClient();
@@ -42,12 +46,16 @@ function buildHandler(ownerId: string) {
         },
       );
 
-      server.tool(
+      server.registerTool(
         "sum_expenses_by_category",
-        "Sum expense amounts grouped by category between two ISO dates (inclusive).",
         {
-          from: z.string().describe("ISO date, e.g. 2026-01-01"),
-          to: z.string().describe("ISO date, e.g. 2026-05-10"),
+          title: "Sum expenses by category",
+          description:
+            "Sum expense amounts grouped by category between two ISO dates (inclusive).",
+          inputSchema: {
+            from: z.string().describe("ISO date, e.g. 2026-01-01"),
+            to: z.string().describe("ISO date, e.g. 2026-05-10"),
+          },
         },
         async ({ from, to }) => {
           const supabase = createMcpSupabaseClient();
