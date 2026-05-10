@@ -38,12 +38,12 @@ export async function proxy(request: NextRequest) {
   const isPricing = pathname.startsWith("/pricing");
   const isPublic = pathname === "/" || isAuthRoute || isPricing;
 
-  // Signed in + has subscription → always go to /protected
+  // Signed in + has subscription → always go to /dashboard
   if (user && isPublic) {
     const hasSubscription = await checkActiveSubscription(supabase, user.sub);
     if (hasSubscription) {
       const url = request.nextUrl.clone();
-      url.pathname = "/protected";
+      url.pathname = "/dashboard";
       return NextResponse.redirect(url);
     }
     return supabaseResponse;
@@ -54,15 +54,15 @@ export async function proxy(request: NextRequest) {
     return supabaseResponse;
   }
 
-  // Not signed in on a protected route → login
+  // Not signed in on a dashboard route → login
   if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
   }
 
-  // Signed in + accessing /protected → check subscription
-  if (pathname.startsWith("/protected")) {
+  // Signed in + accessing /dashboard → check subscription
+  if (pathname.startsWith("/dashboard")) {
     const hasSubscription = await checkActiveSubscription(supabase, user.sub);
     if (!hasSubscription) {
       const url = request.nextUrl.clone();

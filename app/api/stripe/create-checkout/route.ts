@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     customer: customerId,
     mode: "subscription",
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${origin}/protected`,
+    success_url: `${origin}/dashboard`,
     cancel_url: `${origin}/pricing`,
   });
 

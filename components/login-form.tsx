@@ -38,7 +38,7 @@ export function LoginForm({
         password,
       });
       if (error) throw error;
-      router.push("/protected");
+      router.push("/dashboard");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
@@ -51,7 +51,7 @@ export function LoginForm({
     await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/protected`,
+        redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
       },
     });
   };

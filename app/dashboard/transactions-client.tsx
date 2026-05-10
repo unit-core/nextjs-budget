@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { MonthlyTotal } from "@/components/monthly-total"
+// import { MonthlyTotal } from "@/components/monthly-total"
 import { PageDropzone } from "@/components/page-dropzone"
 import { TransactionInput } from "@/components/transaction-input"
 import { UserMenu } from "@/components/user-menu"
@@ -92,7 +92,7 @@ export function TransactionsClient({ userId }: TransactionsClientProps) {
     >
       <div className="absolute top-4 right-4 z-10">
         <div className="flex flex-row items-center">
-          <MonthlyTotal />
+          {/* <MonthlyTotal /> */}
           <UserMenu />
         </div>
       </div>

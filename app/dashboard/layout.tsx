@@ -1,4 +1,4 @@
-export default function ProtectedLayout({
+export default function dashboardLayout({
   children,
 }: {
   children: React.ReactNode;

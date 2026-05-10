@@ -114,8 +114,8 @@ Please file feedback and issues over on the [Supabase GitHub org](https://github
 | User | Route | Result |
 |---|---|---|
 | No auth | `/auth/*`, `/pricing`, `/` | Accepted |
-| No auth | `/protected` | → `/auth/login` |
-| Auth, Sub | `/auth/*`, `/pricing`, `/` | → `/protected` |
+| No auth | `/dashboard` | → `/auth/login` |
+| Auth, Sub | `/auth/*`, `/pricing`, `/` | → `/dashboard` |
 | Auth, No sub | `/auth/*`, `/pricing`, `/` | Accepted |
-| Auth, No sub | `/protected` | → `/pricing` |
-| Auth, Sub | `/protected` | Accepted ✓ |
+| Auth, No sub | `/dashboard` | → `/pricing` |
+| Auth, Sub | `/dashboard` | Accepted ✓ |
