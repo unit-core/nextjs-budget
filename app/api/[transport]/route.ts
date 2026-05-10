@@ -4,6 +4,7 @@ import {
   authenticateMcpRequest,
   createMcpSupabaseClient,
 } from "@/lib/supabase/mcp";
+import type { TransactionInsert } from "@/lib/models/transaction";
 
 export const maxDuration = 60;
 
@@ -42,6 +43,62 @@ function buildHandler(ownerId: string) {
 
           return {
             content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+          };
+        },
+      );
+
+      server.registerTool(
+        "create_transaction",
+        {
+          title: "Create transaction",
+          description:
+            "Create a new transaction from a free-form text description. The text is queued for AI parsing — the transaction is returned with status IDLE/PENDING and is filled in asynchronously (status will move to CONFIRMED once items and category are detected). Use this for quick capture like 'Coffee 4.50 EUR at Starbucks'.",
+          inputSchema: {
+            text: z
+              .string()
+              .min(1)
+              .max(2000)
+              .describe(
+                "Free-form description of the transaction (merchant, amount, currency, what was bought).",
+              ),
+          },
+        },
+        async ({ text }) => {
+          const supabase = createMcpSupabaseClient();
+          const payload: TransactionInsert = {
+            owner_id: ownerId,
+            source: { source_type: "text", source: { text } },
+            folder_id: ownerId,
+            name: text,
+          };
+
+          const { data, error } = await supabase
+            .from("transactions")
+            .insert(payload)
+            .select("id, name, status, created_at")
+            .single();
+
+          if (error) {
+            return {
+              isError: true,
+              content: [{ type: "text", text: `Supabase error: ${error.message}` }],
+            };
+          }
+
+          return {
+            content: [
+              {
+                type: "text",
+                text: JSON.stringify(
+                  {
+                    ...data,
+                    note: "Transaction queued. The AI pipeline will parse items, amount and category asynchronously; status will become CONFIRMED once done. Re-fetch via list_transactions to see the parsed result.",
+                  },
+                  null,
+                  2,
+                ),
+              },
+            ],
           };
         },
       );
