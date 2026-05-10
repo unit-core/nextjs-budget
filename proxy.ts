@@ -36,7 +36,20 @@ export async function proxy(request: NextRequest) {
 
   const isAuthRoute = pathname.startsWith("/auth");
   const isPricing = pathname.startsWith("/pricing");
-  const isPublic = pathname === "/" || isAuthRoute || isPricing;
+  const isRoot = pathname === "/";
+  const isPublic = isAuthRoute || isPricing;
+
+  // Root: anon → login, signed in → handled below (redirected to /dashboard via isPublic-style flow)
+  if (isRoot && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/auth/login";
+    return NextResponse.redirect(url);
+  }
+  if (isRoot && user) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
 
   // Signed in + has subscription → always go to /dashboard
   if (user && isPublic) {
