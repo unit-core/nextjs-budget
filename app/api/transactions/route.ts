@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import {
-  authenticateMcpRequest,
-  createMcpSupabaseClient,
-} from "@/lib/supabase/mcp";
+  authenticateRequest,
+  createServiceClient,
+} from "@/lib/supabase/api-auth";
 import type { TransactionInsert } from "@/lib/models/transaction";
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const auth = await authenticateMcpRequest(req);
+  const auth = await authenticateRequest(req);
   if (!auth) {
     return new NextResponse("Unauthorized", {
       status: 401,
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
 
   const trimmed = text.trim().slice(0, 2000);
 
-  const supabase = createMcpSupabaseClient();
+  const supabase = createServiceClient();
   const payload: TransactionInsert = {
     owner_id: auth.ownerId,
     source: { source_type: "text", source: { text: trimmed } },

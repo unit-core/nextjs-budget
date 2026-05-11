@@ -6,10 +6,7 @@ export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
   const { pathname: bypassPath } = request.nextUrl;
-  if (
-    bypassPath.startsWith("/api/mcp") ||
-    bypassPath.startsWith("/api/transactions")
-  ) {
+  if (bypassPath.startsWith("/api/transactions")) {
     return supabaseResponse;
   }
 

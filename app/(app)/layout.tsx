@@ -12,7 +12,16 @@ export default function AppLayout({
         <Link href="/" className="text-sm font-medium hover:opacity-80">
           Budget by Unitcore
         </Link>
-        <UserMenu />
+        <div className="flex items-center gap-3">
+          <a href="https://www.buymeacoffee.com/unitcore" target="_blank" rel="noopener noreferrer">
+            <img
+              src="https://cdn.buymeacoffee.com/buttons/v2/arial-yellow.png"
+              alt="Buy Me a Coffee"
+              style={{ height: "40px", width: "145px" }}
+            />
+          </a>
+          <UserMenu />
+        </div>
       </header>
       {children}
     </main>

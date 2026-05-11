@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { createMcpToken, revokeMcpToken } from "./actions";
+import { createApiToken, revokeApiToken } from "./actions";
 
 interface TokenRow {
   id: string;
@@ -14,7 +14,7 @@ interface TokenRow {
   last_used_at: string | null;
 }
 
-export function McpTokensClient({ tokens }: { tokens: TokenRow[] }) {
+export function TokensClient({ tokens }: { tokens: TokenRow[] }) {
   const [name, setName] = useState("");
   const [freshToken, setFreshToken] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -26,7 +26,7 @@ export function McpTokensClient({ tokens }: { tokens: TokenRow[] }) {
     }
     startTransition(async () => {
       try {
-        const { plaintext } = await createMcpToken(name);
+        const { plaintext } = await createApiToken(name);
         setFreshToken(plaintext);
         setName("");
       } catch (e) {
@@ -38,7 +38,7 @@ export function McpTokensClient({ tokens }: { tokens: TokenRow[] }) {
   function handleRevoke(id: string) {
     startTransition(async () => {
       try {
-        await revokeMcpToken(id);
+        await revokeApiToken(id);
         toast.success("Token revoked");
       } catch (e) {
         toast.error(e instanceof Error ? e.message : "Failed to revoke");
@@ -57,7 +57,7 @@ export function McpTokensClient({ tokens }: { tokens: TokenRow[] }) {
         <CardContent className="pt-6 space-y-3">
           <div className="flex gap-2">
             <Input
-              placeholder="Token name (e.g. Claude Desktop laptop)"
+              placeholder="Token name (e.g. laptop)"
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={pending}

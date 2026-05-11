@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { generateToken } from "@/lib/supabase/mcp";
+import { generateToken } from "@/lib/supabase/api-auth";
 
-export async function createMcpToken(name: string): Promise<{ plaintext: string }> {
+export async function createApiToken(name: string): Promise<{ plaintext: string }> {
   const trimmed = name.trim();
   if (!trimmed) throw new Error("Name is required");
 
@@ -14,7 +14,7 @@ export async function createMcpToken(name: string): Promise<{ plaintext: string 
 
   const { plaintext, hash } = generateToken();
 
-  const { error } = await supabase.from("mcp_tokens").insert({
+  const { error } = await supabase.from("api_tokens").insert({
     owner_id: userData.user.id,
     token_hash: hash,
     name: trimmed,
@@ -25,9 +25,9 @@ export async function createMcpToken(name: string): Promise<{ plaintext: string 
   return { plaintext };
 }
 
-export async function revokeMcpToken(id: string): Promise<void> {
+export async function revokeApiToken(id: string): Promise<void> {
   const supabase = await createClient();
-  const { error } = await supabase.from("mcp_tokens").delete().eq("id", id);
+  const { error } = await supabase.from("api_tokens").delete().eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/tokens");
 }
