@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { ArrowUp, FileIcon, Paperclip, Plus, Trash2, Upload, X } from "lucide-react"
+import { ArrowUp, FileIcon, Plus, Trash2, Upload, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -12,13 +12,6 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import {
   InputGroup,
   InputGroupAddon,
@@ -279,27 +272,16 @@ export function TransactionInput({
         </div>
 
         <InputGroupAddon align="inline-start">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <InputGroupButton
-                variant="ghost"
-                aria-label="More"
-                size="icon-xs"
-                className="rounded-full size-8"
-                disabled={loading}
-              >
-                <Plus />
-              </InputGroupButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuGroup>
-                <DropdownMenuItem onSelect={() => fileInputRef.current?.click()}>
-                  <Paperclip />
-                  Add files
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <InputGroupButton
+            variant="ghost"
+            aria-label="Add files"
+            size="icon-xs"
+            className="rounded-full size-8"
+            disabled={loading}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Plus />
+          </InputGroupButton>
         </InputGroupAddon>
 
         <InputGroupAddon align="inline-end">
