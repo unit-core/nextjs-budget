@@ -1,19 +1,14 @@
 'use client'
 
 import {
-  BadgeCheck,
-  ChevronsUpDown,
-  CreditCard,
   KeyRound,
   Laptop,
   LogOut,
   Moon,
-  Sparkles,
   Sun,
 } from 'lucide-react'
 import Link from 'next/link'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,7 +34,6 @@ import { useRouter } from 'next/navigation'
 export function UserMenu() {
   const name = useCurrentUserName()
   const email = useCurrentUserEmail()
-  const [loading, setLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
   const router = useRouter()
@@ -53,26 +47,6 @@ export function UserMenu() {
   useEffect(() => {
     setMounted(true)
   }, [])
-
-  const handleManageSubscription = async (e: Event | React.SyntheticEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      const res = await fetch('/api/stripe/create-portal', { method: 'POST' })
-      const { url, error } = await res.json()
-      if (error) throw new Error(error)
-      window.location.href = url
-    } catch (err) {
-      console.error(err)
-      setLoading(false)
-    }
-  }
-
-  const initials = name
-    ?.split(' ')
-    ?.map((word) => word[0])
-    ?.join('')
-    ?.toUpperCase()
 
   return (
     <DropdownMenu>
@@ -91,10 +65,6 @@ export function UserMenu() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={handleManageSubscription} disabled={loading}>
-            <Sparkles />
-            {loading ? 'Redirecting...' : 'Manage subscription'}
-          </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/tokens">
               <KeyRound />
@@ -104,14 +74,6 @@ export function UserMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {/* <DropdownMenuItem>
-            <BadgeCheck />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard />
-            Billing
-          </DropdownMenuItem> */}
           {mounted && (
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>

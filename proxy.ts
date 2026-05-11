@@ -1,5 +1,4 @@
 import { createServerClient } from "@supabase/ssr";
-import { type SupabaseClient } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { hasEnvVars } from "@/lib/utils";
 
@@ -43,11 +42,8 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isAuthRoute = pathname.startsWith("/auth");
-  const isPricing = pathname.startsWith("/pricing");
   const isRoot = pathname === "/";
-  const isPublic = isAuthRoute || isPricing;
 
-  // Root: anon → login, signed in → handled below (redirected to /dashboard via isPublic-style flow)
   if (isRoot && !user) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
@@ -59,81 +55,23 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Signed in + has subscription → always go to /dashboard
-  if (user && isPublic) {
-    const hasSubscription = await checkActiveSubscription(supabase, user.sub);
-    if (hasSubscription) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/dashboard";
-      return NextResponse.redirect(url);
-    }
+  if (user && isAuthRoute) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
+
+  if (!user && isAuthRoute) {
     return supabaseResponse;
   }
 
-  // Not signed in on a public route → allow through
-  if (!user && isPublic) {
-    return supabaseResponse;
-  }
-
-  // Not signed in on a dashboard route → login
   if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
   }
 
-  // Signed in + accessing /dashboard → check subscription
-  if (pathname.startsWith("/dashboard")) {
-    const hasSubscription = await checkActiveSubscription(supabase, user.sub);
-    if (!hasSubscription) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/pricing";
-      return NextResponse.redirect(url);
-    }
-  }
-
   return supabaseResponse;
-}
-
-async function checkActiveSubscription(
-  supabase: SupabaseClient,
-  userId: string,
-): Promise<boolean> {
-  console.log(`[subscription] checking for user ${userId}`);
-
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("stripe_customer_id")
-    .eq("id", userId)
-    .maybeSingle();
-
-  if (profileError) {
-    console.error(`[subscription] failed to fetch profile:`, profileError.message);
-    return false;
-  }
-
-  if (!profile?.stripe_customer_id) {
-    console.log(`[subscription] no stripe_customer_id found for user ${userId} → redirect to pricing`);
-    return false;
-  }
-
-  console.log(`[subscription] found customer ${profile.stripe_customer_id}, checking stripe.subscriptions...`);
-
-  const { data: hasSubscription, error: subError } = await supabase
-    .rpc("has_active_subscription", { customer_id: profile.stripe_customer_id });
-
-  if (subError) {
-    console.error(`[subscription] failed to query stripe.subscriptions:`, subError.message);
-    return false;
-  }
-
-  if (!hasSubscription) {
-    console.log(`[subscription] no active/trialing subscription for customer ${profile.stripe_customer_id} → redirect to pricing`);
-    return false;
-  }
-
-  console.log(`[subscription] active subscription found → allow access`);
-  return true;
 }
 
 export const config = {

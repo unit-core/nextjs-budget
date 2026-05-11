@@ -104,7 +104,6 @@ Please file feedback and issues over on the [Supabase GitHub org](https://github
 
 ## More Supabase examples
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
 - [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
 - [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
 
@@ -113,9 +112,7 @@ Please file feedback and issues over on the [Supabase GitHub org](https://github
 
 | User | Route | Result |
 |---|---|---|
-| No auth | `/auth/*`, `/pricing`, `/` | Accepted |
+| No auth | `/auth/*`, `/` | → `/auth/login` (except `/auth/*`) |
 | No auth | `/dashboard` | → `/auth/login` |
-| Auth, Sub | `/auth/*`, `/pricing`, `/` | → `/dashboard` |
-| Auth, No sub | `/auth/*`, `/pricing`, `/` | Accepted |
-| Auth, No sub | `/dashboard` | → `/pricing` |
-| Auth, Sub | `/dashboard` | Accepted ✓ |
+| Auth | `/auth/*`, `/` | → `/dashboard` |
+| Auth | `/dashboard` | Accepted ✓ |
